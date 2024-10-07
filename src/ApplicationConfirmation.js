@@ -19,21 +19,30 @@ const ConfirmationText = styled.h1`
   text-align: center;
   max-width: 80%;
   padding: 0 20px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+`;
+
+const Wrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ApplicationConfirmation = () => {
-  return (
-    <ConfirmationContainer>
-      <Confetti />
-      <ConfirmationText>
-        Application Received! Poster will get back to you soon if there's a match!
-      </ConfirmationText>
-    </ConfirmationContainer>
-  );
-};
+    return (
+      <Wrapper>
+        <ConfirmationContainer>
+          <Confetti />
+          <ConfirmationText>
+            Application Received! Poster will get back to you soon if there's a match!
+          </ConfirmationText>
+        </ConfirmationContainer>
+      </Wrapper>
+    );
+  };
 
 export default ApplicationConfirmation;
