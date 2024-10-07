@@ -63,6 +63,10 @@ const NavContainer = styled.div`
   align-items: center;
   padding: 20px;
   height: 100%; // Make it full height of the Navigation
+
+  @media (max-width: 768px) {
+    padding: 20px 15px; // Reduce horizontal padding on mobile
+  }
 `;
 
 const NavLink = styled(Link)`
@@ -110,7 +114,12 @@ const HamburgerIcon = styled.div`
   cursor: pointer;
   font-size: 1.5rem;
   color: #ffffff;
-  display: block; // Always show
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+    margin-left: 15px; // Add some space to the left of the icon
+  }
 `;
 
 const NavTitle = styled(Link)`
@@ -122,6 +131,10 @@ const NavTitle = styled(Link)`
 
   &:hover {
     color: #6e8efb;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem; // Slightly reduce font size on mobile
   }
 `;
 
