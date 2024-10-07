@@ -9,6 +9,7 @@ const ConfirmationContainer = styled.div`
   height: 100vh;
   width: 100vw;
   position: relative;
+  overflow: hidden;
 `;
 
 const ConfirmationText = styled.h1`
@@ -16,8 +17,12 @@ const ConfirmationText = styled.h1`
   font-weight: bold;
   color: white;
   text-align: center;
-  max-width: 800px;
+  max-width: 80%;
   padding: 0 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const ApplicationConfirmation = () => {
