@@ -218,6 +218,15 @@ const HeroTitle = styled.h1`
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  @media screen and (max-width: 768px) {
+    font-size: 2rem;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 `;
 
 const HeroSubtitle = styled.p`
