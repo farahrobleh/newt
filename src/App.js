@@ -16,6 +16,11 @@ import {
 import CandidateLogin from './CandidateLogin';
 import PosterLogin from './PosterLogin';
 import AboutUs from './AboutUs';
+import ApplicationConfirmation from './ApplicationConfirmation';
+import PosterProfile from './PosterProfile';
+import { useApplicants } from './context/ApplicantContext.js';
+import { ApplicantProvider } from './context/ApplicantContext.js';
+import CommunityFeed from './CommunityFeed';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -545,6 +550,8 @@ const ProjectDetailsPage = ({
 }) => {
   const { projectTitle } = useParams();
   const [projectDetails, setProjectDetails] = useState(null);
+  const history = useHistory();
+  const { addApplicant } = useApplicants();
 
   useEffect(() => {
     const allProjects = [
@@ -577,8 +584,10 @@ const renderPostedBy = () => {
 };
 
 const handleApply = () => {
-  // Here you can add the logic for what happens when the button is clicked
-  // For example, you could open a modal, navigate to an application page, etc.
+  if (projectDetails.title === "Immunotherapy Optimization for Triple-Negative Breast Cancer") {
+    addApplicant(projectDetails.title);
+  }
+  history.push('/application-confirmation');
 };
 
 return (
@@ -612,8 +621,6 @@ return (
             <li key={index}>{qualification}</li>
           ))}
         </ul>
-        <h4>Application Instructions:</h4>
-        <p>{projectDetails.applicationInstructions}</p>
         <h4>Additional Information:</h4>
         <p>{projectDetails.additionalInfo}</p>
 
@@ -633,6 +640,7 @@ const App = () => {
   };
 
   return (
+    <ApplicantProvider>
     <Router>
       <GlobalStyle />
       <StarryBackground />
@@ -643,6 +651,7 @@ const App = () => {
             <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
           </MenuIcon>
           <NavLinks isOpen={isMenuOpen}>
+            <NavLink to="/community-feed" onClick={toggleMenu}>Community Feed</NavLink>
             <NavLink to="/candidate-login" onClick={toggleMenu}>Candidate Login</NavLink>
             <NavLink to="/poster-login" onClick={toggleMenu}>Poster Login</NavLink>
             <NavLink to="/about" onClick={toggleMenu}>About Us</NavLink>
@@ -652,6 +661,7 @@ const App = () => {
       <AppContainer>
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route path="/community-feed" component={CommunityFeed} />
           <Route path="/projects" render={(props) => (
             <Projects 
               {...props} 
@@ -688,10 +698,13 @@ const App = () => {
           )} />
           <Route path="/candidate-login" component={CandidateLogin} />
           <Route path="/poster-login" component={PosterLogin} />
+          <Route path="/poster-profile" component={PosterProfile} />
+          <Route path="/application-confirmation" component={ApplicationConfirmation} />
           <Route path="/about" component={AboutUs} />
         </Switch>
       </AppContainer>
     </Router>
+    </ApplicantProvider>
   );
 };
 

@@ -24,7 +24,6 @@ const exampleProjects = [
         "Strong interpersonal skills for patient interactions and multidisciplinary team collaboration.",
         "Proficiency in statistical analysis software (e.g., SPSS, R) and experience with qualitative data analysis."
       ],
-      applicationInstructions: "To apply, please submit your CV, a cover letter detailing your interest in VR applications for pain management, and two professional references to vr.painresearch@healthtechuniversity.edu by July 15, 2023.",
       additionalInfo: "For more information about our innovative approaches to pain management, visit www.healthtechuniversity.edu/pain-solutions."
     },
     {
@@ -51,7 +50,6 @@ const exampleProjects = [
         "Experience with large-scale genomic studies and statistical genetics, particularly in the context of neurodegenerative diseases.",
         "Excellent written and verbal communication skills for interdisciplinary collaboration and publication preparation."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, research statement focusing on their experience in genetic studies of neurodegenerative diseases, and contact information for three references to alzheimers.genetics@centralmed.edu by October 31, 2023.",
       additionalInfo: "Learn more about our Alzheimer's research program and available resources at www.centralmed.edu/alzheimers-genetics."
     },
     {
@@ -78,7 +76,6 @@ const exampleProjects = [
         "Experience with high-throughput screening, bacterial culture techniques, and in vivo infection models.",
         "Excellent project management and leadership skills, with a history of successful grant applications and industry collaborations."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter detailing your relevant experience in antibiotic discovery, a brief research proposal outlining your approach to combating antibiotic resistance, and contact information for three references to antibiotics.discovery@ghsu.edu by May 31, 2023.",
       additionalInfo: "For more information about our ongoing research in infectious diseases and available research facilities, visit www.ghsu.edu/infectious-disease-research."
     },
   ];
@@ -111,7 +108,6 @@ const cancerProjects = [
         "Proven track record of successful grant applications and publications in top-tier journals.",
         "Excellent project management and communication skills for coordinating multidisciplinary research teams."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter detailing your experience in cancer immunotherapy, and contact information for three references to immunotherapy.tnbc@metropolitanuh.edu by July 15, 2023.",
       additionalInfo: "Learn more about our cancer immunotherapy program at www.metropolitanuh.edu/cancer-immunotherapy"
     },
     {
@@ -137,7 +133,6 @@ const cancerProjects = [
         "Experience in developing and maintaining bioinformatics pipelines and databases.",
         "Excellent communication skills for presenting complex computational results to diverse audiences."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests, and contact information for three references to ai.cancertargets@techuniversity.edu by November 30, 2023.",
       additionalInfo: "For more information about our computational oncology initiatives, visit www.techuniversity.edu/comp-oncology"
     },
     {
@@ -163,7 +158,6 @@ const cancerProjects = [
         "Familiarity with CRISPR-based genetic screening approaches.",
         "Strong publication record and excellent written and oral communication skills."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter describing your research experience and interest in cancer stem cell biology, and contact information for three references to csc.glioblastoma@umc.edu by May 31, 2023.",
       additionalInfo: "Learn more about our Neuro-Oncology Research Center at www.umc.edu/neuro-oncology"
     },
     {
@@ -189,7 +183,6 @@ const cancerProjects = [
         "Familiarity with bioinformatics tools for analyzing genomic and epigenomic data.",
         "Excellent project management skills and a track record of successful collaborations with clinicians and industry partners."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests focusing on liquid biopsy and early cancer detection, and contact information for three references to liquidbiopsy.jobs@biotechinstitute.org by August 15, 2023.",
       additionalInfo: "For more information about our Cancer Diagnostics Innovation Lab, visit www.biotechinstitute.org/cancer-diagnostics"
     },
     {
@@ -215,7 +208,6 @@ const cancerProjects = [
         "Familiarity with imaging techniques such as confocal microscopy, electron microscopy, and small animal imaging.",
         "Excellent communication and teamwork skills for collaborating in a multidisciplinary research environment."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter describing your research experience in nanomedicine and drug delivery, and contact information for three references to nanomedicine.jobs@bioengineering.edu by January 15, 2024.",
       additionalInfo: "Learn more about our Nanomedicine and Drug Delivery Lab at www.bioengineering.edu/nanomedicine-lab"
     },
     {
@@ -241,7 +233,6 @@ const cancerProjects = [
         "Familiarity with preclinical drug development and in vivo models of brain tumors.",
         "Strong publication record and excellent communication skills for interdisciplinary collaboration."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests in pediatric cancer epigenetics, and contact information for three references to epigenetics.pedsoncology@childrensresearch.org by June 30, 2023.",
       additionalInfo: "For more information about our Pediatric Neuro-Oncology research programs, visit www.childrensresearchhospital.org/neuro-oncology"
     },
     {
@@ -267,7 +258,6 @@ const cancerProjects = [
         "Experience in working with multidisciplinary teams including clinicians, basic scientists, and computational biologists.",
         "Excellent project management and communication skills, with a track record of successful grant applications and publications."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter detailing your experience in precision oncology and colorectal cancer research, and contact information for three references to precisiononcology.crc@uci.edu by September 30, 2023.",
       additionalInfo: "Learn more about our Gastrointestinal Cancer Center and precision oncology initiatives at www.uci.edu/gi-cancer-center"
     },
     {
@@ -293,7 +283,6 @@ const cancerProjects = [
         "Familiarity with GMP manufacturing processes for cell therapy products.",
         "Excellent project management skills and a track record of successful collaborations with industry partners and clinicians."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests in CAR-NK cell therapy, and contact information for three references to car.nk.jobs@ncrc.org by December 15, 2023.",
       additionalInfo: "For more information about our Cell Therapy Innovation Lab and ongoing clinical trials, visit www.ncrc.org/cell-therapy-lab"
     },
     {
@@ -319,7 +308,6 @@ const cancerProjects = [
         "Familiarity with in vivo tumor models and preclinical drug development.",
         "Strong publication record and excellent communication skills for interdisciplinary collaboration."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter describing your research experience in cancer metabolism, and contact information for three references to cancermetabolism.jobs@umc.edu by March 15, 2024.",
       additionalInfo: "Learn more about our Pancreatic Cancer Research Institute at www.umc.edu/pancreatic-cancer-institute"
     },
     {
@@ -345,7 +333,6 @@ const cancerProjects = [
         "Familiarity with lung cancer biology and clinical aspects of thoracic oncology.",
         "Excellent programming skills and experience with deploying machine learning models in clinical settings."
       ],
-      applicationInstructions: "Interested candidates should submit a detailed CV, a portfolio of relevant projects or GitHub profile, a brief statement of research interests in AI for lung cancer imaging, and contact information for three professional references to ai.lungcancer@cancerai.org by July 31, 2023.",
       additionalInfo: "For more information about our Thoracic Oncology and AI Lab, visit www.canceraiinstitute.org/thoracic-ai-lab"
     },
     {
@@ -371,7 +358,6 @@ const cancerProjects = [
         "Familiarity with ovarian cancer biology and clinical aspects of gynecologic oncology.",
         "Excellent project management skills and a track record of successful collaborations with industry partners and clinicians."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter detailing your research experience in DNA repair and cancer therapeutics, and contact information for three references to dnarepair.ovariancancer@wci.edu by November 30, 2023.",
       additionalInfo: "Learn more about our Gynecologic Oncology Research Center at www.womenscancerinstitute.org/gynonc-research"
     },
     {
@@ -397,7 +383,6 @@ const cancerProjects = [
         "Experience with in vivo tumor models and imaging techniques for tracking virus replication and tumor growth.",
         "Excellent communication skills and a track record of successful grant applications and publications in the field of oncolytic virotherapy."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests in oncolytic virus therapy for melanoma, and contact information for three references to oncolyticvirus.melanoma@cci.edu by May 31, 2023.",
       additionalInfo: "For more information about our Melanoma Research and Therapy Center, visit www.comprehensivecancerinstitute.org/melanoma-center"
     }
   ];
@@ -426,7 +411,6 @@ const influenzaProjects = [
         "Proficiency in immunological assays, including neutralization assays and animal model studies.",
         "Excellent project management and communication skills for coordinating multidisciplinary research teams."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter detailing your experience in influenza vaccine research, and contact information for three references to universal.flu.vaccine@globalhealth.edu by July 15, 2023.",
       additionalInfo: "Learn more about our Vaccine Research Institute at www.globalhealth.edu/vaccine-research"
     },
     {
@@ -452,7 +436,6 @@ const influenzaProjects = [
         "Familiarity with influenza biology and antigenic drift concepts.",
         "Excellent communication skills for presenting complex computational results to diverse audiences."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests in AI-driven viral evolution prediction, and contact information for three references to ai.fluevolution@techinstitute.org by November 30, 2023.",
       additionalInfo: "For more information about our Computational Virology Lab, visit www.techinstitute.org/compvirology"
     },
     {
@@ -478,7 +461,6 @@ const influenzaProjects = [
         "Familiarity with bioinformatics tools for analyzing large-scale omics datasets.",
         "Strong publication record and excellent written and oral communication skills."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter describing your research experience in viral immunology and host-pathogen interactions, and contact information for three references to fluhost.pathogen@umirc.edu by May 31, 2023.",
       additionalInfo: "Learn more about our Respiratory Infections Research Center at www.umirc.edu/respiratory-infections"
     },
     {
@@ -504,7 +486,6 @@ const influenzaProjects = [
         "Familiarity with regulatory requirements for vaccine development and GMP manufacturing processes.",
         "Excellent project management skills and a track record of successful collaborations with industry partners."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests in intranasal vaccine development, and contact information for three references to nasalfluvaccine@vacinnov.org by August 15, 2023.",
       additionalInfo: "For more information about our Mucosal Immunology Lab and ongoing vaccine projects, visit www.vacinnov.org/mucosal-immunology"
     },
     {
@@ -530,7 +511,6 @@ const influenzaProjects = [
         "Proficiency in bioinformatics analysis of large-scale proteomics and interactomics datasets.",
         "Strong publication record and excellent communication skills for interdisciplinary collaboration."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter describing your research experience in viral-host interactions and proteomics, and contact information for three references to fluinteractome@iid.edu by January 15, 2024.",
       additionalInfo: "Learn more about our Molecular Virology Department at www.iid.edu/molecular-virology"
     },
     {
@@ -556,7 +536,6 @@ const influenzaProjects = [
         "Familiarity with GIS tools and experience working with spatial data.",
         "Excellent project management and communication skills for coordinating multi-disciplinary research teams and engaging with public health stakeholders."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests in influenza epidemiology and environmental factors, and contact information for three references to flutransmission@phi.org by June 30, 2023.",
       additionalInfo: "For more information about our Environmental Health and Epidemiology Center, visit www.publichealthinstitute.org/env-health-epi"
     },
     {
@@ -582,7 +561,6 @@ const influenzaProjects = [
         "Proficiency in computational chemistry tools and molecular modeling software.",
         "Excellent project management skills and a track record of successful collaborations with biologists and pharmacologists."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter detailing your experience in antiviral drug discovery, and contact information for three references to antiviraldiscovery@psi.edu by November 30, 2023.",
       additionalInfo: "Learn more about our Antiviral Research Division at www.psi.edu/antiviral-research"
     },
     {
@@ -608,7 +586,6 @@ const influenzaProjects = [
         "Familiarity with network analysis, machine learning, and dynamical systems modeling.",
         "Strong publication record and excellent communication skills for interdisciplinary collaboration."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests in systems biology of viral infections, and contact information for three references to systemsimmunology@ibi.edu by April 30, 2023.",
       additionalInfo: "For more information about our Systems Immunology Lab and available computational resources, visit www.ibi.edu/systems-immunology"
     }
   ];
@@ -637,7 +614,6 @@ const influenzaProjects = [
         "Familiarity with regulatory requirements for vaccine development and clinical trials.",
         "Excellent project management and communication skills for coordinating multidisciplinary research teams."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter detailing your experience in mRNA vaccine development, and contact information for three references to mrna.vaccines@globalhealth.org by July 15, 2023.",
       additionalInfo: "Learn more about our Vaccine Innovation Lab at www.globalhealth.org/vaccine-lab"
     },
     {
@@ -663,7 +639,6 @@ const influenzaProjects = [
         "Familiarity with drug discovery processes and understanding of pharmacology concepts.",
         "Excellent communication skills for presenting complex AI models to diverse audiences."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests in AI-driven drug repurposing, and contact information for three references to ai.drugdiscovery@techinnovation.org by November 30, 2023.",
       additionalInfo: "For more information about our AI for Health Division, visit www.techinnovation.org/ai-health"
     },
     {
@@ -689,7 +664,6 @@ const influenzaProjects = [
         "Familiarity with immunological and molecular biology techniques for mechanistic studies.",
         "Strong publication record and excellent written and oral communication skills."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter describing your research experience relevant to Long COVID studies, and contact information for three references to longcovid.research@umc.edu by May 31, 2023.",
       additionalInfo: "Learn more about our Center for Post-Viral Syndromes at www.umc.edu/post-viral-syndromes"
     },
     {
@@ -715,7 +689,6 @@ const influenzaProjects = [
         "Experience with computational chemistry tools and molecular modeling software.",
         "Excellent project management skills and a track record of successful collaborations in drug discovery projects."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a cover letter detailing their experience in antiviral drug discovery, and contact information for three references to mpro.inhibitors@pharmaresearch.org by August 31, 2023.",
       additionalInfo: "For more information about our Antiviral Drug Discovery Lab, visit www.pharmaresearch.org/antiviral-discovery"
     },
     {
@@ -741,7 +714,6 @@ const influenzaProjects = [
         "Proficiency in bioinformatics analysis of large-scale proteomics and interactomics datasets.",
         "Strong publication record and excellent communication skills for interdisciplinary collaboration."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter describing your research experience in viral-host interactions and proteomics, and contact information for three references to sarscov2.interactome@iid.edu by January 15, 2024.",
       additionalInfo: "Learn more about our Molecular Virology Department at www.iid.edu/molecular-virology"
     },
     {
@@ -767,7 +739,6 @@ const influenzaProjects = [
         "Proficiency in programming languages (e.g., Python, R) for data analysis and modeling.",
         "Excellent project management and communication skills for coordinating international research efforts."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests in coronavirus evolution and zoonosis, and contact information for three references to zoonotic.cov@onehealth.org by June 30, 2023.",
       additionalInfo: "For more information about our Emerging Viruses Research Center, visit www.onehealthinstitute.org/emerging-viruses"
     },
     {
@@ -793,7 +764,6 @@ const influenzaProjects = [
         "Familiarity with regulatory requirements for vaccine development and GMP manufacturing processes.",
         "Excellent project management skills and a track record of successful collaborations with industry partners."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests in intranasal vaccine development, and contact information for three references to nasalcovid.vaccine@vri.edu by August 15, 2023.",
       additionalInfo: "For more information about our Mucosal Immunology Lab and ongoing vaccine projects, visit www.vri.edu/mucosal-immunology"
     },
     {
@@ -819,7 +789,6 @@ const influenzaProjects = [
         "Proficiency in structural biology software packages and molecular visualization tools.",
         "Excellent communication skills and ability to collaborate in a multidisciplinary research environment."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter describing your research experience in structural biology of viral proteins, and contact information for three references to spikeprotein.structure@imm.edu by November 30, 2023.",
       additionalInfo: "Learn more about our Structural Virology Unit at www.imm.edu/structural-virology"
     },
     {
@@ -845,7 +814,6 @@ const influenzaProjects = [
         "Familiarity with healthcare data privacy regulations and experience working with clinical datasets.",
         "Excellent programming skills and experience with deploying machine learning models in clinical settings."
       ],
-      applicationInstructions: "Interested candidates should submit a detailed CV, a portfolio of relevant projects or GitHub profile, a brief statement of research interests in AI for COVID-19 diagnostics, and contact information for three professional references to ai.coviddiagnosis@medicalai.org by May 31, 2023.",
       additionalInfo: "For more information about our AI in Healthcare Lab, visit www.medicalai.org/healthcare-lab"
     },
     {
@@ -871,7 +839,6 @@ const influenzaProjects = [
         "Familiarity with bioinformatics tools for analyzing large-scale omics datasets.",
         "Strong publication record and excellent communication skills for interdisciplinary collaboration."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter describing your research experience in viral metabolism, and contact information for three references to viralmetabolism@cidr.edu by September 30, 2023.",
       additionalInfo: "Learn more about our Metabolic Virology Department at www.cidr.edu/metabolic-virology"
     },
     {
@@ -897,7 +864,6 @@ const influenzaProjects = [
         "Familiarity with GIS tools and experience working with spatial data.",
         "Excellent project management and communication skills for coordinating multi-disciplinary research teams and engaging with public health stakeholders."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests in COVID-19 epidemiology and environmental factors, and contact information for three references to covidtransmission@phi.org by January 15, 2024.",
       additionalInfo: "For more information about our Environmental Health and Epidemiology Center, visit www.publichealthinstitute.org/env-health-epi"
     },
     {
@@ -923,7 +889,6 @@ const influenzaProjects = [
         "Experience with phylogenetic analysis and familiarity with tools like BEAST, NextStrain, or similar platforms.",
         "Excellent communication skills and ability to collaborate in an international, multidisciplinary environment."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter describing your experience in genomic epidemiology and viral surveillance, and contact information for three references to genomicsurveillance@gpi.org by July 31, 2023.",
       additionalInfo: "Learn more about our Viral Genomics and Evolution Lab at www.globalpathogen.org/viral-genomics"
     },
     {
@@ -949,7 +914,6 @@ const influenzaProjects = [
         "Proficiency in advanced microscopy and image analysis techniques.",
         "Strong publication record and excellent communication skills for interdisciplinary collaboration."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests in COVID-19 neurobiology, and contact information for three references to covidneurology@brainsciences.edu by November 30, 2023.",
       additionalInfo: "For more information about our Neuroimmunology Research Center, visit www.brainsciences.edu/neuroimmunology"
     },
     {
@@ -975,7 +939,6 @@ const influenzaProjects = [
         "Proficiency in structural biology software packages and molecular visualization tools.",
         "Excellent communication skills and ability to collaborate in a multidisciplinary research environment."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter describing your research experience in structural biology of viral proteins, and contact information for three references to nsp.structure@imm.edu by May 31, 2023.",
       additionalInfo: "Learn more about our Structural Virology Unit at www.imm.edu/structural-virology"
     }
   ];
@@ -1004,7 +967,6 @@ const influenzaProjects = [
         "Familiarity with regulatory requirements for vaccine development and clinical trials.",
         "Excellent project management and communication skills for coordinating multidisciplinary research teams."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter detailing your experience in vaccine development, and contact information for three references to measlesvaccine@globalhealth.org by July 15, 2023.",
       additionalInfo: "Learn more about our Vaccine Innovation Lab at www.globalhealth.org/vaccine-lab"
     },
     {
@@ -1030,7 +992,6 @@ const influenzaProjects = [
         "Familiarity with structural biology concepts and immunological methods.",
         "Excellent analytical skills and proficiency in programming languages (e.g., Python, R) for data analysis."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests in measles virus evolution, and contact information for three references to measlesevolution@uiv.edu by November 30, 2023.",
       additionalInfo: "For more information about our Viral Evolution Research Center, visit www.uiv.edu/viral-evolution"
     },
     {
@@ -1056,7 +1017,6 @@ const influenzaProjects = [
         "Familiarity with systems immunology approaches and bioinformatics analysis of immunological data.",
         "Strong publication record and excellent written and oral communication skills."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter describing your research experience in viral immunology, and contact information for three references to measlesimmunology@mri.edu by May 31, 2023.",
       additionalInfo: "Learn more about our Viral Immunology Department at www.mri.edu/viral-immunology"
     },
     {
@@ -1082,7 +1042,6 @@ const influenzaProjects = [
         "Proficiency in advanced microscopy and image analysis techniques.",
         "Strong publication record and excellent communication skills for interdisciplinary collaboration."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a statement of research interests in measles virus neuropathology, and contact information for three references to measlesneuro@brainrc.org by August 31, 2023.",
       additionalInfo: "For more information about our Neurovirology Lab, visit www.brainrc.org/neurovirology"
     },
     {
@@ -1108,7 +1067,6 @@ const influenzaProjects = [
         "Familiarity with regulatory requirements for medical diagnostic devices.",
         "Excellent problem-solving skills and ability to work in resource-constrained environments."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter describing your experience in diagnostic development for infectious diseases, and contact information for three references to measlesdiagnostics@iht.org by January 15, 2024.",
       additionalInfo: "Learn more about our Global Diagnostics Initiative at www.iht.org/global-diagnostics"
     }
   ];
@@ -1137,7 +1095,6 @@ const sickleCellProjects = [
         "Experience with next-generation sequencing and analysis of genomic data.",
         "Excellent project management and communication skills for coordinating complex research projects."
       ],
-      applicationInstructions: "Please submit your CV, a cover letter detailing your experience in gene editing and stem cell research, and contact information for three references to genetherapy@ami.edu by July 15, 2023.",
       additionalInfo: "Learn more about our Gene Therapy Center at www.ami.edu/gene-therapy-center"
     },
     {
@@ -1163,7 +1120,6 @@ const sickleCellProjects = [
         "Experience with computational chemistry tools and molecular modeling software.",
         "Excellent project management skills and a track record of successful collaborations with biologists and pharmacologists."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a cover letter detailing your experience in drug discovery for hematological disorders, and contact information for three references to scddrugdiscovery@hri.org by November 30, 2023.",
       additionalInfo: "For more information about our Drug Discovery Unit, visit www.hri.org/drug-discovery"
     },
     {
@@ -1189,7 +1145,6 @@ const sickleCellProjects = [
         "Familiarity with 3D culture systems and microfluidic devices for disease modeling.",
         "Excellent communication skills and ability to collaborate in a multidisciplinary research environment."
       ],
-      applicationInstructions: "Please submit your CV, a statement of research interests in iPSC modeling of hematological disorders, and contact information for three references to ipsc.scd@rmi.edu by May 31, 2023.",
       additionalInfo: "Learn more about our Stem Cell Biology Department at www.rmi.edu/stem-cell-biology"
     },
     {
@@ -1215,7 +1170,6 @@ const sickleCellProjects = [
         "Familiarity with flow cytometry and other immunological assays.",
         "Strong publication record and excellent written and oral communication skills."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a cover letter describing your research experience in vascular biology and hematological disorders, and contact information for three references to scd.vascular@crc.edu by August 31, 2023.",
       additionalInfo: "For more information about our Vascular Biology Lab, visit www.crc.edu/vascular-biology"
     },
     {
@@ -1241,7 +1195,6 @@ const sickleCellProjects = [
         "Familiarity with erythroid cell culture systems and animal models of hemoglobinopathies.",
         "Excellent analytical skills and proficiency in molecular biology techniques."
       ],
-      applicationInstructions: "Please submit your CV, a statement of research interests in fetal hemoglobin induction and sickle cell disease, and contact information for three references to hbf.induction@bdi.org by January 15, 2024.",
       additionalInfo: "Learn more about our Hemoglobin Research Unit at www.bdi.org/hemoglobin-research"
     },
     {
@@ -1267,7 +1220,6 @@ const sickleCellProjects = [
         "Familiarity with digital health technologies and their application in chronic disease management.",
         "Excellent interpersonal skills and ability to work with diverse patient populations and multidisciplinary teams."
       ],
-      applicationInstructions: "Interested candidates should submit a CV, a cover letter describing your experience in pain management research and sickle cell disease, and contact information for three references to scdpain@cscp.edu by June 30, 2023.",
       additionalInfo: "For more information about our Comprehensive Sickle Cell Program, visit www.cscp.edu/sickle-cell-program"
     }
   ];

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 
-const PosterContainer = styled.div`
+const LoginContainer = styled.div`
   max-width: 450px;
-  margin: 150px auto; // Increased from 100px to 150px
+  margin: 150px auto;
   padding: 30px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
@@ -21,13 +22,13 @@ const Title = styled.h2`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  padding: 0 10px;  // Added padding
+  padding: 0 10px;
 `;
 
 const InputGroup = styled.div`
   position: relative;
   margin-bottom: 20px;
-  width: 100%;  // Ensure full width
+  width: 100%;
 `;
 
 const Input = styled.input`
@@ -38,7 +39,7 @@ const Input = styled.input`
   background-color: transparent;
   color: #ffffff;
   font-size: 16px;
-  box-sizing: border-box;  // Include padding and border in element's total width and height
+  box-sizing: border-box;
   &:focus {
     outline: none;
     border-bottom-color: #a777e3;
@@ -69,16 +70,19 @@ const Button = styled.button`
 const PosterLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would typically handle the login logic
-    console.log('Login attempted with:', email, password);
-    alert('Login functionality is not implemented yet.');
+    if (email === 'drelena@metropolitan.edu' && password === 'research123') {
+      history.push('/poster-profile');
+    } else {
+      alert('Invalid credentials');
+    }
   };
 
   return (
-    <PosterContainer>
+    <LoginContainer>
       <Title>Poster Login</Title>
       <Form onSubmit={handleSubmit}>
         <InputGroup>
@@ -103,7 +107,7 @@ const PosterLogin = () => {
         </InputGroup>
         <Button type="submit">Log In</Button>
       </Form>
-    </PosterContainer>
+    </LoginContainer>
   );
 };
 
