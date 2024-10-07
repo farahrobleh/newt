@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const AboutContainer = styled.div`
   max-width: 800px;
-  margin: 0 auto;
+  margin: 120px auto 0; // Increase top margin to 120px
   padding: 40px 20px;
   color: #ffffff;
 `;
