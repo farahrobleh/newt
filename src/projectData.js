@@ -1,4 +1,4 @@
-// Project data
+// Project data arrays
 const exampleProjects = [
     {
       title: "Exploring Virtual Reality as a Therapeutic Tool for Chronic Pain Management",
