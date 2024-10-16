@@ -7,24 +7,41 @@ require('dotenv').config({ path: path.join(__dirname, '.env') });
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Enhanced CORS configuration
+console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
+
+app.use((req, res, next) => {
+  console.log('Incoming request from:', req.headers.origin);
+  next();
+});
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'https://newt-nine.vercel.app',
+  origin: (origin, callback) => {
+    const allowedOrigins = [process.env.FRONTEND_URL, 'https://newt-nine.vercel.app'];
+    console.log('Checking origin:', origin);
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log('Origin not allowed:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
   optionsSuccessStatus: 200
 }));
 
-// Middleware
+app.use((req, res, next) => {
+  console.log('CORS headers set:', res.getHeaders());
+  next();
+});
+
 app.use(express.json());
 
-// MongoDB connection
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// Define Insight Schema
 const insightSchema = new mongoose.Schema({
   content: String,
   username: String,
@@ -35,7 +52,6 @@ const insightSchema = new mongoose.Schema({
 
 const Insight = mongoose.model('Insight', insightSchema);
 
-// Routes
 app.get('/', (req, res) => {
   res.send('Server is running');
 });
@@ -87,13 +103,11 @@ app.post('/api/insights/:id/like', async (req, res) => {
   }
 });
 
-// Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Something went wrong!', error: err.message });
 });
 
-// Start server
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
   console.log(`CORS is set up for origin: ${process.env.FRONTEND_URL || 'https://newt-nine.vercel.app'}`);

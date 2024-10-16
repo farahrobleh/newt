@@ -5,6 +5,7 @@ import { faUser, faComment, faHeart, faImage } from '@fortawesome/free-solid-svg
 import AdSense from './AdSense';
 import axios from 'axios';
 
+console.log('API URL:', process.env.REACT_APP_API_URL);
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.withCredentials = true;
 
@@ -192,12 +193,15 @@ const CommunityHub = () => {
   const [image, setImage] = useState(null);
 
   useEffect(() => {
+    console.log('API URL:', process.env.REACT_APP_API_URL);
     const fetchInsights = async () => {
       try {
+        console.log('Fetching insights...');
         const response = await axios.get('/api/insights');
+        console.log('Insights response:', response);
         setInsights(response.data);
       } catch (error) {
-        console.error('Error fetching insights:', error);
+        console.error('Error fetching insights:', error.response ? error.response.data : error.message);
       }
     };
     fetchInsights();
@@ -214,12 +218,14 @@ const CommunityHub = () => {
         likes: 0
       };
       try {
+        console.log('Posting new insight:', newInsightObj);
         const response = await axios.post('/api/insights', newInsightObj);
+        console.log('Post insight response:', response);
         setInsights([response.data, ...insights]);
         setNewInsight('');
         setImage(null);
       } catch (error) {
-        console.error('Error posting insight:', error);
+        console.error('Error posting insight:', error.response ? error.response.data : error.message);
       }
     }
   };
@@ -237,27 +243,31 @@ const CommunityHub = () => {
 
   const handleComment = async (insightId, comment) => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/insights/${insightId}/comments`, { comment });
+      console.log('Posting comment:', { insightId, comment });
+      const response = await axios.post(`/api/insights/${insightId}/comments`, { comment });
+      console.log('Comment response:', response);
       setInsights(insights.map(insight => 
         insight._id === insightId 
           ? { ...insight, comments: [...insight.comments, response.data] }
           : insight
       ));
     } catch (error) {
-      console.error('Error posting comment:', error);
+      console.error('Error posting comment:', error.response ? error.response.data : error.message);
     }
   };
 
   const handleLike = async (insightId) => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/insights/${insightId}/like`);
+      console.log('Liking insight:', insightId);
+      const response = await axios.post(`/api/insights/${insightId}/like`);
+      console.log('Like response:', response);
       setInsights(insights.map(insight => 
         insight._id === insightId 
           ? { ...insight, likes: response.data.likes, liked: true }
           : insight
       ));
     } catch (error) {
-      console.error('Error liking insight:', error);
+      console.error('Error liking insight:', error.response ? error.response.data : error.message);
     }
   };
 
