@@ -8,40 +8,39 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
+console.log('NODE_ENV:', process.env.NODE_ENV);
 
-app.use((req, res, next) => {
-  console.log('Incoming request from:', req.headers.origin);
-  next();
-});
+// Middleware
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-app.use(cors({
-  origin: (origin, callback) => {
-    const allowedOrigins = [process.env.FRONTEND_URL, 'https://newt-nine.vercel.app'];
-    console.log('Checking origin:', origin);
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      console.log('Origin not allowed:', origin);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+// CORS Configuration
+const corsOptions = {
+  origin: ['https://newt-nine.vercel.app', 'http://localhost:3000'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
   optionsSuccessStatus: 200
-}));
+};
 
+app.use(cors(corsOptions));
+
+// Logging middleware
 app.use((req, res, next) => {
-  console.log('CORS headers set:', res.getHeaders());
+  console.log(`${new Date().toISOString()} - ${req.method} request to ${req.url} from ${req.headers.origin}`);
+  console.log('Request headers:', req.headers);
   next();
 });
 
-app.use(express.json());
+// Add this before your routes
+app.options('*', cors(corsOptions));
 
-mongoose.connect(process.env.MONGODB_URI)
+// MongoDB connection
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.error('MongoDB connection error:', err));
 
+// Insight Schema
 const insightSchema = new mongoose.Schema({
   content: String,
   username: String,
@@ -52,6 +51,7 @@ const insightSchema = new mongoose.Schema({
 
 const Insight = mongoose.model('Insight', insightSchema);
 
+// Routes
 app.get('/', (req, res) => {
   res.send('Server is running');
 });
@@ -61,6 +61,7 @@ app.get('/api/insights', async (req, res) => {
     const insights = await Insight.find().sort({ createdAt: -1 });
     res.json(insights);
   } catch (error) {
+    console.error('Error fetching insights:', error);
     res.status(500).json({ message: 'Error fetching insights', error: error.message });
   }
 });
@@ -71,6 +72,7 @@ app.post('/api/insights', async (req, res) => {
     const savedInsight = await newInsight.save();
     res.status(201).json(savedInsight);
   } catch (error) {
+    console.error('Error creating insight:', error);
     res.status(400).json({ message: 'Error creating insight', error: error.message });
   }
 });
@@ -85,6 +87,7 @@ app.post('/api/insights/:id/comments', async (req, res) => {
     await insight.save();
     res.status(201).json(insight);
   } catch (error) {
+    console.error('Error adding comment:', error);
     res.status(400).json({ message: 'Error adding comment', error: error.message });
   }
 });
@@ -99,16 +102,19 @@ app.post('/api/insights/:id/like', async (req, res) => {
     await insight.save();
     res.json({ likes: insight.likes });
   } catch (error) {
+    console.error('Error liking insight:', error);
     res.status(400).json({ message: 'Error liking insight', error: error.message });
   }
 });
 
+// Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error('Unhandled error:', err);
   res.status(500).json({ message: 'Something went wrong!', error: err.message });
 });
 
+// Start server
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
-  console.log(`CORS is set up for origin: ${process.env.FRONTEND_URL || 'https://newt-nine.vercel.app'}`);
+  console.log(`CORS is set up for origins: ${corsOptions.origin.join(', ')}`);
 });
