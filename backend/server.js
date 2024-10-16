@@ -38,6 +38,10 @@ const insightSchema = new mongoose.Schema({
 const Insight = mongoose.model('Insight', insightSchema);
 
 // Routes
+app.get('/', (req, res) => {
+  res.send('Server is running');
+});
+
 app.get('/api/insights', async (req, res) => {
   try {
     const insights = await Insight.find().sort({ createdAt: -1 });
