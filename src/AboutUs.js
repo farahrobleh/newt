@@ -3,13 +3,15 @@ import styled from 'styled-components';
 
 const AboutContainer = styled.div`
   max-width: 800px;
-  margin: 100px auto 0; // Increase top margin to 100px
+  margin: 100px auto 0;
   padding: 40px 20px;
-  color: #ffffff;
+  color: #4a7a4a;
+  background-color: rgba(127, 191, 127, 0.1);
+  border-radius: 10px;
 `;
 
 const Title = styled.h1`
-  color: #6e8efb;
+  color: #4a7a4a;
   text-align: center;
   margin-bottom: 30px;
 `;
@@ -19,7 +21,7 @@ const Section = styled.section`
 `;
 
 const SectionTitle = styled.h2`
-  color: #a777e3;
+  color: #7fbf7f;
   margin-bottom: 15px;
 `;
 
@@ -35,13 +37,31 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   margin-bottom: 10px;
+  &::before {
+    content: '•';
+    color: #7fbf7f;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
 `;
 
 const ContactInfo = styled.div`
-  background-color: rgba(110, 142, 251, 0.1);
+  background-color: rgba(127, 191, 127, 0.2);
   padding: 20px;
   border-radius: 10px;
   margin-top: 30px;
+`;
+
+const Link = styled.a`
+  color: #4a7a4a;
+  text-decoration: none;
+  border-bottom: 1px dotted #4a7a4a;
+  &:hover {
+    color: #7fbf7f;
+    border-bottom-color: #7fbf7f;
+  }
 `;
 
 const AboutUs = () => {
@@ -50,8 +70,8 @@ const AboutUs = () => {
       <Title>About Us</Title>
       
       <Section>
-        <Paragraph>Welcome to Research Voyager!</Paragraph>
-        <Paragraph>At Research Voyager, we're dedicated to transforming medical research recruitment. Our mission is to bridge the gap between exceptional research talent—both local and international—and U.S.-based institutions and hospitals. By harnessing the power of AI and tapping into a diverse talent pool, we aim to accelerate breakthroughs and foster collaboration within the scientific community.</Paragraph>
+        <Paragraph>Welcome to newt.io!</Paragraph>
+        <Paragraph>At newt.io, we're dedicated to transforming medical research recruitment. Our mission is to bridge the gap between exceptional research talent—both local and international—and U.S.-based institutions and hospitals. By harnessing the power of AI and tapping into a diverse talent pool, we aim to accelerate breakthroughs and foster collaboration within the scientific community.</Paragraph>
       </Section>
 
       <Section>
@@ -61,7 +81,7 @@ const AboutUs = () => {
 
       <Section>
         <SectionTitle>Our Solution</SectionTitle>
-        <Paragraph>Research Voyager offers an AI-powered platform that revolutionizes research recruitment by:</Paragraph>
+        <Paragraph>newt.io offers an AI-powered platform that revolutionizes research recruitment by:</Paragraph>
         <List>
           <ListItem><strong>Connecting Local and Global Talent</strong>: We facilitate connections between researchers and U.S. institutions, expanding access to diverse expertise.</ListItem>
           <ListItem><strong>Advanced Matching Algorithms</strong>: Our sophisticated algorithms ensure precise alignment of skills with project needs, streamlining the recruitment process.</ListItem>
@@ -82,19 +102,19 @@ const AboutUs = () => {
 
       <Section>
         <SectionTitle>Our Vision and Impact</SectionTitle>
-        <Paragraph>At Research Voyager, we envision a future where:</Paragraph>
+        <Paragraph>At newt.io, we envision a future where:</Paragraph>
         <List>
           <ListItem><strong>Global Research Collaboration is Revolutionized</strong>: We aim to foster an inclusive research environment that transcends borders.</ListItem>
           <ListItem><strong>Medical Breakthroughs are Accelerated</strong>: Diverse teams lead to innovative solutions and faster discoveries.</ListItem>
           <ListItem><strong>A Borderless Research Community is Created</strong>: We strive to establish a network that unites researchers from all backgrounds.</ListItem>
-          <ListItem><strong>Research Voyager becomes the Go-To Platform</strong>: Our goal is to be the leading platform for research talent allocation worldwide.</ListItem>
+          <ListItem><strong>newt.io becomes the Go-To Platform</strong>: Our goal is to be the leading platform for research talent allocation worldwide.</ListItem>
         </List>
       </Section>
 
       <ContactInfo>
         <SectionTitle>Get in Touch</SectionTitle>
         <Paragraph>We'd love to hear from you! For inquiries or more information, please reach out:</Paragraph>
-        <Paragraph><strong>Email</strong>: <a href="mailto:ayan@researchvoyager.com">ayan@researchvoyager.com</a></Paragraph>
+        <Paragraph><strong>Email</strong>: <Link href="mailto:ayan@newt.io">ayan@newt.io</Link></Paragraph>
         <Paragraph><strong>Phone</strong>: +1 216 543 1146</Paragraph>
       </ContactInfo>
 

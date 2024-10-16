@@ -21,6 +21,9 @@ import PosterProfile from './PosterProfile';
 import { useApplicants } from './context/ApplicantContext.js';
 import { ApplicantProvider } from './context/ApplicantContext.js';
 import CommunityFeed from './CommunityFeed';
+import IntroAnimation from './IntroAnimation';
+import lizardLogo from './images/lizard.png';
+import CommunityHub from './CommunityHub';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -165,32 +168,80 @@ const moveStars = keyframes`
   }
 `;
 
-const StarryBackground = styled.div`
+// const StarryBackground = styled.div`
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 200%; // Double the height
+//   pointer-events: none;
+//   z-index: -1;
+
+//   &::after {
+//     content: "";
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     background-image: 
+//       radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+//       radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+//       radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+//       radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+//       radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+//       radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
+//     background-repeat: repeat;
+//     background-size: 200px 200px;
+//     animation: ${moveStars} 100s linear infinite;
+//   }
+// `;
+
+const twinkle = keyframes`
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+`;
+
+const moverStars = keyframes`
+  from { transform: translateY(0); }
+  to { transform: translateY(-2000px); }
+`;
+
+const MinimalistBackground = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 200%; // Double the height
-  pointer-events: none;
+  right: 0;
+  bottom: 0;
+  background-color: #000000;
   z-index: -1;
+  overflow: hidden;
 
+  &::before,
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background-image: 
-      radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
-      radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
-      radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
-      radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
-      radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
-      radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
+      radial-gradient(2px 2px at 20px 30px, #4CAF50, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 40px 70px, #81C784, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 50px 160px, #66BB6A, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 90px 40px, #A5D6A7, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 130px 80px, #81C784, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 160px 120px, #4CAF50, rgba(0,0,0,0));
     background-repeat: repeat;
     background-size: 200px 200px;
-    animation: ${moveStars} 100s linear infinite;
+    opacity: 0.3;
+    animation: ${twinkle} 4s infinite;
+  }
+
+  &::after {
+    background-size: 300px 300px;
+    animation: ${twinkle} 5s infinite, ${moverStars} 100s linear infinite;
   }
 `;
 
@@ -217,7 +268,7 @@ const SectionTitle = styled.h2`
 `;
 
 const HeroSection = styled.div`
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  background: linear-gradient(135deg, #7fbf7f, #a0d0a0); // Subtle green gradient
   padding: 100px 20px 80px;
   text-align: center;
   position: relative;
@@ -342,10 +393,40 @@ const ProjectDescription = styled.p`
   margin-bottom: 20px;
 `;
 
+// const ViewProjectButton = styled.button`
+//   background-color: transparent;
+//   color: #6e8efb;
+//   border: 2px solid #6e8efb;
+//   padding: 8px 15px;
+//   font-size: 0.9rem;
+//   cursor: pointer;
+//   border-radius: 20px;
+//   transition: all 0.3s;
+
+//   &:hover {
+//     background-color: #6e8efb;
+//     color: #000000;
+//   }
+// `;
+
+// const ViewProjectButton = styled(Link)`
+//   display: inline-block;
+//   background-color: #7fbf7f; // Light green background
+//   color: #ffffff;
+//   padding: 10px 15px;
+//   border-radius: 5px;
+//   text-decoration: none;
+//   transition: background-color 0.3s ease;
+
+//   &:hover {
+//     background-color: #4a7a4a; // Darker green on hover
+//   }
+// `;
+
 const ViewProjectButton = styled.button`
   background-color: transparent;
-  color: #6e8efb;
-  border: 2px solid #6e8efb;
+  color: #7fbf7f;  // Light green color
+  border: 2px solid #7fbf7f;  // Light green border
   padding: 8px 15px;
   font-size: 0.9rem;
   cursor: pointer;
@@ -353,8 +434,8 @@ const ViewProjectButton = styled.button`
   transition: all 0.3s;
 
   &:hover {
-    background-color: #6e8efb;
-    color: #000000;
+    background-color: #7fbf7f;  // Light green background on hover
+    color: #000000;  // Black text on hover for contrast
   }
 `;
 
@@ -633,6 +714,16 @@ return (
 };
 
 const App = () => {
+
+  const [showIntro, setShowIntro] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowIntro(false);
+    }, 2000); // Adjust this time to match your animation duration
+
+    return () => clearTimeout(timer);
+  }, []);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -643,10 +734,14 @@ const App = () => {
     <ApplicantProvider>
     <Router>
       <GlobalStyle />
-      <StarryBackground />
-      <Navigation>
-        <NavContainer>
-          <NavTitle to="/">Research Voyager</NavTitle>
+      {showIntro ? (
+        <IntroAnimation imageSrc={lizardLogo} />
+      ) : (
+        <>
+          <MinimalistBackground />
+          <Navigation>
+            <NavContainer>
+              <NavTitle to="/">newt.io</NavTitle>
           <MenuIcon onClick={toggleMenu}>
             <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
           </MenuIcon>
@@ -662,6 +757,7 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/community-feed" component={CommunityFeed} />
+          <Route path="/community-hub" component={CommunityHub} />
           <Route path="/projects" render={(props) => (
             <Projects 
               {...props} 
@@ -702,8 +798,10 @@ const App = () => {
           <Route path="/application-confirmation" component={ApplicationConfirmation} />
           <Route path="/about" component={AboutUs} />
         </Switch>
-      </AppContainer>
-    </Router>
+        </AppContainer>
+          </>
+        )}
+      </Router>
     </ApplicantProvider>
   );
 };

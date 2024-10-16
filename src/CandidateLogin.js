@@ -7,14 +7,14 @@ const LoginContainer = styled.div`
   max-width: 450px;
   margin: 150px auto; // Increased from 100px to 150px
   padding: 30px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(127, 191, 127, 0.1); // Light green background
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(127, 191, 127, 0.1);
 `;
 
 const Title = styled.h2`
   text-align: center;
-  color: #6e8efb;
+  color: #7fbf7f; // Light green color
   margin-bottom: 20px;
 `;
 
@@ -34,14 +34,14 @@ const Input = styled.input`
   width: 100%;
   padding: 10px 10px 10px 40px;
   border: none;
-  border-bottom: 2px solid #6e8efb;
+  border-bottom: 2px solid #7fbf7f; // Light green border
   background-color: transparent;
   color: #ffffff;
   font-size: 16px;
   box-sizing: border-box;  // Include padding and border in element's total width and height
   &:focus {
     outline: none;
-    border-bottom-color: #a777e3;
+    border-bottom-color: #4a7a4a; // Darker green on focus
   }
 `;
 
@@ -49,12 +49,12 @@ const Icon = styled(FontAwesomeIcon)`
   position: absolute;
   top: 12px;
   left: 10px;
-  color: #6e8efb;
+  color: #7fbf7f; // Light green color
 `;
 
 const Button = styled.button`
   padding: 10px;
-  background-color: #6e8efb;
+  background-color: #7fbf7f; // Light green background
   color: #ffffff;
   border: none;
   border-radius: 5px;
@@ -62,7 +62,7 @@ const Button = styled.button`
   cursor: pointer;
   transition: background-color 0.3s;
   &:hover {
-    background-color: #a777e3;
+    background-color: #4a7a4a; // Darker green on hover
   }
 `;
 
