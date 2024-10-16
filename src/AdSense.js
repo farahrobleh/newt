@@ -19,7 +19,7 @@ const AdSense = ({ adSlot }) => {
     <AdContainer>
       <ins className="adsbygoogle"
            style={{ display: 'block' }}
-           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" // Replace with your AdSense publisher ID
+           data-ad-client="ca-pub-6023600789342619" // Replace with your AdSense publisher ID
            data-ad-slot={adSlot}
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>

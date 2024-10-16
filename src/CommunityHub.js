@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faComment, faHeart, faImage } from '@fortawesome/free-solid-svg-icons';
+import AdSense from './AdSense';
+import axios from 'axios';
 
 const PageContainer = styled.div`
   max-width: 800px;
@@ -15,13 +17,13 @@ const PageContainer = styled.div`
 
   @media (max-width: 768px) {
     padding: 20px 10px;
-    margin-top: 60px; // Adjust this value based on your navbar height
+    margin-top: 60px;
   }
 `;
 
 const ContentWrapper = styled.div`
   width: 100%;
-  max-width: 600px; // Adjust this value as needed
+  max-width: 600px;
 `;
 
 const Header = styled.header`
@@ -187,34 +189,35 @@ const CommunityHub = () => {
   const [image, setImage] = useState(null);
 
   useEffect(() => {
-    const savedInsights = localStorage.getItem('insights');
-    if (savedInsights) {
-      setInsights(JSON.parse(savedInsights).map(insight => ({
-        ...insight,
-        likes: parseInt(insight.likes) || 0
-      })));
-    }
+    const fetchInsights = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/insights`);
+        setInsights(response.data);
+      } catch (error) {
+        console.error('Error fetching insights:', error);
+      }
+    };
+    fetchInsights();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('insights', JSON.stringify(insights));
-  }, [insights]);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (newInsight.trim()) {
       const newInsightObj = {
-        id: Date.now(),
         content: newInsight,
         username: 'User',
         image: image,
         comments: [],
-        likes: 0,
-        liked: false
+        likes: 0
       };
-      setInsights([newInsightObj, ...insights]);
-      setNewInsight('');
-      setImage(null);
+      try {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/insights`, newInsightObj);
+        setInsights([response.data, ...insights]);
+        setNewInsight('');
+        setImage(null);
+      } catch (error) {
+        console.error('Error posting insight:', error);
+      }
     }
   };
 
@@ -229,84 +232,96 @@ const CommunityHub = () => {
     }
   };
 
-  const handleComment = (insightId, comment) => {
-    setInsights(insights.map(insight => 
-      insight.id === insightId 
-        ? { ...insight, comments: [...insight.comments, comment] }
-        : insight
-    ));
+  const handleComment = async (insightId, comment) => {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/insights/${insightId}/comments`, { comment });
+      setInsights(insights.map(insight => 
+        insight._id === insightId 
+          ? { ...insight, comments: [...insight.comments, response.data] }
+          : insight
+      ));
+    } catch (error) {
+      console.error('Error posting comment:', error);
+    }
   };
 
-  const handleLike = (insightId) => {
-    setInsights(insights.map(insight => 
-      insight.id === insightId 
-        ? { 
-            ...insight, 
-            likes: insight.likes + 1,
-            liked: true
-          }
-        : insight
-    ));
+  const handleLike = async (insightId) => {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/insights/${insightId}/like`);
+      setInsights(insights.map(insight => 
+        insight._id === insightId 
+          ? { ...insight, likes: response.data.likes, liked: true }
+          : insight
+      ));
+    } catch (error) {
+      console.error('Error liking insight:', error);
+    }
   };
 
   return (
     <PageContainer>
       <ContentWrapper>
-      <Header>
-        <Title>newt.io community hub</Title>
-      </Header>
-      <InsightForm onSubmit={handleSubmit}>
-        <InsightInput 
-          value={newInsight} 
-          onChange={(e) => setNewInsight(e.target.value)}
-          placeholder="Share your research project or thoughts..."
-        />
-        <ImageUpload 
-          type="file" 
-          id="image-upload" 
-          accept="image/*" 
-          onChange={handleImageUpload}
-        />
-        <ImageUploadLabel htmlFor="image-upload">
-          <FontAwesomeIcon icon={faImage} /> Upload Image
-        </ImageUploadLabel>
-        <InsightButton type="submit">Post Insight</InsightButton>
-      </InsightForm>
-      {insights.map((insight) => (
-        <Insight key={insight.id}>
-          <InsightHeader>
-            <Avatar>
-              <FontAwesomeIcon icon={faUser} />
-            </Avatar>
-            <Username>{insight.username}</Username>
-          </InsightHeader>
-          <InsightContent>{insight.content}</InsightContent>
-          {insight.image && <InsightImage src={insight.image} alt="Insight" />}
-          <InsightActions>
-            <ActionButton><FontAwesomeIcon icon={faComment} /> Comment</ActionButton>
-            <LikeButton onClick={() => handleLike(insight.id)} liked={insight.liked}>
-              <FontAwesomeIcon icon={faHeart} /> Like
-              <LikeCount>{insight.likes}</LikeCount>
-            </LikeButton>
-          </InsightActions>
-          <CommentSection>
-            {insight.comments.map((comment, index) => (
-              <Comment key={index}>{comment}</Comment>
-            ))}
-            <CommentForm onSubmit={(e) => {
-              e.preventDefault();
-              const comment = e.target.elements.comment.value;
-              if (comment.trim()) {
-                handleComment(insight.id, comment);
-                e.target.elements.comment.value = '';
-              }
-            }}>
-              <CommentInput type="text" name="comment" placeholder="Add a comment..." />
-              <CommentButton type="submit">Post</CommentButton>
-            </CommentForm>
-          </CommentSection>
-        </Insight>
-      ))}
+        <Header>
+          <Title>newt.io community hub</Title>
+        </Header>
+        <AdSense adSlot="1234567890" />
+        <InsightForm onSubmit={handleSubmit}>
+          <InsightInput 
+            value={newInsight} 
+            onChange={(e) => setNewInsight(e.target.value)}
+            placeholder="Share your research project or thoughts..."
+          />
+          <ImageUpload 
+            type="file" 
+            id="image-upload" 
+            accept="image/*" 
+            onChange={handleImageUpload}
+          />
+          <ImageUploadLabel htmlFor="image-upload">
+            <FontAwesomeIcon icon={faImage} /> Upload Image
+          </ImageUploadLabel>
+          <InsightButton type="submit">Post Insight</InsightButton>
+        </InsightForm>
+        {insights.map((insight, index) => (
+          <React.Fragment key={insight._id}>
+            <Insight>
+              <InsightHeader>
+                <Avatar>
+                  <FontAwesomeIcon icon={faUser} />
+                </Avatar>
+                <Username>{insight.username}</Username>
+              </InsightHeader>
+              <InsightContent>{insight.content}</InsightContent>
+              {insight.image && <InsightImage src={insight.image} alt="Insight" />}
+              <InsightActions>
+                <ActionButton><FontAwesomeIcon icon={faComment} /> Comment</ActionButton>
+                <LikeButton onClick={() => handleLike(insight._id)} liked={insight.liked}>
+                  <FontAwesomeIcon icon={faHeart} /> Like
+                  <LikeCount>{insight.likes}</LikeCount>
+                </LikeButton>
+              </InsightActions>
+              <CommentSection>
+                {insight.comments.map((comment, index) => (
+                  <Comment key={index}>{comment}</Comment>
+                ))}
+                <CommentForm onSubmit={(e) => {
+                  e.preventDefault();
+                  const comment = e.target.elements.comment.value;
+                  if (comment.trim()) {
+                    handleComment(insight._id, comment);
+                    e.target.elements.comment.value = '';
+                  }
+                }}>
+                  <CommentInput type="text" name="comment" placeholder="Add a comment..." />
+                  <CommentButton type="submit">Post</CommentButton>
+                </CommentForm>
+              </CommentSection>
+            </Insight>
+            {index % 5 === 0 && index !== 0 && (
+              <AdSense adSlot="0987654321" />
+            )}
+          </React.Fragment>
+        ))}
       </ContentWrapper>
     </PageContainer>
   );
