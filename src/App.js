@@ -746,7 +746,7 @@ const App = () => {
             <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
           </MenuIcon>
           <NavLinks isOpen={isMenuOpen}>
-            <NavLink to="/community-feed" onClick={toggleMenu}>Community Feed</NavLink>
+            <NavLink to="/community-feed" onClick={toggleMenu}>Community Hub</NavLink>
             <NavLink to="/candidate-login" onClick={toggleMenu}>Candidate Login</NavLink>
             <NavLink to="/poster-login" onClick={toggleMenu}>Poster Login</NavLink>
             <NavLink to="/about" onClick={toggleMenu}>About Us</NavLink>

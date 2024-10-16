@@ -84,7 +84,7 @@ const CommunityFeed = () => {
       <BlurredBackground />
       <ScrollingContent />
       <TextContainer>
-        <Title>Community Feed</Title>
+        <Title>Community Hub</Title>
         <BetaButton onClick={handleBetaClick}>Beta Site</BetaButton>
       </TextContainer>
     </PageContainer>
