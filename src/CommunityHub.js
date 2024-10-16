@@ -5,7 +5,7 @@ import { faUser, faComment, faHeart, faImage } from '@fortawesome/free-solid-svg
 import AdSense from './AdSense';
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'https://newt-backend.herokuapp.com';
+const API_URL = process.env.REACT_APP_API_URL || 'https://newt-io-backend-8c9be281b359.herokuapp.com/';
 axios.defaults.baseURL = API_URL;
 axios.defaults.withCredentials = true;
 
