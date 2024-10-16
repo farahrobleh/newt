@@ -9,10 +9,19 @@ const PageContainer = styled.div`
   padding: 20px;
   width: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   @media (max-width: 768px) {
     padding: 20px 10px;
+    margin-top: 60px; // Adjust this value based on your navbar height
   }
+`;
+
+const ContentWrapper = styled.div`
+  width: 100%;
+  max-width: 600px; // Adjust this value as needed
 `;
 
 const Header = styled.header`
@@ -242,6 +251,7 @@ const CommunityHub = () => {
 
   return (
     <PageContainer>
+      <ContentWrapper>
       <Header>
         <Title>newt.io community hub</Title>
       </Header>
@@ -297,6 +307,7 @@ const CommunityHub = () => {
           </CommentSection>
         </Insight>
       ))}
+      </ContentWrapper>
     </PageContainer>
   );
 };
