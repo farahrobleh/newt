@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5000;
 
 // Enhanced CORS configuration
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL || 'https://newt-nine.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
@@ -67,7 +67,7 @@ app.post('/api/insights/:id/comments', async (req, res) => {
     }
     insight.comments.push(req.body.comment);
     await insight.save();
-    res.status(201).json(req.body.comment);
+    res.status(201).json(insight);
   } catch (error) {
     res.status(400).json({ message: 'Error adding comment', error: error.message });
   }
@@ -96,5 +96,5 @@ app.use((err, req, res, next) => {
 // Start server
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
-  console.log(`CORS is set up for origin: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
+  console.log(`CORS is set up for origin: ${process.env.FRONTEND_URL || 'https://newt-nine.vercel.app'}`);
 });

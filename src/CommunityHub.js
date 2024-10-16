@@ -5,6 +5,9 @@ import { faUser, faComment, faHeart, faImage } from '@fortawesome/free-solid-svg
 import AdSense from './AdSense';
 import axios from 'axios';
 
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+axios.defaults.withCredentials = true;
+
 const PageContainer = styled.div`
   max-width: 800px;
   margin: 80px auto 0;
@@ -191,7 +194,7 @@ const CommunityHub = () => {
   useEffect(() => {
     const fetchInsights = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/insights`);
+        const response = await axios.get('/api/insights');
         setInsights(response.data);
       } catch (error) {
         console.error('Error fetching insights:', error);
@@ -211,7 +214,7 @@ const CommunityHub = () => {
         likes: 0
       };
       try {
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/insights`, newInsightObj);
+        const response = await axios.post('/api/insights', newInsightObj);
         setInsights([response.data, ...insights]);
         setNewInsight('');
         setImage(null);
