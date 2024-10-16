@@ -7,6 +7,12 @@ const PageContainer = styled.div`
   max-width: 800px;
   margin: 80px auto 0;
   padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 20px 10px;
+  }
 `;
 
 const Header = styled.header`
