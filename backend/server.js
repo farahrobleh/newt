@@ -14,16 +14,20 @@ console.log('NODE_ENV:', process.env.NODE_ENV);
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// CORS Configuration
-const corsOptions = {
-  origin: ['https://newt-nine.vercel.app', 'http://localhost:3000'],
+// Disable CORS (temporary)
+app.use(cors({
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-  optionsSuccessStatus: 200
-};
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
-app.use(cors(corsOptions));
+// Add this middleware to set headers for all responses
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  next();
+});
 
 // Logging middleware
 app.use((req, res, next) => {
@@ -31,9 +35,6 @@ app.use((req, res, next) => {
   console.log('Request headers:', req.headers);
   next();
 });
-
-// Add this before your routes
-app.options('*', cors(corsOptions));
 
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -116,5 +117,5 @@ app.use((err, req, res, next) => {
 // Start server
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
-  console.log(`CORS is set up for origins: ${corsOptions.origin.join(', ')}`);
+  console.log('CORS is disabled for debugging');
 });
