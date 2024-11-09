@@ -7,6 +7,23 @@ require('dotenv').config({ path: path.join(__dirname, '.env') });
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const projectSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  postedBy: { type: String, required: true },
+  jobTitle: { type: String, required: true },
+  projectSummary: { type: String, required: true },
+  roleDetails: { type: String, required: true },
+  compensation: { type: String, required: true },
+  projectTimeline: { type: String, required: true },
+  roleTimeline: { type: String, required: true },
+  qualifications: { type: String, required: true },
+  additionalInfo: String,
+  image: { type: String, default: 'https://via.placeholder.com/300x200' },
+  createdAt: { type: Date, default: Date.now }
+});
+
+const Project = mongoose.model('Project', projectSchema);
+
 console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
 console.log('NODE_ENV:', process.env.NODE_ENV);
 
@@ -105,6 +122,27 @@ app.post('/api/insights/:id/like', async (req, res) => {
   } catch (error) {
     console.error('Error liking insight:', error);
     res.status(400).json({ message: 'Error liking insight', error: error.message });
+  }
+});
+
+app.post('/api/projects', async (req, res) => {
+  try {
+    const project = new Project(req.body);
+    await project.save();
+    res.status(201).json(project);
+  } catch (error) {
+    console.error('Error creating project:', error);
+    res.status(500).json({ message: 'Error creating project', error: error.message });
+  }
+});
+
+app.get('/api/projects', async (req, res) => {
+  try {
+    const projects = await Project.find().sort({ createdAt: -1 });
+    res.json(projects);
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    res.status(500).json({ message: 'Error fetching projects', error: error.message });
   }
 });
 

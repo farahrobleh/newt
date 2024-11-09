@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const ResultsContainer = styled.div`
   max-width: 800px;
@@ -28,14 +29,30 @@ const SearchResults = ({
   influenzaProjects, 
   coronavirusProjects, 
   measlesProjects, 
-  sickleCellProjects 
+  sickleCellProjects, 
+  searchQuery 
 }) => {
   const [results, setResults] = useState([]);
+  const [dbProjects, setDbProjects] = useState([]);
   const { search } = useLocation();
   const query = new URLSearchParams(search).get('query')?.toLowerCase() || '';
 
   useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/projects`);
+        setDbProjects(response.data);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      }
+    };
+    
+    fetchProjects();
+  }, []);
+
+  useEffect(() => {
     const allProjects = [
+      ...dbProjects,
       ...(exampleProjects || []),
       ...(cancerProjects || []),
       ...(influenzaProjects || []),
@@ -46,12 +63,11 @@ const SearchResults = ({
 
     const filteredResults = allProjects.filter(project => 
       project.title.toLowerCase().includes(query) ||
-      (typeof project.postedBy === 'object' && project.postedBy.name.toLowerCase().includes(query)) ||
-      (typeof project.postedBy === 'string' && project.postedBy.toLowerCase().includes(query))
+      project.postedBy.toLowerCase().includes(query)
     );
 
     setResults(filteredResults);
-  }, [query, exampleProjects, cancerProjects, influenzaProjects, coronavirusProjects, measlesProjects, sickleCellProjects]);
+  }, [query, dbProjects, exampleProjects, cancerProjects, influenzaProjects, coronavirusProjects, measlesProjects, sickleCellProjects]);
 
   return (
     <ResultsContainer>
@@ -60,7 +76,7 @@ const SearchResults = ({
         results.map((result, index) => (
           <ResultItem key={index} to={`/project/${encodeURIComponent(result.title)}`}>
             <h3>{result.title}</h3>
-            <p>Posted by: {typeof result.postedBy === 'object' ? result.postedBy.name : result.postedBy}</p>
+            <p>Posted by: {result.postedBy}</p>
           </ResultItem>
         ))
       ) : (

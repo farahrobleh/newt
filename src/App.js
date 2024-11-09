@@ -24,6 +24,8 @@ import CommunityFeed from './CommunityFeed';
 import IntroAnimation from './IntroAnimation';
 import lizardLogo from './images/lizard.png';
 import CommunityHub from './CommunityHub';
+import GenericPosterProfile from './GenericPosterProfile';
+import CreateProject from './CreateProject';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -797,6 +799,8 @@ const App = () => {
           <Route path="/poster-profile" component={PosterProfile} />
           <Route path="/application-confirmation" component={ApplicationConfirmation} />
           <Route path="/about" component={AboutUs} />
+          <Route path="/generic-poster-profile" component={GenericPosterProfile} />
+          <Route path="/create-project" component={CreateProject} />
         </Switch>
         </AppContainer>
           </>

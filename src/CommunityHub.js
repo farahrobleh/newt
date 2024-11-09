@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faComment, faHeart, faImage } from '@fortawesome/free-solid-svg-icons';
-import AdSense from './AdSense';
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL || 'https://newt-io-backend-8c9be281b359.herokuapp.com/';
@@ -277,7 +276,6 @@ const CommunityHub = () => {
         <Header>
           <Title>newt.io community hub</Title>
         </Header>
-        <AdSense adSlot="1234567890" />
         <InsightForm onSubmit={handleSubmit}>
           <InsightInput 
             value={newInsight} 
@@ -330,9 +328,6 @@ const CommunityHub = () => {
                 </CommentForm>
               </CommentSection>
             </Insight>
-            {index % 5 === 0 && index !== 0 && (
-              <AdSense adSlot="0987654321" />
-            )}
           </React.Fragment>
         ))}
       </ContentWrapper>
