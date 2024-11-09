@@ -31,13 +31,6 @@ console.log('NODE_ENV:', process.env.NODE_ENV);
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Disable CORS (temporary)
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
-
 // Add this middleware to set headers for all responses
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -54,9 +47,25 @@ app.use((req, res, next) => {
 });
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected...'))
-  .catch(err => console.error('MongoDB connection error:', err));
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log('Successfully connected to MongoDB.');
+})
+.catch((error) => {
+  console.error('MongoDB connection error:', error);
+});
+
+// Add this to check if connection is lost
+mongoose.connection.on('error', err => {
+  console.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('MongoDB disconnected');
+});
 
 // Insight Schema
 const insightSchema = new mongoose.Schema({
@@ -73,6 +82,15 @@ const Insight = mongoose.model('Insight', insightSchema);
 app.get('/', (req, res) => {
   res.send('Server is running');
 });
+
+app.use(cors({
+  origin: true, // For testing, allow all origins
+  credentials: true
+}));
+
+// Make sure you have body-parser middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/api/insights', async (req, res) => {
   try {
@@ -127,12 +145,26 @@ app.post('/api/insights/:id/like', async (req, res) => {
 
 app.post('/api/projects', async (req, res) => {
   try {
+    console.log('Received project data:', req.body);
+    
     const project = new Project(req.body);
-    await project.save();
-    res.status(201).json(project);
+    console.log('Created project instance:', project);
+    
+    const savedProject = await project.save();
+    console.log('Saved project:', savedProject);
+    
+    res.status(201).json(savedProject);
   } catch (error) {
-    console.error('Error creating project:', error);
-    res.status(500).json({ message: 'Error creating project', error: error.message });
+    console.error('Detailed server error:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
+    res.status(500).json({ 
+      message: 'Error creating project', 
+      error: error.message,
+      details: error.errors // This will show mongoose validation errors
+    });
   }
 });
 

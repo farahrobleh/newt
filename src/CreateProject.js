@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+console.log('API URL:', process.env.REACT_APP_API_URL);
+
 const FormContainer = styled.div`
   max-width: 800px;
   margin: 120px auto 40px;
@@ -111,15 +113,29 @@ const CreateProject = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/projects`, formData);
+      console.log('Sending project data:', formData);
+      console.log('API URL:', process.env.REACT_APP_API_URL);
+      
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/projects`, formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      console.log('Response:', response);
       
       if (response.status === 201) {
         alert('Project created successfully!');
         history.push('/generic-poster-profile');
       }
     } catch (error) {
-      console.error('Error creating project:', error);
-      alert('Failed to create project. Please try again.');
+      console.error('Detailed error:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        headers: error.response?.headers
+      });
+      alert(`Failed to create project: ${error.response?.data?.message || error.message}`);
     } finally {
       setIsSubmitting(false);
     }
