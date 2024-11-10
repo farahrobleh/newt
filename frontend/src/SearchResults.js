@@ -29,10 +29,8 @@ const SearchResults = ({
   influenzaProjects, 
   coronavirusProjects, 
   measlesProjects, 
-  sickleCellProjects, 
-  searchQuery 
+  sickleCellProjects 
 }) => {
-  const [results, setResults] = useState([]);
   const [dbProjects, setDbProjects] = useState([]);
   const { search } = useLocation();
   const query = new URLSearchParams(search).get('query')?.toLowerCase() || '';
@@ -50,46 +48,52 @@ const SearchResults = ({
     fetchProjects();
   }, []);
 
-  useEffect(() => {
-    const allProjects = [
-      ...dbProjects,
-      ...(exampleProjects || []),
-      ...(cancerProjects || []),
-      ...(influenzaProjects || []),
-      ...(coronavirusProjects || []),
-      ...(measlesProjects || []),
-      ...(sickleCellProjects || [])
-    ];
+  // Combine all projects
+  const allProjects = [
+    ...dbProjects,
+    ...(exampleProjects || []),
+    ...(cancerProjects || []),
+    ...(influenzaProjects || []),
+    ...(coronavirusProjects || []),
+    ...(measlesProjects || []),
+    ...(sickleCellProjects || [])
+  ];
 
-    const filteredResults = allProjects.filter(project => {
-      try {
-        return (
-          (project.title?.toLowerCase() || '').includes(query) ||
-          (project.postedBy?.toLowerCase() || '').includes(query) ||
-          (project.jobTitle?.toLowerCase() || '').includes(query) ||
-          (project.projectSummary?.toLowerCase() || '').includes(query) ||
-          (project.qualifications?.toLowerCase() || '').includes(query)
-        );
-      } catch (error) {
-        console.error('Error filtering project:', project, error);
-        return false;
-      }
-    });
+  // Filter projects safely
+  const filteredResults = allProjects.filter(project => {
+    if (!project) return false;
 
-    setResults(filteredResults);
-  }, [query, dbProjects, exampleProjects, cancerProjects, influenzaProjects, coronavirusProjects, measlesProjects, sickleCellProjects]);
+    try {
+      const searchableFields = {
+        title: String(project.title || ''),
+        postedBy: typeof project.postedBy === 'string' ? project.postedBy : '',
+        jobTitle: String(project.jobTitle || ''),
+        projectSummary: String(project.projectSummary || ''),
+        qualifications: Array.isArray(project.qualifications) 
+          ? project.qualifications.join(' ') 
+          : String(project.qualifications || '')
+      };
+
+      return Object.values(searchableFields).some(value => 
+        value.toLowerCase().includes(query)
+      );
+    } catch (error) {
+      console.error('Error filtering project:', project, error);
+      return false;
+    }
+  });
 
   return (
     <ResultsContainer>
       <h2>Search Results for "{query}"</h2>
-      {results.length > 0 ? (
-        results.map((result, index) => (
+      {filteredResults.length > 0 ? (
+        filteredResults.map((result, index) => (
           <ResultItem 
             key={index} 
-            to={`/project/${result._id}`}
+            to={result._id ? `/project/${result._id}` : `/project/${encodeURIComponent(result.title)}`}
           >
             <h3>{result.title}</h3>
-            <p>Posted by: {result.postedBy}</p>
+            <p>Posted by: {typeof result.postedBy === 'string' ? result.postedBy : 'Unknown'}</p>
           </ResultItem>
         ))
       ) : (
