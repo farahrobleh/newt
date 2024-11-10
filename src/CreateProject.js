@@ -113,18 +113,21 @@ const CreateProject = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const apiUrl = process.env.REACT_APP_API_URL || 'https://newt-backend.herokuapp.com';
-    
     try {
+      console.log('Attempting to create project...');
+      
       const response = await axios({
         method: 'post',
-        url: `${apiUrl}/api/projects`,
+        url: `${process.env.REACT_APP_API_URL}/api/projects`,
         data: formData,
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         withCredentials: false
       });
+      
+      console.log('Response:', response);
       
       if (response.status === 201) {
         alert('Project created successfully!');
