@@ -86,19 +86,19 @@ const SearchResults = ({
   return (
     <ResultsContainer>
       <h2>Search Results for "{query}"</h2>
-      {filteredResults.length > 0 ? (
-        filteredResults.map((result, index) => (
-          <ResultItem 
-            key={index} 
-            to={result._id ? `/project/${result._id}` : `/project/${encodeURIComponent(result.title)}`}
-          >
-            <h3>{result.title}</h3>
-            <p>Posted by: {typeof result.postedBy === 'string' ? result.postedBy : 'Unknown'}</p>
-          </ResultItem>
-        ))
-      ) : (
-        <p>No results found for "{query}"</p>
-      )}
+      {filteredResults.map((result, index) => (
+        <ResultItem 
+          key={index} 
+          to={`/project/${encodeURIComponent(result._id || result.title)}`}
+        >
+          <h3>{result.title}</h3>
+          <p>Posted by: {
+            typeof result.postedBy === 'object' 
+              ? result.postedBy.name 
+              : result.postedBy
+          }</p>
+        </ResultItem>
+      ))}
     </ResultsContainer>
   );
 };

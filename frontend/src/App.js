@@ -639,12 +639,13 @@ const DummyProjectDetails = ({
   sickleCellProjects,
   ...props 
 }) => {
-  const { projectTitle } = useParams();
+  const { id } = useParams();
   const [projectDetails, setProjectDetails] = useState(null);
   const history = useHistory();
   const { addApplicant } = useApplicants();
 
   useEffect(() => {
+    // Combine all projects
     const allProjects = [
       ...exampleProjects,
       ...cancerProjects,
@@ -654,72 +655,78 @@ const DummyProjectDetails = ({
       ...sickleCellProjects
     ];
 
-  const project = allProjects.find(p => p.title === decodeURIComponent(projectTitle));
-  setProjectDetails(project);
-}, [projectTitle, exampleProjects, cancerProjects, influenzaProjects, coronavirusProjects, measlesProjects, sickleCellProjects]);
-
-if (!projectDetails) {
-  return <div>Loading...</div>;
-}
-
-const renderPostedBy = () => {
-  if (typeof projectDetails.postedBy === 'object') {
-    return (
-      <StyledLink to={`/researcher/${projectDetails.postedBy.id}`}>
-        {projectDetails.postedBy.name}, {projectDetails.postedBy.institution}
-      </StyledLink>
+    // Find the project by title
+    const project = allProjects.find(
+      p => p.title === decodeURIComponent(id)
     );
-  } else {
-    return projectDetails.postedBy;
-  }
-};
 
-const handleApply = () => {
-  if (projectDetails.title === "Immunotherapy Optimization for Triple-Negative Breast Cancer") {
-    addApplicant(projectDetails.title);
-  }
-  history.push('/application-confirmation');
-};
+    if (project) {
+      setProjectDetails(project);
+    }
+  }, [id, exampleProjects, cancerProjects, influenzaProjects, 
+      coronavirusProjects, measlesProjects, sickleCellProjects]);
 
-return (
-  <Section>
-    <ProjectDetails>
-      <h2>{projectDetails.title}</h2>
-      <p>
-        <strong>Posted By:</strong>{' '}
-        {renderPostedBy()}
-      </p>
-      <h3>Job Title: {projectDetails.jobTitle}</h3>
-      <h4>Project Summary:</h4>
-        <p>{projectDetails.summary}</p>
-        <h4>Role Details:</h4>
-        <ul>
-          {projectDetails.roleDetails.map((detail, index) => (
-            <li key={index}>{detail}</li>
-          ))}
-        </ul>
-        <h4>Compensation Details:</h4>
-        <p>{projectDetails.compensation}</p>
-        <h4>Project Timeline:</h4>
-        <p>Start Date: {projectDetails.projectTimeline.start}</p>
-        <p>End Date: {projectDetails.projectTimeline.end}</p>
-        <h4>Role Timeline:</h4>
-        <p>Start Date: {projectDetails.roleTimeline.start}</p>
-        <p>End Date: {projectDetails.roleTimeline.end}</p>
-        <h4>Qualifications:</h4>
-        <ul>
-          {projectDetails.qualifications.map((qualification, index) => (
-            <li key={index}>{qualification}</li>
-          ))}
-        </ul>
-        <h4>Additional Information:</h4>
-        <p>{projectDetails.additionalInfo}</p>
+  if (!projectDetails) return <div>Loading...</div>;
 
-        <ApplyButton onClick={handleApply}>
-          Apply to Research Project
-        </ApplyButton>
-      </ProjectDetails>
-    </Section>
+  const renderPostedBy = () => {
+    if (typeof projectDetails.postedBy === 'object') {
+      return (
+        <StyledLink to={`/researcher/${projectDetails.postedBy.id}`}>
+          {projectDetails.postedBy.name}, {projectDetails.postedBy.institution}
+        </StyledLink>
+      );
+    } else {
+      return projectDetails.postedBy;
+    }
+  };
+
+  const handleApply = () => {
+    if (projectDetails.title === "Immunotherapy Optimization for Triple-Negative Breast Cancer") {
+      addApplicant(projectDetails.title);
+    }
+    history.push('/application-confirmation');
+  };
+
+  return (
+    <Section>
+      <ProjectDetails>
+        <h2>{projectDetails.title}</h2>
+        <p>
+          <strong>Posted By:</strong>{' '}
+          {renderPostedBy()}
+        </p>
+        <h3>Job Title: {projectDetails.jobTitle}</h3>
+        <h4>Project Summary:</h4>
+          <p>{projectDetails.summary}</p>
+          <h4>Role Details:</h4>
+          <ul>
+            {projectDetails.roleDetails.map((detail, index) => (
+              <li key={index}>{detail}</li>
+            ))}
+          </ul>
+          <h4>Compensation Details:</h4>
+          <p>{projectDetails.compensation}</p>
+          <h4>Project Timeline:</h4>
+          <p>Start Date: {projectDetails.projectTimeline.start}</p>
+          <p>End Date: {projectDetails.projectTimeline.end}</p>
+          <h4>Role Timeline:</h4>
+          <p>Start Date: {projectDetails.roleTimeline.start}</p>
+          <p>End Date: {projectDetails.roleTimeline.end}</p>
+          <h4>Qualifications:</h4>
+          <ul>
+            {projectDetails.qualifications.map((qualification, index) => (
+              <li key={index}>{qualification}</li>
+            ))}
+          </ul>
+          <h4>Additional Information:</h4>
+          <p>{projectDetails.additionalInfo}</p>
+
+          <ApplyButton onClick={handleApply}>
+            Apply to Research Project
+          </ApplyButton>
+        </ProjectDetails>
+      </Section>
+    </>
   );
 };
 
@@ -782,14 +789,25 @@ const App = () => {
           <Route 
             path="/project/:id" 
             render={(props) => {
-              // Check if the ID is a MongoDB ObjectId (24 hex chars)
-              const isMongoId = /^[0-9a-fA-F]{24}$/.test(props.match.params.id);
+              const { id } = props.match.params;
               
-              if (isMongoId) {
-                // If it's a MongoDB ID, use the new ProjectDetailsPage component
-                return <ProjectDetailsPage {...props} />;
-              } else {
-                // If it's not a MongoDB ID, it's a title from dummy data
+              // Combine all dummy projects into one array
+              const allDummyProjects = [
+                ...exampleProjects,
+                ...cancerProjects,
+                ...influenzaProjects,
+                ...coronavirusProjects,
+                ...measlesProjects,
+                ...sickleCellProjects
+              ];
+
+              // Try to find the project in dummy data first
+              const dummyProject = allDummyProjects.find(
+                project => project.title === decodeURIComponent(id)
+              );
+
+              // If it's a dummy project, render DummyProjectDetails
+              if (dummyProject) {
                 return (
                   <DummyProjectDetails 
                     {...props}
@@ -802,6 +820,9 @@ const App = () => {
                   />
                 );
               }
+
+              // If not found in dummy data, assume it's a database project
+              return <ProjectDetailsPage {...props} />;
             }}
           />
           <Route path="/researcher/:researcherId" component={ResearcherProfilePage} />

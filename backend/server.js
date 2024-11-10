@@ -181,6 +181,35 @@ app.get('/api/projects/title/:title', async (req, res) => {
   }
 });
 
+// Update the existing projects routes
+app.get('/api/projects/:id', async (req, res) => {
+  try {
+    console.log('Fetching project with ID:', req.params.id); // Debug log
+    
+    // Check if the ID is a valid MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      console.log('Invalid MongoDB ID format');
+      return res.status(404).json({ message: 'Invalid project ID format' });
+    }
+
+    const project = await Project.findById(req.params.id);
+    
+    if (!project) {
+      console.log('Project not found');
+      return res.status(404).json({ message: 'Project not found' });
+    }
+    
+    console.log('Project found:', project); // Debug log
+    res.json(project);
+  } catch (error) {
+    console.error('Error fetching project:', error);
+    res.status(500).json({ 
+      message: 'Error fetching project', 
+      error: error.message 
+    });
+  }
+});
+
 // Add this near your other routes
 app.get('/api/test', (req, res) => {
   res.json({ message: 'API is working' });
