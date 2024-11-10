@@ -114,12 +114,13 @@ const CreateProject = () => {
 
     try {
       console.log('Sending project data:', formData);
-      console.log('API URL:', process.env.REACT_APP_API_URL);
       
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/projects`, formData, {
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
+        withCredentials: false
       });
       
       console.log('Response:', response);
