@@ -28,8 +28,8 @@ const SectionTitle = styled.h2`
   margin-bottom: 10px;
 `;
 
-const ProjectDetails = () => {
-  const { title } = useParams();
+const ProjectDetailsPage = () => {
+  const { id } = useParams();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -39,7 +39,7 @@ const ProjectDetails = () => {
       try {
         setLoading(true);
         const baseUrl = process.env.REACT_APP_API_URL.replace(/\/+$/, '');
-        const response = await axios.get(`${baseUrl}/api/projects/title/${encodeURIComponent(title)}`);
+        const response = await axios.get(`${baseUrl}/api/projects/${id}`);
         setProject(response.data);
       } catch (error) {
         console.error('Error fetching project:', error);
@@ -50,7 +50,7 @@ const ProjectDetails = () => {
     };
 
     fetchProject();
-  }, [title]);
+  }, [id]);
 
   if (loading) return <Container>Loading...</Container>;
   if (error) return <Container>Error: {error}</Container>;
@@ -110,4 +110,4 @@ const ProjectDetails = () => {
   );
 };
 
-export default ProjectDetails;
+export default ProjectDetailsPage;

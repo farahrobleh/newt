@@ -26,7 +26,7 @@ import lizardLogo from './images/lizard.png';
 import CommunityHub from './CommunityHub.js';
 import GenericPosterProfile from './GenericPosterProfile.js';
 import CreateProject from './CreateProject.js';
-import ProjectDetails from './ProjectDetails';
+import ProjectDetailsPage from './ProjectDetailsPage';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -772,17 +772,7 @@ const App = () => {
               sickleCellProjects={sickleCellProjects}
             />
           )} />
-          <Route path="/project/:projectTitle" render={(props) => (
-            <ProjectDetailsPage 
-              {...props} 
-              exampleProjects={exampleProjects}
-              cancerProjects={cancerProjects}
-              influenzaProjects={influenzaProjects}
-              coronavirusProjects={coronavirusProjects}
-              measlesProjects={measlesProjects}
-              sickleCellProjects={sickleCellProjects}
-            />
-          )} />
+          <Route path="/project/:id" component={ProjectDetailsPage} />
           <Route path="/researcher/:researcherId" component={ResearcherProfilePage} />
           <Route path="/search" render={(props) => (
             <SearchResults 
@@ -802,7 +792,7 @@ const App = () => {
           <Route path="/about" component={AboutUs} />
           <Route path="/generic-poster-profile" component={GenericPosterProfile} />
           <Route path="/create-project" component={CreateProject} />
-          <Route path="/project/:title" component={ProjectDetails} />
+          <Route path="/project/:title" component={ProjectDetailsPage} />
         </Switch>
         </AppContainer>
           </>
