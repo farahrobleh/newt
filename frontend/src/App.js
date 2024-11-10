@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Switch, Link, useHistory, useParams } f
 import styled, { createGlobalStyle, keyframes } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faArrowRight, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-import ResearcherProfilePage from './ResearcherProfilePage';
-import SearchResults from './SearchResults';
+import ResearcherProfilePage from './ResearcherProfilePage.js';
+import SearchResults from './SearchResults.js';
 import { 
   exampleProjects, 
   cancerProjects, 
@@ -12,20 +12,20 @@ import {
   coronavirusProjects, 
   measlesProjects, 
   sickleCellProjects 
-} from './projectData';
-import CandidateLogin from './CandidateLogin';
-import PosterLogin from './PosterLogin';
-import AboutUs from './AboutUs';
-import ApplicationConfirmation from './ApplicationConfirmation';
-import PosterProfile from './PosterProfile';
+} from './projectData.js';
+import CandidateLogin from './CandidateLogin.js';
+import PosterLogin from './PosterLogin.js';
+import AboutUs from './AboutUs.js';
+import ApplicationConfirmation from './ApplicationConfirmation.js';
+import PosterProfile from './PosterProfile.js';
 import { useApplicants } from './context/ApplicantContext.js';
 import { ApplicantProvider } from './context/ApplicantContext.js';
-import CommunityFeed from './CommunityFeed';
-import IntroAnimation from './IntroAnimation';
+import CommunityFeed from './CommunityFeed.js';
+import IntroAnimation from './IntroAnimation.js';
 import lizardLogo from './images/lizard.png';
-import CommunityHub from './CommunityHub';
-import GenericPosterProfile from './GenericPosterProfile';
-import CreateProject from './CreateProject';
+import CommunityHub from './CommunityHub.js';
+import GenericPosterProfile from './GenericPosterProfile.js';
+import CreateProject from './CreateProject.js';
 
 const GlobalStyle = createGlobalStyle`
   body {

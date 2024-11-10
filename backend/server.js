@@ -7,6 +7,7 @@ require('dotenv').config({ path: path.join(__dirname, '.env') });
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Schemas
 const projectSchema = new mongoose.Schema({
   title: { type: String, required: true },
   postedBy: { type: String, required: true },
@@ -22,38 +23,29 @@ const projectSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
+const insightSchema = new mongoose.Schema({
+  content: String,
+  username: String,
+  image: String,
+  comments: [String],
+  likes: { type: Number, default: 0 }
+}, { timestamps: true });
+
 const Project = mongoose.model('Project', projectSchema);
+const Insight = mongoose.model('Insight', insightSchema);
 
-console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
-console.log('NODE_ENV:', process.env.NODE_ENV);
-
-// Middleware
-
-// CORS Configuration - PLACE THIS BEFORE ANY ROUTES
+// Consolidated CORS configuration
 app.use(cors({
   origin: ['https://newt-nine.vercel.app', 'http://localhost:3000'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
   credentials: true,
   optionsSuccessStatus: 204
 }));
 
+// Middleware
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-
-// Additional headers middleware
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://newt-nine.vercel.app');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  
-  // Handle preflight requests
-  if (req.method === 'OPTIONS') {
-    return res.status(204).end();
-  }
-  next();
-});
 
 // Logging middleware
 app.use((req, res, next) => {
@@ -74,7 +66,6 @@ mongoose.connect(process.env.MONGODB_URI, {
   console.error('MongoDB connection error:', error);
 });
 
-// Add this to check if connection is lost
 mongoose.connection.on('error', err => {
   console.error('MongoDB connection error:', err);
 });
@@ -83,31 +74,12 @@ mongoose.connection.on('disconnected', () => {
   console.log('MongoDB disconnected');
 });
 
-// Insight Schema
-const insightSchema = new mongoose.Schema({
-  content: String,
-  username: String,
-  image: String,
-  comments: [String],
-  likes: { type: Number, default: 0 }
-}, { timestamps: true });
-
-const Insight = mongoose.model('Insight', insightSchema);
-
 // Routes
 app.get('/', (req, res) => {
-  res.send('Server is running');
+  res.json({ message: 'Server is running' });
 });
 
-app.use(cors({
-  origin: true, // For testing, allow all origins
-  credentials: true
-}));
-
-// Make sure you have body-parser middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
+// Insights routes
 app.get('/api/insights', async (req, res) => {
   try {
     const insights = await Insight.find().sort({ createdAt: -1 });
@@ -159,16 +131,14 @@ app.post('/api/insights/:id/like', async (req, res) => {
   }
 });
 
+// Projects routes
 app.post('/api/projects', async (req, res) => {
   try {
     console.log('Received project data:', req.body);
-    
     const project = new Project(req.body);
     console.log('Created project instance:', project);
-    
     const savedProject = await project.save();
     console.log('Saved project:', savedProject);
-    
     res.status(201).json(savedProject);
   } catch (error) {
     console.error('Detailed server error:', {
@@ -179,7 +149,7 @@ app.post('/api/projects', async (req, res) => {
     res.status(500).json({ 
       message: 'Error creating project', 
       error: error.message,
-      details: error.errors // This will show mongoose validation errors
+      details: error.errors
     });
   }
 });
@@ -203,5 +173,6 @@ app.use((err, req, res, next) => {
 // Start server
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
-  console.log('CORS is disabled for debugging');
+  console.log('Environment:', process.env.NODE_ENV);
+  console.log('Frontend URL:', process.env.FRONTEND_URL);
 });
