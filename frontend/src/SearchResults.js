@@ -61,10 +61,20 @@ const SearchResults = ({
       ...(sickleCellProjects || [])
     ];
 
-    const filteredResults = allProjects.filter(project => 
-      project.title.toLowerCase().includes(query) ||
-      project.postedBy.toLowerCase().includes(query)
-    );
+    const filteredResults = allProjects.filter(project => {
+      try {
+        return (
+          (project.title?.toLowerCase() || '').includes(query) ||
+          (project.postedBy?.toLowerCase() || '').includes(query) ||
+          (project.jobTitle?.toLowerCase() || '').includes(query) ||
+          (project.projectSummary?.toLowerCase() || '').includes(query) ||
+          (project.qualifications?.toLowerCase() || '').includes(query)
+        );
+      } catch (error) {
+        console.error('Error filtering project:', project, error);
+        return false;
+      }
+    });
 
     setResults(filteredResults);
   }, [query, dbProjects, exampleProjects, cancerProjects, influenzaProjects, coronavirusProjects, measlesProjects, sickleCellProjects]);
