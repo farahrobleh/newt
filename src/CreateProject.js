@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 console.log('API URL:', process.env.REACT_APP_API_URL);
-console.log("this is from the create-project-js file");
+console.log("this is from the create project js file");
 
 const FormContainer = styled.div`
   max-width: 800px;
