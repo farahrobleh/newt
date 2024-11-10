@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -28,8 +28,25 @@ const SectionTitle = styled.h2`
   margin-bottom: 10px;
 `;
 
+const ApplyButton = styled.button`
+  background-color: #7fbf7f;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #6ca86c;
+  }
+`;
+
 const ProjectDetailsPage = () => {
   const { id } = useParams();
+  const history = useHistory();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -39,7 +56,18 @@ const ProjectDetailsPage = () => {
       try {
         setLoading(true);
         const baseUrl = process.env.REACT_APP_API_URL.replace(/\/+$/, '');
-        const response = await axios.get(`${baseUrl}/api/projects/${id}`);
+        
+        // Check if id is a MongoDB ObjectId
+        const isMongoId = /^[0-9a-fA-F]{24}$/.test(id);
+        
+        let response;
+        if (isMongoId) {
+          response = await axios.get(`${baseUrl}/api/projects/${id}`);
+        } else {
+          // If not a MongoDB ID, try to fetch by title
+          response = await axios.get(`${baseUrl}/api/projects/title/${encodeURIComponent(id)}`);
+        }
+        
         setProject(response.data);
       } catch (error) {
         console.error('Error fetching project:', error);
@@ -52,9 +80,28 @@ const ProjectDetailsPage = () => {
     fetchProject();
   }, [id]);
 
+  const handleApply = () => {
+    // You can add application logic here
+    history.push('/application-confirmation');
+  };
+
   if (loading) return <Container>Loading...</Container>;
   if (error) return <Container>Error: {error}</Container>;
   if (!project) return <Container>Project not found</Container>;
+
+  // Helper function to render array or string content
+  const renderContent = (content) => {
+    if (Array.isArray(content)) {
+      return (
+        <ul>
+          {content.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      );
+    }
+    return <p>{content}</p>;
+  };
 
   return (
     <Container>
@@ -72,12 +119,12 @@ const ProjectDetailsPage = () => {
 
       <Section>
         <SectionTitle>Project Summary</SectionTitle>
-        <p>{project.projectSummary}</p>
+        {renderContent(project.projectSummary)}
       </Section>
 
       <Section>
         <SectionTitle>Role Details</SectionTitle>
-        <p>{project.roleDetails}</p>
+        {renderContent(project.roleDetails)}
       </Section>
 
       <Section>
@@ -87,17 +134,31 @@ const ProjectDetailsPage = () => {
 
       <Section>
         <SectionTitle>Project Timeline</SectionTitle>
-        <p>{project.projectTimeline}</p>
+        {typeof project.projectTimeline === 'object' ? (
+          <>
+            <p>Start Date: {project.projectTimeline.start}</p>
+            <p>End Date: {project.projectTimeline.end}</p>
+          </>
+        ) : (
+          <p>{project.projectTimeline}</p>
+        )}
       </Section>
 
       <Section>
         <SectionTitle>Role Timeline</SectionTitle>
-        <p>{project.roleTimeline}</p>
+        {typeof project.roleTimeline === 'object' ? (
+          <>
+            <p>Start Date: {project.roleTimeline.start}</p>
+            <p>End Date: {project.roleTimeline.end}</p>
+          </>
+        ) : (
+          <p>{project.roleTimeline}</p>
+        )}
       </Section>
 
       <Section>
         <SectionTitle>Qualifications</SectionTitle>
-        <p>{project.qualifications}</p>
+        {renderContent(project.qualifications)}
       </Section>
 
       {project.additionalInfo && (
@@ -106,6 +167,10 @@ const ProjectDetailsPage = () => {
           <p>{project.additionalInfo}</p>
         </Section>
       )}
+
+      <ApplyButton onClick={handleApply}>
+        Apply to Research Project
+      </ApplyButton>
     </Container>
   );
 };
