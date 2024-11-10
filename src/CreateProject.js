@@ -113,31 +113,26 @@ const CreateProject = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    const apiUrl = process.env.REACT_APP_API_URL || 'https://newt-backend.herokuapp.com';
+    
     try {
-      console.log('Sending project data:', formData);
-      
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/projects`, formData, {
+      const response = await axios({
+        method: 'post',
+        url: `${apiUrl}/api/projects`,
+        data: formData,
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
+          'Content-Type': 'application/json'
         },
         withCredentials: false
       });
-      
-      console.log('Response:', response);
       
       if (response.status === 201) {
         alert('Project created successfully!');
         history.push('/generic-poster-profile');
       }
     } catch (error) {
-      console.error('Detailed error:', {
-        message: error.message,
-        response: error.response?.data,
-        status: error.response?.status,
-        headers: error.response?.headers
-      });
-      alert(`Failed to create project: ${error.response?.data?.message || error.message}`);
+      console.error('Error creating project:', error);
+      alert('Failed to create project. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
