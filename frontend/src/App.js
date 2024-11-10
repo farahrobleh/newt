@@ -615,7 +615,13 @@ const Projects = ({
             <h3>{project.title}</h3>
             <p>{project.description}</p>
             <p>Posted by: {project.postedBy}</p>
-            <Button onClick={() => history.push(`/project/${encodeURIComponent(project.title)}`)}>Apply</Button>
+            <Button onClick={() => {
+              // If project has _id, it's from database, otherwise use title
+              const param = project._id || encodeURIComponent(project.title);
+              history.push(`/project/${param}`);
+            }}>
+              Apply
+            </Button>
           </ProjectItem>
         ))}
       </ProjectsList>
@@ -623,7 +629,8 @@ const Projects = ({
   );
 };
 
-const ProjectDetailsPage = ({ 
+// Rename the dummy data component to avoid conflict
+const DummyProjectDetails = ({ 
   exampleProjects, 
   cancerProjects, 
   influenzaProjects, 
@@ -772,7 +779,31 @@ const App = () => {
               sickleCellProjects={sickleCellProjects}
             />
           )} />
-          <Route path="/project/:id" component={ProjectDetailsPage} />
+          <Route 
+            path="/project/:id" 
+            render={(props) => {
+              // Check if the ID is a MongoDB ObjectId (24 hex chars)
+              const isMongoId = /^[0-9a-fA-F]{24}$/.test(props.match.params.id);
+              
+              if (isMongoId) {
+                // If it's a MongoDB ID, use the new ProjectDetailsPage component
+                return <ProjectDetailsPage {...props} />;
+              } else {
+                // If it's not a MongoDB ID, it's a title from dummy data
+                return (
+                  <DummyProjectDetails 
+                    {...props}
+                    exampleProjects={exampleProjects}
+                    cancerProjects={cancerProjects}
+                    influenzaProjects={influenzaProjects}
+                    coronavirusProjects={coronavirusProjects}
+                    measlesProjects={measlesProjects}
+                    sickleCellProjects={sickleCellProjects}
+                  />
+                );
+              }
+            }}
+          />
           <Route path="/researcher/:researcherId" component={ResearcherProfilePage} />
           <Route path="/search" render={(props) => (
             <SearchResults 
