@@ -26,6 +26,7 @@ import lizardLogo from './images/lizard.png';
 import CommunityHub from './CommunityHub.js';
 import GenericPosterProfile from './GenericPosterProfile.js';
 import CreateProject from './CreateProject.js';
+import ProjectDetails from './ProjectDetails';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -801,6 +802,7 @@ const App = () => {
           <Route path="/about" component={AboutUs} />
           <Route path="/generic-poster-profile" component={GenericPosterProfile} />
           <Route path="/create-project" component={CreateProject} />
+          <Route path="/project/:title" component={ProjectDetails} />
         </Switch>
         </AppContainer>
           </>

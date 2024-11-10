@@ -164,6 +164,23 @@ app.get('/api/projects', async (req, res) => {
   }
 });
 
+app.get('/api/projects/title/:title', async (req, res) => {
+  try {
+    const project = await Project.findOne({ 
+      title: decodeURIComponent(req.params.title) 
+    });
+    
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+    
+    res.json(project);
+  } catch (error) {
+    console.error('Error fetching project:', error);
+    res.status(500).json({ message: 'Error fetching project', error: error.message });
+  }
+});
+
 // Add this near your other routes
 app.get('/api/test', (req, res) => {
   res.json({ message: 'API is working' });
