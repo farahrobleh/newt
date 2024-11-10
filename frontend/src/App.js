@@ -629,104 +629,33 @@ const Projects = ({
   );
 };
 
-// Rename the dummy data component to avoid conflict
-const DummyProjectDetails = ({ 
-  exampleProjects, 
-  cancerProjects, 
-  influenzaProjects, 
-  coronavirusProjects, 
-  measlesProjects, 
-  sickleCellProjects,
-  ...props 
-}) => {
-  const { id } = useParams();
-  const [projectDetails, setProjectDetails] = useState(null);
+// First, define the DummyProjectDetails component at the top of your file
+const DummyProjectDetails = ({ project, ...props }) => {
   const history = useHistory();
-  const { addApplicant } = useApplicants();
-
-  useEffect(() => {
-    // Combine all projects
-    const allProjects = [
-      ...exampleProjects,
-      ...cancerProjects,
-      ...influenzaProjects,
-      ...coronavirusProjects,
-      ...measlesProjects,
-      ...sickleCellProjects
-    ];
-
-    // Find the project by title
-    const project = allProjects.find(
-      p => p.title === decodeURIComponent(id)
-    );
-
-    if (project) {
-      setProjectDetails(project);
-    }
-  }, [id, exampleProjects, cancerProjects, influenzaProjects, 
-      coronavirusProjects, measlesProjects, sickleCellProjects]);
-
-  if (!projectDetails) return <div>Loading...</div>;
-
-  const renderPostedBy = () => {
-    if (typeof projectDetails.postedBy === 'object') {
-      return (
-        <StyledLink to={`/researcher/${projectDetails.postedBy.id}`}>
-          {projectDetails.postedBy.name}, {projectDetails.postedBy.institution}
-        </StyledLink>
-      );
-    } else {
-      return projectDetails.postedBy;
-    }
-  };
-
   const handleApply = () => {
-    if (projectDetails.title === "Immunotherapy Optimization for Triple-Negative Breast Cancer") {
-      addApplicant(projectDetails.title);
-    }
     history.push('/application-confirmation');
   };
 
   return (
-    <Section>
-      <ProjectDetails>
-        <h2>{projectDetails.title}</h2>
-        <p>
-          <strong>Posted By:</strong>{' '}
-          {renderPostedBy()}
-        </p>
-        <h3>Job Title: {projectDetails.jobTitle}</h3>
-        <h4>Project Summary:</h4>
-          <p>{projectDetails.summary}</p>
-          <h4>Role Details:</h4>
-          <ul>
-            {projectDetails.roleDetails.map((detail, index) => (
-              <li key={index}>{detail}</li>
-            ))}
-          </ul>
-          <h4>Compensation Details:</h4>
-          <p>{projectDetails.compensation}</p>
-          <h4>Project Timeline:</h4>
-          <p>Start Date: {projectDetails.projectTimeline.start}</p>
-          <p>End Date: {projectDetails.projectTimeline.end}</p>
-          <h4>Role Timeline:</h4>
-          <p>Start Date: {projectDetails.roleTimeline.start}</p>
-          <p>End Date: {projectDetails.roleTimeline.end}</p>
-          <h4>Qualifications:</h4>
-          <ul>
-            {projectDetails.qualifications.map((qualification, index) => (
-              <li key={index}>{qualification}</li>
-            ))}
-          </ul>
-          <h4>Additional Information:</h4>
-          <p>{projectDetails.additionalInfo}</p>
-
-          <ApplyButton onClick={handleApply}>
-            Apply to Research Project
-          </ApplyButton>
-        </ProjectDetails>
+    <Container>
+      <Title>{project.title}</Title>
+      
+      <Section>
+        <SectionTitle>Posted By</SectionTitle>
+        <p>{typeof project.postedBy === 'object' ? project.postedBy.name : project.postedBy}</p>
       </Section>
-    </>
+
+      <Section>
+        <SectionTitle>Job Title</SectionTitle>
+        <p>{project.jobTitle}</p>
+      </Section>
+
+      {/* ... other sections ... */}
+
+      <ApplyButton onClick={handleApply}>
+        Apply to Research Project
+      </ApplyButton>
+    </Container>
   );
 };
 
@@ -737,10 +666,10 @@ const App = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowIntro(false);
-    }, 2000); // Adjust this time to match your animation duration
-
+    }, 3000);
     return () => clearTimeout(timer);
   }, []);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -790,7 +719,6 @@ const App = () => {
                   path="/project/:id" 
                   render={(props) => {
                     const { id } = props.match.params;
-                    
                     const allDummyProjects = [
                       ...exampleProjects,
                       ...cancerProjects,
@@ -804,22 +732,11 @@ const App = () => {
                       project => project.title === decodeURIComponent(id)
                     );
 
-                    if (dummyProject) {
-                      return (
-                        <DummyProjectDetails 
-                          {...props}
-                          project={dummyProject}
-                          exampleProjects={exampleProjects}
-                          cancerProjects={cancerProjects}
-                          influenzaProjects={influenzaProjects}
-                          coronavirusProjects={coronavirusProjects}
-                          measlesProjects={measlesProjects}
-                          sickleCellProjects={sickleCellProjects}
-                        />
-                      );
-                    }
-
-                    return <ProjectDetailsPage {...props} />;
+                    return dummyProject ? (
+                      <DummyProjectDetails project={dummyProject} {...props} />
+                    ) : (
+                      <ProjectDetailsPage {...props} />
+                    );
                   }}
                 />
                 <Route path="/researcher/:researcherId" component={ResearcherProfilePage} />
