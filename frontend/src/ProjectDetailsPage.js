@@ -56,22 +56,15 @@ const ProjectDetailsPage = () => {
       try {
         setLoading(true);
         const baseUrl = process.env.REACT_APP_API_URL.replace(/\/+$/, '');
+        console.log('Fetching project with ID:', id);
         
-        // Check if id is a MongoDB ObjectId
-        const isMongoId = /^[0-9a-fA-F]{24}$/.test(id);
-        
-        let response;
-        if (isMongoId) {
-          response = await axios.get(`${baseUrl}/api/projects/${id}`);
-        } else {
-          // If not a MongoDB ID, try to fetch by title
-          response = await axios.get(`${baseUrl}/api/projects/title/${encodeURIComponent(id)}`);
-        }
+        const response = await axios.get(`${baseUrl}/api/projects/${id}`);
+        console.log('Project data received:', response.data);
         
         setProject(response.data);
       } catch (error) {
-        console.error('Error fetching project:', error);
-        setError(error.message);
+        console.error('Error fetching project:', error.response?.data || error.message);
+        setError(error.response?.data?.message || error.message);
       } finally {
         setLoading(false);
       }

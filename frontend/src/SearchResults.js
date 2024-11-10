@@ -84,7 +84,10 @@ const SearchResults = ({
       <h2>Search Results for "{query}"</h2>
       {results.length > 0 ? (
         results.map((result, index) => (
-          <ResultItem key={index} to={`/project/${encodeURIComponent(result._id)}`}>
+          <ResultItem 
+            key={index} 
+            to={`/project/${result._id}`}
+          >
             <h3>{result.title}</h3>
             <p>Posted by: {result.postedBy}</p>
           </ResultItem>
