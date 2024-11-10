@@ -116,9 +116,11 @@ const CreateProject = () => {
     try {
       console.log('Attempting to create project...');
       
+      const baseUrl = process.env.REACT_APP_API_URL.replace(/\/+$/, '');
+      
       const response = await axios({
         method: 'post',
-        url: `${process.env.REACT_APP_API_URL}/api/projects`,
+        url: `${baseUrl}/api/projects`,
         data: formData,
         headers: {
           'Content-Type': 'application/json',

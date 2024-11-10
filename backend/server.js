@@ -164,6 +164,17 @@ app.get('/api/projects', async (req, res) => {
   }
 });
 
+// Add this near your other routes
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'API is working' });
+});
+
+// Log all incoming requests
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  next();
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Unhandled error:', err);
