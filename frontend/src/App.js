@@ -749,68 +749,35 @@ const App = () => {
 
   return (
     <ApplicantProvider>
-    <Router>
-      <GlobalStyle />
-      {showIntro ? (
-        <IntroAnimation imageSrc={lizardLogo} />
-      ) : (
-        <>
-          <MinimalistBackground />
-          <Navigation>
-            <NavContainer>
-              <NavTitle to="/">newt.io</NavTitle>
-          <MenuIcon onClick={toggleMenu}>
-            <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
-          </MenuIcon>
-          <NavLinks isOpen={isMenuOpen}>
-            <NavLink to="/community-feed" onClick={toggleMenu}>Community Hub</NavLink>
-            <NavLink to="/candidate-login" onClick={toggleMenu}>Candidate Login</NavLink>
-            <NavLink to="/poster-login" onClick={toggleMenu}>Poster Login</NavLink>
-            <NavLink to="/about" onClick={toggleMenu}>About Us</NavLink>
-          </NavLinks>
-        </NavContainer>
-      </Navigation>
-      <AppContainer>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/community-feed" component={CommunityFeed} />
-          <Route path="/community-hub" component={CommunityHub} />
-          <Route path="/projects" render={(props) => (
-            <Projects 
-              {...props} 
-              exampleProjects={exampleProjects}
-              cancerProjects={cancerProjects}
-              influenzaProjects={influenzaProjects}
-              coronavirusProjects={coronavirusProjects}
-              measlesProjects={measlesProjects}
-              sickleCellProjects={sickleCellProjects}
-            />
-          )} />
-          <Route 
-            path="/project/:id" 
-            render={(props) => {
-              const { id } = props.match.params;
-              
-              // Combine all dummy projects into one array
-              const allDummyProjects = [
-                ...exampleProjects,
-                ...cancerProjects,
-                ...influenzaProjects,
-                ...coronavirusProjects,
-                ...measlesProjects,
-                ...sickleCellProjects
-              ];
-
-              // Try to find the project in dummy data first
-              const dummyProject = allDummyProjects.find(
-                project => project.title === decodeURIComponent(id)
-              );
-
-              // If it's a dummy project, render DummyProjectDetails
-              if (dummyProject) {
-                return (
-                  <DummyProjectDetails 
-                    {...props}
+      <Router>
+        <GlobalStyle />
+        {showIntro ? (
+          <IntroAnimation imageSrc={lizardLogo} />
+        ) : (
+          <>
+            <MinimalistBackground />
+            <Navigation>
+              <NavContainer>
+                <NavTitle to="/">newt.io</NavTitle>
+                <MenuIcon onClick={toggleMenu}>
+                  <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
+                </MenuIcon>
+                <NavLinks isOpen={isMenuOpen}>
+                  <NavLink to="/community-feed" onClick={toggleMenu}>Community Hub</NavLink>
+                  <NavLink to="/candidate-login" onClick={toggleMenu}>Candidate Login</NavLink>
+                  <NavLink to="/poster-login" onClick={toggleMenu}>Poster Login</NavLink>
+                  <NavLink to="/about" onClick={toggleMenu}>About Us</NavLink>
+                </NavLinks>
+              </NavContainer>
+            </Navigation>
+            <AppContainer>
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route path="/community-feed" component={CommunityFeed} />
+                <Route path="/community-hub" component={CommunityHub} />
+                <Route path="/projects" render={(props) => (
+                  <Projects 
+                    {...props} 
                     exampleProjects={exampleProjects}
                     cancerProjects={cancerProjects}
                     influenzaProjects={influenzaProjects}
@@ -818,35 +785,64 @@ const App = () => {
                     measlesProjects={measlesProjects}
                     sickleCellProjects={sickleCellProjects}
                   />
-                );
-              }
+                )} />
+                <Route 
+                  path="/project/:id" 
+                  render={(props) => {
+                    const { id } = props.match.params;
+                    
+                    const allDummyProjects = [
+                      ...exampleProjects,
+                      ...cancerProjects,
+                      ...influenzaProjects,
+                      ...coronavirusProjects,
+                      ...measlesProjects,
+                      ...sickleCellProjects
+                    ];
 
-              // If not found in dummy data, assume it's a database project
-              return <ProjectDetailsPage {...props} />;
-            }}
-          />
-          <Route path="/researcher/:researcherId" component={ResearcherProfilePage} />
-          <Route path="/search" render={(props) => (
-            <SearchResults 
-              {...props} 
-              exampleProjects={exampleProjects}
-              cancerProjects={cancerProjects}
-              influenzaProjects={influenzaProjects}
-              coronavirusProjects={coronavirusProjects}
-              measlesProjects={measlesProjects}
-              sickleCellProjects={sickleCellProjects}
-            />
-          )} />
-          <Route path="/candidate-login" component={CandidateLogin} />
-          <Route path="/poster-login" component={PosterLogin} />
-          <Route path="/poster-profile" component={PosterProfile} />
-          <Route path="/application-confirmation" component={ApplicationConfirmation} />
-          <Route path="/about" component={AboutUs} />
-          <Route path="/generic-poster-profile" component={GenericPosterProfile} />
-          <Route path="/create-project" component={CreateProject} />
-          <Route path="/project/:title" component={ProjectDetailsPage} />
-        </Switch>
-        </AppContainer>
+                    const dummyProject = allDummyProjects.find(
+                      project => project.title === decodeURIComponent(id)
+                    );
+
+                    if (dummyProject) {
+                      return (
+                        <DummyProjectDetails 
+                          {...props}
+                          project={dummyProject}
+                          exampleProjects={exampleProjects}
+                          cancerProjects={cancerProjects}
+                          influenzaProjects={influenzaProjects}
+                          coronavirusProjects={coronavirusProjects}
+                          measlesProjects={measlesProjects}
+                          sickleCellProjects={sickleCellProjects}
+                        />
+                      );
+                    }
+
+                    return <ProjectDetailsPage {...props} />;
+                  }}
+                />
+                <Route path="/researcher/:researcherId" component={ResearcherProfilePage} />
+                <Route path="/search" render={(props) => (
+                  <SearchResults 
+                    {...props} 
+                    exampleProjects={exampleProjects}
+                    cancerProjects={cancerProjects}
+                    influenzaProjects={influenzaProjects}
+                    coronavirusProjects={coronavirusProjects}
+                    measlesProjects={measlesProjects}
+                    sickleCellProjects={sickleCellProjects}
+                  />
+                )} />
+                <Route path="/candidate-login" component={CandidateLogin} />
+                <Route path="/poster-login" component={PosterLogin} />
+                <Route path="/poster-profile" component={PosterProfile} />
+                <Route path="/application-confirmation" component={ApplicationConfirmation} />
+                <Route path="/about" component={AboutUs} />
+                <Route path="/generic-poster-profile" component={GenericPosterProfile} />
+                <Route path="/create-project" component={CreateProject} />
+              </Switch>
+            </AppContainer>
           </>
         )}
       </Router>
