@@ -491,6 +491,48 @@ const ApplyButton = styled.button`
   }
 `;
 
+// Add these styled components before DummyProjectDetails
+const DummyContainer = styled.div`
+  max-width: 800px;
+  margin: 120px auto 40px;
+  padding: 40px;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #333;
+`;
+
+const DummyTitle = styled.h1`
+  color: #4a7a4a;
+  margin-bottom: 20px;
+`;
+
+const DummySection = styled.div`
+  margin-bottom: 30px;
+`;
+
+const DummySectionTitle = styled.h2`
+  color: #7fbf7f;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+`;
+
+const DummyApplyButton = styled.button`
+  background-color: #7fbf7f;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #6ca86c;
+  }
+`;
+
 // Components
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -629,7 +671,7 @@ const Projects = ({
   );
 };
 
-// First, define the DummyProjectDetails component at the top of your file
+// Update DummyProjectDetails to use the new styled components
 const DummyProjectDetails = ({ project, ...props }) => {
   const history = useHistory();
   const handleApply = () => {
@@ -637,25 +679,90 @@ const DummyProjectDetails = ({ project, ...props }) => {
   };
 
   return (
-    <Container>
-      <Title>{project.title}</Title>
+    <DummyContainer>
+      <DummyTitle>{project.title}</DummyTitle>
       
-      <Section>
-        <SectionTitle>Posted By</SectionTitle>
+      <DummySection>
+        <DummySectionTitle>Posted By</DummySectionTitle>
         <p>{typeof project.postedBy === 'object' ? project.postedBy.name : project.postedBy}</p>
-      </Section>
+      </DummySection>
 
-      <Section>
-        <SectionTitle>Job Title</SectionTitle>
+      <DummySection>
+        <DummySectionTitle>Job Title</DummySectionTitle>
         <p>{project.jobTitle}</p>
-      </Section>
+      </DummySection>
 
-      {/* ... other sections ... */}
+      <DummySection>
+        <DummySectionTitle>Project Summary</DummySectionTitle>
+        <p>{project.summary || project.projectSummary}</p>
+      </DummySection>
 
-      <ApplyButton onClick={handleApply}>
+      <DummySection>
+        <DummySectionTitle>Role Details</DummySectionTitle>
+        {Array.isArray(project.roleDetails) ? (
+          <ul>
+            {project.roleDetails.map((detail, index) => (
+              <li key={index}>{detail}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>{project.roleDetails}</p>
+        )}
+      </DummySection>
+
+      <DummySection>
+        <DummySectionTitle>Compensation</DummySectionTitle>
+        <p>{project.compensation}</p>
+      </DummySection>
+
+      <DummySection>
+        <DummySectionTitle>Project Timeline</DummySectionTitle>
+        {typeof project.projectTimeline === 'object' ? (
+          <>
+            <p>Start Date: {project.projectTimeline.start}</p>
+            <p>End Date: {project.projectTimeline.end}</p>
+          </>
+        ) : (
+          <p>{project.projectTimeline}</p>
+        )}
+      </DummySection>
+
+      <DummySection>
+        <DummySectionTitle>Role Timeline</DummySectionTitle>
+        {typeof project.roleTimeline === 'object' ? (
+          <>
+            <p>Start Date: {project.roleTimeline.start}</p>
+            <p>End Date: {project.roleTimeline.end}</p>
+          </>
+        ) : (
+          <p>{project.roleTimeline}</p>
+        )}
+      </DummySection>
+
+      <DummySection>
+        <DummySectionTitle>Qualifications</DummySectionTitle>
+        {Array.isArray(project.qualifications) ? (
+          <ul>
+            {project.qualifications.map((qual, index) => (
+              <li key={index}>{qual}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>{project.qualifications}</p>
+        )}
+      </DummySection>
+
+      {project.additionalInfo && (
+        <DummySection>
+          <DummySectionTitle>Additional Information</DummySectionTitle>
+          <p>{project.additionalInfo}</p>
+        </DummySection>
+      )}
+
+      <DummyApplyButton onClick={handleApply}>
         Apply to Research Project
-      </ApplyButton>
-    </Container>
+      </DummyApplyButton>
+    </DummyContainer>
   );
 };
 
