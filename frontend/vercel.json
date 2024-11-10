@@ -1,0 +1,12 @@
+{
+    "version": 2,
+    "routes": [
+      { "src": "/create-project", "dest": "/" },
+      { "src": "/generic-poster-profile", "dest": "/" },
+      { "handle": "filesystem" },
+      { "src": "/(.*)", "dest": "/" }
+    ],
+    "env": {
+      "REACT_APP_API_URL": "https://newt-io-backend-7dd79bae48eb.herokuapp.com/"
+    }
+  }
