@@ -1,6 +1,7 @@
 // Project data arrays
 const exampleProjects = [
     {
+      id: 'example-1',
       title: "Exploring Virtual Reality as a Therapeutic Tool for Chronic Pain Management",
       description: "Investigating the efficacy of VR technology in alleviating chronic pain symptoms.",
       imageUrl: "https://lightyearhealth.com/wp-content/uploads/2022/03/AdobeStock_185990542-scaled.jpeg",

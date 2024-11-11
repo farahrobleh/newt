@@ -19,11 +19,11 @@ const Container = styled.div`
   color: #ffffff;
 `;
 
-const Section = styled.div`
-  margin: 30px 0;
-  padding: 20px;
+const ProjectContainer = styled.div`
   background-color: rgba(127, 191, 127, 0.1);
   border-radius: 10px;
+  padding: 30px;
+  margin-top: 20px;
 `;
 
 const Title = styled.h1`
@@ -31,9 +31,20 @@ const Title = styled.h1`
   margin-bottom: 20px;
 `;
 
+const ContentSection = styled.div`
+  margin: 25px 0;
+  border-bottom: 1px solid rgba(127, 191, 127, 0.2);
+  padding-bottom: 20px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+
 const SectionTitle = styled.h2`
   color: #7fbf7f;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  font-size: 1.2em;
 `;
 
 const ResearcherLink = styled(Link)`
@@ -71,8 +82,9 @@ const ProjectDetailsPage = () => {
         setLoading(true);
         const decodedId = decodeURIComponent(id);
         
-        // First try to find in local data
-        const allProjects = [
+        // First check example projects
+        const allLocalProjects = [
+          ...exampleProjects,
           ...cancerProjects,
           ...influenzaProjects,
           ...coronavirusProjects,
@@ -80,16 +92,24 @@ const ProjectDetailsPage = () => {
           ...sickleCellProjects
         ];
         
-        const localProject = allProjects.find(p => 
+        // Try to find by title or id
+        const localProject = allLocalProjects.find(p => 
           p.title === decodedId || p.id === decodedId
         );
         
         if (localProject) {
           setProject(localProject);
-        } else {
-          // Try to fetch from API
+          setLoading(false);
+          return;
+        }
+
+        // If not found locally and it's a valid ID format, try the API
+        if (id.match(/^[0-9a-fA-F]{24}$/)) {
           const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/projects/${id}`);
           setProject(response.data);
+        } else {
+          // If not found locally and not a valid MongoDB ID, show error
+          throw new Error('Project not found');
         }
       } catch (error) {
         console.error('Error loading project:', error);
@@ -115,10 +135,6 @@ const ProjectDetailsPage = () => {
       history.push('/application-confirmation');
     }
   };
-
-  const ContentSection = styled.div`
-    margin: 15px 0;
-  `;
 
   if (loading) {
     return (
@@ -148,76 +164,78 @@ const ProjectDetailsPage = () => {
     <Container>
       <Title>{project?.title}</Title>
       
-      <ContentSection>
-        <p><strong>Posted By:</strong> {' '}
-          {project?.postedBy === "Dr. Elena Vasquez" ? (
-            <ResearcherLink to="/researcher-public-profile/elena-vasquez">
-              {project.postedBy}
-            </ResearcherLink>
-          ) : (
-            project?.postedBy
-          )}
-        </p>
-        <p><strong>Institution:</strong> {project?.institution}</p>
-        <p><strong>Job Title:</strong> {project?.jobTitle}</p>
-      </ContentSection>
-
-      <Section>
-        <SectionTitle>Project Summary</SectionTitle>
-        <p>{project?.projectSummary || project?.description}</p>
-      </Section>
-
-      <Section>
-        <SectionTitle>Role Details</SectionTitle>
-        {Array.isArray(project?.roleDetails) ? (
-          <ul>
-            {project.roleDetails.map((detail, index) => (
-              <li key={index}>{detail}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>{project?.roleDetails}</p>
-        )}
-      </Section>
-
-      <Section>
-        <SectionTitle>Compensation</SectionTitle>
-        <p>{project?.compensation}</p>
-      </Section>
-
-      <Section>
-        <SectionTitle>Timeline</SectionTitle>
-        {project?.projectTimeline && typeof project.projectTimeline === 'object' ? (
-          <>
-            <p><strong>Project:</strong> {project.projectTimeline.start} - {project.projectTimeline.end}</p>
-            {project.roleTimeline && (
-              <p><strong>Role:</strong> {project.roleTimeline.start} - {project.roleTimeline.end}</p>
+      <ProjectContainer>
+        <ContentSection>
+          <p><strong>Posted By:</strong> {' '}
+            {project?.postedBy === "Dr. Elena Vasquez" ? (
+              <ResearcherLink to="/researcher-public-profile/elena-vasquez">
+                {project.postedBy}
+              </ResearcherLink>
+            ) : (
+              project?.postedBy
             )}
-          </>
-        ) : (
-          <p>{project?.projectTimeline}</p>
-        )}
-      </Section>
+          </p>
+          <p><strong>Institution:</strong> {project?.institution}</p>
+          <p><strong>Job Title:</strong> {project?.jobTitle}</p>
+        </ContentSection>
 
-      <Section>
-        <SectionTitle>Qualifications</SectionTitle>
-        {Array.isArray(project?.qualifications) ? (
-          <ul>
-            {project.qualifications.map((qual, index) => (
-              <li key={index}>{qual}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>{project?.qualifications}</p>
-        )}
-      </Section>
+        <ContentSection>
+          <SectionTitle>Project Summary</SectionTitle>
+          <p>{project?.projectSummary || project?.description}</p>
+        </ContentSection>
 
-      {project?.additionalInfo && (
         <Section>
-          <SectionTitle>Additional Information</SectionTitle>
-          <p>{project.additionalInfo}</p>
+          <SectionTitle>Role Details</SectionTitle>
+          {Array.isArray(project?.roleDetails) ? (
+            <ul>
+              {project.roleDetails.map((detail, index) => (
+                <li key={index}>{detail}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>{project?.roleDetails}</p>
+          )}
         </Section>
-      )}
+
+        <Section>
+          <SectionTitle>Compensation</SectionTitle>
+          <p>{project?.compensation}</p>
+        </Section>
+
+        <Section>
+          <SectionTitle>Timeline</SectionTitle>
+          {project?.projectTimeline && typeof project.projectTimeline === 'object' ? (
+            <>
+              <p><strong>Project:</strong> {project.projectTimeline.start} - {project.projectTimeline.end}</p>
+              {project.roleTimeline && (
+                <p><strong>Role:</strong> {project.roleTimeline.start} - {project.roleTimeline.end}</p>
+              )}
+            </>
+          ) : (
+            <p>{project?.projectTimeline}</p>
+          )}
+        </Section>
+
+        <Section>
+          <SectionTitle>Qualifications</SectionTitle>
+          {Array.isArray(project?.qualifications) ? (
+            <ul>
+              {project.qualifications.map((qual, index) => (
+                <li key={index}>{qual}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>{project?.qualifications}</p>
+          )}
+        </Section>
+
+        {project?.additionalInfo && (
+          <Section>
+            <SectionTitle>Additional Information</SectionTitle>
+            <p>{project.additionalInfo}</p>
+          </Section>
+        )}
+      </ProjectContainer>
 
       <ApplyButton onClick={handleApply}>
         Apply to Research Project

@@ -89,7 +89,7 @@ const SearchResults = ({
       {filteredResults.map((result, index) => (
         <ResultItem 
           key={index} 
-          to={`/project/${encodeURIComponent(result._id || result.title)}`}
+          to={`/project/${encodeURIComponent(result.id || result._id)}`}
         >
           <h3>{result.title}</h3>
           <p>Posted by: {
