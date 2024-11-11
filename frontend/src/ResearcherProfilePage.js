@@ -11,10 +11,62 @@ import {
     sickleCellProjects 
 } from './projectData';
 
-// ... existing styled components ...
+const Container = styled.div`
+  max-width: 800px;
+  margin: 120px auto;
+  padding: 20px;
+`;
+
+const ProfileHeader = styled.div`
+  text-align: center;
+  margin-bottom: 40px;
+`;
+
+const Title = styled.h1`
+  color: #7fbf7f;
+  margin-bottom: 10px;
+`;
+
+const SubTitle = styled.h2`
+  color: #7fbf7f;
+  font-size: 1.2em;
+  margin-bottom: 5px;
+`;
+
+const Institution = styled.h3`
+  color: #7fbf7f;
+  font-size: 1em;
+`;
+
+const Section = styled.div`
+  margin: 30px 0;
+  padding: 20px;
+  background-color: rgba(127, 191, 127, 0.1);
+  border-radius: 10px;
+`;
 
 const ProjectSection = styled(Section)`
   margin-top: 20px;
+`;
+
+const SectionTitle = styled.h2`
+  color: #7fbf7f;
+  margin-bottom: 20px;
+`;
+
+const List = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
+
+const ListItem = styled.li`
+  margin: 10px 0;
+  color: #ffffff;
+`;
+
+const Text = styled.p`
+  color: #ffffff;
+  line-height: 1.6;
 `;
 
 const ProjectCard = styled.div`
@@ -22,6 +74,40 @@ const ProjectCard = styled.div`
   padding: 15px;
   margin: 10px 0;
   border-radius: 5px;
+  h3 {
+    color: #7fbf7f;
+    margin-bottom: 10px;
+  }
+  p {
+    color: #ffffff;
+  }
+`;
+
+const ApplicantsList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
+const ApplicantItem = styled.div`
+  background: rgba(127, 191, 127, 0.1);
+  padding: 15px;
+  border-radius: 5px;
+`;
+
+const ApplicantName = styled.h3`
+  color: #7fbf7f;
+  margin-bottom: 5px;
+`;
+
+const ApplicantProject = styled.p`
+  color: #ffffff;
+  margin-bottom: 5px;
+`;
+
+const ApplicantStatus = styled.p`
+  color: #7fbf7f;
+  font-weight: bold;
 `;
 
 const ResearcherProfilePage = () => {
