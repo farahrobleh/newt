@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import { useApplicants } from './context/ApplicantContext';
 import styled from 'styled-components';
-import axios from 'axios';
 import { 
   exampleProjects, 
   cancerProjects, 
@@ -14,12 +13,16 @@ import {
 
 const Container = styled.div`
   max-width: 800px;
-  margin: 120px auto 40px;
-  padding: 40px;
-  background-color: #1a1a1a;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  margin: 120px auto;
+  padding: 20px;
   color: #ffffff;
+`;
+
+const Section = styled.div`
+  margin: 30px 0;
+  padding: 20px;
+  background-color: rgba(127, 191, 127, 0.1);
+  border-radius: 10px;
 `;
 
 const Title = styled.h1`
@@ -27,14 +30,17 @@ const Title = styled.h1`
   margin-bottom: 20px;
 `;
 
-const Section = styled.div`
-  margin-bottom: 30px;
-`;
-
 const SectionTitle = styled.h2`
   color: #7fbf7f;
-  font-size: 1.2rem;
   margin-bottom: 10px;
+`;
+
+const ResearcherLink = styled(Link)`
+  color: #7fbf7f;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const ApplyButton = styled.button`
@@ -43,21 +49,10 @@ const ApplyButton = styled.button`
   border: none;
   padding: 12px 24px;
   border-radius: 5px;
-  font-size: 1.1rem;
   cursor: pointer;
   margin-top: 20px;
-  transition: background-color 0.3s;
-
   &:hover {
     background-color: #6ca86c;
-  }
-`;
-
-const ResearcherLink = styled(Link)`
-  color: #7fbf7f;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
   }
 `;
 
@@ -89,12 +84,10 @@ const ProjectDetailsPage = () => {
   const handleApply = () => {
     if (project) {
       const dummyApplicant = {
-        name: "John Doe",
-        email: "johndoe@example.com",
+        applicantName: "John Doe",
         projectTitle: project.title,
-        appliedDate: new Date().toISOString(),
         status: "Pending",
-        researcherId: project.researcherId
+        researcherId: project.researcherId || 'elena-vasquez'
       };
 
       addApplicant(dummyApplicant);
@@ -113,7 +106,7 @@ const ProjectDetailsPage = () => {
       <Section>
         <SectionTitle>Posted By</SectionTitle>
         {project.postedBy === "Dr. Elena Vasquez" ? (
-          <ResearcherLink to={`/researcher-public-profile/${project.researcherId}`}>
+          <ResearcherLink to="/researcher-public-profile/elena-vasquez">
             {project.postedBy}
           </ResearcherLink>
         ) : (
@@ -129,12 +122,20 @@ const ProjectDetailsPage = () => {
 
       <Section>
         <SectionTitle>Project Summary</SectionTitle>
-        {renderContent(project.projectSummary)}
+        <p>{project.summary || project.projectSummary}</p>
       </Section>
 
       <Section>
         <SectionTitle>Role Details</SectionTitle>
-        {renderContent(project.roleDetails)}
+        {Array.isArray(project.roleDetails) ? (
+          <ul>
+            {project.roleDetails.map((detail, index) => (
+              <li key={index}>{detail}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>{project.roleDetails}</p>
+        )}
       </Section>
 
       <Section>
@@ -155,20 +156,16 @@ const ProjectDetailsPage = () => {
       </Section>
 
       <Section>
-        <SectionTitle>Role Timeline</SectionTitle>
-        {typeof project.roleTimeline === 'object' ? (
-          <>
-            <p>Start Date: {project.roleTimeline.start}</p>
-            <p>End Date: {project.roleTimeline.end}</p>
-          </>
-        ) : (
-          <p>{project.roleTimeline}</p>
-        )}
-      </Section>
-
-      <Section>
         <SectionTitle>Qualifications</SectionTitle>
-        {renderContent(project.qualifications)}
+        {Array.isArray(project.qualifications) ? (
+          <ul>
+            {project.qualifications.map((qual, index) => (
+              <li key={index}>{qual}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>{project.qualifications}</p>
+        )}
       </Section>
 
       {project.additionalInfo && (
