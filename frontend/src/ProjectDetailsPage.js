@@ -128,17 +128,18 @@ const ProjectDetailsPage = () => {
   }, [id]);
 
   const handleApply = () => {
-    if (project) {
-      const dummyApplicant = {
-        applicantName: "John Doe",
-        projectTitle: project.title,
-        status: "Pending",
-        researcherId: project.researcherId || 'elena-vasquez'
-      };
+    const newApplicant = {
+      name: "John Smith",
+      email: "john.smith@example.com",
+      projectTitle: project.title,
+      appliedDate: new Date().toLocaleDateString(),
+      status: "Pending Review",
+      researcherId: project.postedBy === "Dr. Elena Vasquez" ? "elena-vasquez" : undefined,
+      researcherEmail: project.postedBy === "Dr. Elena Vasquez" ? "drelena@metropolitan.edu" : undefined
+    };
 
-      addApplicant(dummyApplicant);
-      history.push('/application-confirmation');
-    }
+    addApplicant(newApplicant);
+    history.push('/application-confirmation');
   };
 
   if (loading) {

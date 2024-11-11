@@ -67,7 +67,7 @@ const ApplicantItem = styled.div`
 `;
 
 const PosterProfile = () => {
-  const { applicants } = useApplicants();
+  const { applicants, addApplicant } = useApplicants();
 
   const elenaApplicants = applicants.filter(applicant => 
     applicant.projectTitle === "Immunotherapy Optimization for Triple-Negative Breast Cancer" ||
@@ -78,7 +78,7 @@ const PosterProfile = () => {
     <ProfileContainer>
       <WelcomeHeader>Dr. Elena Vasquez</WelcomeHeader>
       <ProfileImage 
-        src="https://via.placeholder.com/200" 
+        src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3"
         alt="Dr. Elena Vasquez" 
       />
       <InfoSection>
