@@ -4,20 +4,19 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 
-const Container = styled.div`
-  max-width: 400px;
-  margin: 120px auto 40px;
-  padding: 40px;
-  background-color: #1a1a1a;
+const LoginContainer = styled.div`
+  max-width: 450px;
+  margin: 150px auto;
+  padding: 30px;
+  background-color: rgba(127, 191, 127, 0.1);
   border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  color: #ffffff;
+  box-shadow: 0 0 10px rgba(127, 191, 127, 0.1);
 `;
 
-const Title = styled.h1`
-  color: #7fbf7f;
-  margin-bottom: 30px;
+const Title = styled.h2`
   text-align: center;
+  color: #7fbf7f;
+  margin-bottom: 20px;
 `;
 
 const Form = styled.form`
@@ -34,16 +33,17 @@ const InputGroup = styled.div`
 
 const Input = styled.input`
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #333;
-  border-radius: 5px;
-  background-color: #2a2a2a;
-  color: white;
-
+  padding: 10px 10px 10px 40px;
+  border: none;
+  border-bottom: 2px solid #7fbf7f;
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 16px;
+  box-sizing: border-box;
+  
   &:focus {
     outline: none;
-    border-color: #7fbf7f;
+    border-bottom-color: #4a7a4a;
   }
 `;
 
@@ -51,28 +51,26 @@ const Icon = styled(FontAwesomeIcon)`
   position: absolute;
   top: 12px;
   left: 10px;
-  color: #FF3232;
+  color: #7fbf7f;
 `;
 
 const Button = styled.button`
-  width: 100%;
-  padding: 12px;
+  padding: 10px;
   background-color: #7fbf7f;
-  color: white;
+  color: #ffffff;
   border: none;
   border-radius: 5px;
-  font-size: 1rem;
+  font-size: 16px;
   cursor: pointer;
-  margin-top: 20px;
   transition: background-color 0.3s;
-
+  
   &:hover {
-    background-color: #6ca86c;
+    background-color: #4a7a4a;
   }
 `;
 
 const ErrorMessage = styled.p`
-  color: #FF3232;
+  color: #7fbf7f;
   text-align: center;
   margin-top: 10px;
 `;
@@ -87,20 +85,16 @@ const PosterLogin = () => {
     e.preventDefault();
     setError('');
 
-    // Basic validation
     if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
 
-    // Store the email in localStorage for use in the generic profile
     localStorage.setItem('userEmail', email);
 
-    // Check if it's Dr. Elena's credentials
     if (email === 'drelena@metropolitan.edu' && password === 'research123') {
       history.push('/poster-profile');
     } else {
-      // For any other valid email/password combination
       if (email.includes('@') && password.length >= 6) {
         history.push('/generic-poster-profile');
       } else {
@@ -110,7 +104,7 @@ const PosterLogin = () => {
   };
 
   return (
-    <Container>
+    <LoginContainer>
       <Title>Poster Login</Title>
       <Form onSubmit={handleSubmit}>
         <InputGroup>
@@ -136,7 +130,7 @@ const PosterLogin = () => {
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <Button type="submit">Log In</Button>
       </Form>
-    </Container>
+    </LoginContainer>
   );
 };
 
