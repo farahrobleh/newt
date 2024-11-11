@@ -137,7 +137,7 @@ const ProjectDetailsPage = () => {
         education: ["Stanford University - Ph.D. Candidate, Cancer Biology", "UC Berkeley - B.S. Molecular Biology"],
         resume: "cancer_research_resume.pdf",
         coverLetter: "I am excited to apply for this position...",
-        projectTitle: project?.title,
+        projectTitle: project.title,
         appliedDate: new Date().toLocaleDateString(),
         status: "Pending Review",
         researcherId: "elena-vasquez",
@@ -150,7 +150,7 @@ const ProjectDetailsPage = () => {
         education: ["MIT - Ph.D. Bioengineering", "Johns Hopkins - B.S. Biomedical Engineering"],
         resume: "immunotherapy_resume.pdf",
         coverLetter: "With my background in immunotherapy research...",
-        projectTitle: project?.title,
+        projectTitle: project.title,
         appliedDate: new Date().toLocaleDateString(),
         status: "Pending Review",
         researcherId: "elena-vasquez",
@@ -163,7 +163,7 @@ const ProjectDetailsPage = () => {
         education: ["Harvard Medical School - MD/Ph.D. Program", "Yale - B.S. Molecular Biology"],
         resume: "clinical_research_resume.pdf",
         coverLetter: "Your groundbreaking work in immunotherapy...",
-        projectTitle: project?.title,
+        projectTitle: project.title,
         appliedDate: new Date().toLocaleDateString(),
         status: "Pending Review",
         researcherId: "elena-vasquez",
@@ -171,9 +171,21 @@ const ProjectDetailsPage = () => {
       }
     ];
 
-    // Randomly select a dummy applicant
-    const randomApplicant = dummyApplicants[Math.floor(Math.random() * dummyApplicants.length)];
-    addApplicant(randomApplicant);
+    // Check if this is Dr. Elena's project
+    if (project.postedBy.includes("Dr. Elena")) {
+      // Randomly select a dummy applicant
+      const randomApplicant = dummyApplicants[Math.floor(Math.random() * dummyApplicants.length)];
+      
+      // Add to context
+      addApplicant(randomApplicant);
+      
+      // Store in localStorage to persist the data
+      const existingApplicants = JSON.parse(localStorage.getItem('applicants') || '[]');
+      localStorage.setItem('applicants', JSON.stringify([...existingApplicants, randomApplicant]));
+      
+      console.log('Added applicant:', randomApplicant); // Debug log
+    }
+
     history.push('/application-confirmation');
   };
 

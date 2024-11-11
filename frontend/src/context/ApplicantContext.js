@@ -3,17 +3,17 @@ import React, { createContext, useState, useContext } from 'react';
 const ApplicantContext = createContext();
 
 export const ApplicantProvider = ({ children }) => {
-  const [applicants, setApplicants] = useState([]);
+  const [applicants, setApplicants] = useState(() => {
+    const savedApplicants = localStorage.getItem('applicants');
+    return savedApplicants ? JSON.parse(savedApplicants) : [];
+  });
 
-  const addApplicant = (projectTitle) => {
-    const newApplicant = {
-      id: Date.now(),
-      name: `Applicant ${applicants.length + 1}`,
-      email: `applicant${applicants.length + 1}@example.com`,
-      projectTitle: projectTitle,
-      appliedDate: new Date().toLocaleDateString()
-    };
-    setApplicants([...applicants, newApplicant]);
+  const addApplicant = (newApplicant) => {
+    setApplicants(prevApplicants => {
+      const updatedApplicants = [...prevApplicants, newApplicant];
+      localStorage.setItem('applicants', JSON.stringify(updatedApplicants));
+      return updatedApplicants;
+    });
   };
 
   return (
@@ -22,5 +22,4 @@ export const ApplicantProvider = ({ children }) => {
     </ApplicantContext.Provider>
   );
 };
-
 export const useApplicants = () => useContext(ApplicantContext);
