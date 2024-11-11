@@ -90,25 +90,23 @@ const cancerProjects = [
       researcherId: "elena-vasquez",
       institution: "Memorial Cancer Research Center",
       jobTitle: "Senior Research Scientist - Immunotherapy",
-      summary: "This project aims to enhance the efficacy of immunotherapy treatments for triple-negative breast cancer (TNBC) patients. We will investigate novel combination therapies, including immune checkpoint inhibitors and CAR-T cell approaches, to overcome the immunosuppressive tumor micro-environment. Our goal is to develop personalized immunotherapy strategies that can improve outcomes for TNBC patients who currently have limited treatment options.",
+      projectSummary: "This project focuses on developing and optimizing immunotherapy protocols...",
       roleDetails: [
-        "Designing and conducting preclinical studies to evaluate novel immunotherapy combinations in TNBC models.",
-        "Analyzing tumor-infiltrating lymphocytes and other immune cell populations in patient samples and animal models.",
-        "Developing and optimizing CAR-T cell therapies targeting TNBC-specific antigens.",
-        "Collaborating with clinicians to design and implement early-phase clinical trials for promising immunotherapy approaches.",
-        "Presenting research findings at international conferences and preparing manuscripts for high-impact journals."
+        "Lead research efforts in immunotherapy optimization",
+        "Design and conduct clinical trials",
+        "Analyze patient response data",
+        "Collaborate with oncology team"
       ],
-      compensation: "This position offers a competitive salary range of $90,000-$120,000 per year, depending on experience. Benefits include comprehensive health coverage, retirement plans, and opportunities for professional development.",
-      projectTimeline: { start: "September 1, 2023", end: "August 31, 2027" },
-      roleTimeline: { start: "September 1, 2023", end: "August 31, 2025" },
+      compensation: "$90,000-$120,000 per year",
+      projectTimeline: { start: "July 2023", end: "June 2024" },
+      roleTimeline: { start: "July 2023", end: "June 2024" },
       qualifications: [
-        "Ph.D. in Immunology, Cancer Biology, or a related field with at least 5 years of postdoctoral experience in cancer immunotherapy.",
-        "Strong background in T cell biology, antibody engineering, and preclinical model development.",
-        "Experience with flow cytometry, multi-color immunofluorescence, and single-cell sequencing techniques.",
-        "Proven track record of successful grant applications and publications in top-tier journals.",
-        "Excellent project management and communication skills for coordinating multidisciplinary research teams."
+        "Ph.D. in Immunology or related field",
+        "5+ years experience in cancer research",
+        "Clinical trial experience",
+        "Strong publication record"
       ],
-      additionalInfo: "Learn more about our cancer immunotherapy program at www.metropolitanuh.edu/cancer-immunotherapy"
+      additionalInfo: "Join our cutting-edge research team..."
     },
     {
       title: "AI-Driven Discovery of Novel Targets for Pancreatic Cancer",
