@@ -83,7 +83,14 @@ const Comment = styled.div`
 const AdminDashboard = () => {
   const [dbProjects, setDbProjects] = useState([]);
   const [insights, setInsights] = useState([]);
-  const [dummyProjects, setDummyProjects] = useState({});
+  const [dummyProjects, setDummyProjects] = useState({
+    example: [],
+    cancer: [],
+    influenza: [],
+    coronavirus: [],
+    measles: [],
+    sickleCell: []
+  });
   const history = useHistory();
 
   useEffect(() => {
@@ -93,12 +100,42 @@ const AdminDashboard = () => {
     }
 
     setDummyProjects({
-      example: exampleProjects.map(project => ({ ...project })),
-      cancer: cancerProjects.map(project => ({ ...project })),
-      influenza: influenzaProjects.map(project => ({ ...project })),
-      coronavirus: coronavirusProjects.map(project => ({ ...project })),
-      measles: measlesProjects.map(project => ({ ...project })),
-      sickleCell: sickleCellProjects.map(project => ({ ...project }))
+      example: exampleProjects.map(project => ({
+        title: project.title || 'Untitled',
+        postedBy: project.postedBy || 'Unknown',
+        description: project.description || '',
+        id: `example-${Math.random()}`
+      })),
+      cancer: cancerProjects.map(project => ({
+        title: project.title || 'Untitled',
+        postedBy: project.postedBy || 'Unknown',
+        description: project.description || '',
+        id: `cancer-${Math.random()}`
+      })),
+      influenza: influenzaProjects.map(project => ({
+        title: project.title || 'Untitled',
+        postedBy: project.postedBy || 'Unknown',
+        description: project.description || '',
+        id: `influenza-${Math.random()}`
+      })),
+      coronavirus: coronavirusProjects.map(project => ({
+        title: project.title || 'Untitled',
+        postedBy: project.postedBy || 'Unknown',
+        description: project.description || '',
+        id: `coronavirus-${Math.random()}`
+      })),
+      measles: measlesProjects.map(project => ({
+        title: project.title || 'Untitled',
+        postedBy: project.postedBy || 'Unknown',
+        description: project.description || '',
+        id: `measles-${Math.random()}`
+      })),
+      sickleCell: sickleCellProjects.map(project => ({
+        title: project.title || 'Untitled',
+        postedBy: project.postedBy || 'Unknown',
+        description: project.description || '',
+        id: `sickleCell-${Math.random()}`
+      }))
     });
 
     fetchData();
@@ -130,10 +167,10 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleDeleteDummyProject = (category, index) => {
+  const handleDeleteDummyProject = (category, projectId) => {
     setDummyProjects(prev => ({
       ...prev,
-      [category]: prev[category].filter((_, i) => i !== index)
+      [category]: prev[category].filter(project => project.id !== projectId)
     }));
   };
 
@@ -181,11 +218,11 @@ const AdminDashboard = () => {
         {Object.entries(dummyProjects).map(([category, projects]) => (
           <React.Fragment key={category}>
             <SubsectionTitle>{category.charAt(0).toUpperCase() + category.slice(1)} Projects</SubsectionTitle>
-            {Array.isArray(projects) && projects.map((project, index) => (
-              <Card key={`${category}-${index}`}>
-                <DeleteButton onClick={() => handleDeleteDummyProject(category, index)}>Delete</DeleteButton>
-                <h3>{project.title || 'Untitled Project'}</h3>
-                <p>Posted by: {project.postedBy || 'Unknown'}</p>
+            {Array.isArray(projects) && projects.map((project) => (
+              <Card key={project.id}>
+                <DeleteButton onClick={() => handleDeleteDummyProject(category, project.id)}>Delete</DeleteButton>
+                <h3>{project.title}</h3>
+                <p>Posted by: {project.postedBy}</p>
               </Card>
             ))}
           </React.Fragment>
