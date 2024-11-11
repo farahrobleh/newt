@@ -10,13 +10,13 @@ const FormContainer = styled.div`
   max-width: 800px;
   margin: 120px auto 40px;
   padding: 40px;
-  background-color: #FFFFFF;
+  background-color: rgba(127, 191, 127, 0.1);
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #ffffff;
 `;
 
 const Title = styled.h1`
-  color: #FF3232;
+  color: #7fbf7f;
   margin-bottom: 30px;
   text-align: center;
 `;
@@ -35,37 +35,41 @@ const FormGroup = styled.div`
 
 const Label = styled.label`
   font-weight: bold;
-  color: #333;
+  color: #ffffff;
 `;
 
 const Input = styled.input`
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(127, 191, 127, 0.3);
   border-radius: 5px;
   font-size: 1rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #ffffff;
   
   &:focus {
     outline: none;
-    border-color: #FF3232;
+    border-color: #7fbf7f;
   }
 `;
 
 const TextArea = styled.textarea`
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(127, 191, 127, 0.3);
   border-radius: 5px;
   font-size: 1rem;
   min-height: 100px;
   resize: vertical;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #ffffff;
   
   &:focus {
     outline: none;
-    border-color: #FF3232;
+    border-color: #7fbf7f;
   }
 `;
 
 const SubmitButton = styled.button`
-  background-color: #FF3232;
+  background-color: #7fbf7f;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -75,11 +79,11 @@ const SubmitButton = styled.button`
   transition: background-color 0.3s;
   
   &:hover {
-    background-color: #CC0000;
+    background-color: #6ca86c;
   }
   
   &:disabled {
-    background-color: #ccc;
+    background-color: rgba(127, 191, 127, 0.3);
     cursor: not-allowed;
   }
 `;
@@ -117,6 +121,8 @@ const CreateProject = () => {
       console.log('Attempting to create project...');
       
       const baseUrl = process.env.REACT_APP_API_URL.replace(/\/+$/, '');
+      const userEmail = localStorage.getItem('userEmail');
+      const researcherName = userEmail.split('@')[0];
       
       const response = await axios({
         method: 'post',
@@ -133,7 +139,7 @@ const CreateProject = () => {
       
       if (response.status === 201) {
         alert('Project created successfully!');
-        history.push('/generic-poster-profile');
+        history.push(`/generic-poster-profile/${researcherName}`);
       }
     } catch (error) {
       console.error('Error creating project:', error);
