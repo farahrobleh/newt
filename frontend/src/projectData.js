@@ -90,7 +90,7 @@ const cancerProjects = [
       researcherId: "elena-vasquez",
       institution: "Memorial Cancer Research Center",
       jobTitle: "Senior Research Scientist - Immunotherapy",
-      summary: "This project aims to enhance the efficacy of immunotherapy treatments for triple-negative breast cancer (TNBC) patients. We will investigate novel combination therapies, including immune checkpoint inhibitors and CAR-T cell approaches, to overcome the immunosuppressive tumor microenvironment. Our goal is to develop personalized immunotherapy strategies that can improve outcomes for TNBC patients who currently have limited treatment options.",
+      summary: "This project aims to enhance the efficacy of immunotherapy treatments for triple-negative breast cancer (TNBC) patients. We will investigate novel combination therapies, including immune checkpoint inhibitors and CAR-T cell approaches, to overcome the immunosuppressive tumor micro-environment. Our goal is to develop personalized immunotherapy strategies that can improve outcomes for TNBC patients who currently have limited treatment options.",
       roleDetails: [
         "Designing and conducting preclinical studies to evaluate novel immunotherapy combinations in TNBC models.",
         "Analyzing tumor-infiltrating lymphocytes and other immune cell populations in patient samples and animal models.",

@@ -118,7 +118,7 @@ const ProjectDetailsPage = () => {
       
       <Section>
         <SectionTitle>Posted By</SectionTitle>
-        <ResearcherLink to={`/generic-poster-profile/${project.postedBy}`}>
+        <ResearcherLink to={`/generic-poster-profile/elena-vasquez`}>
           {project.postedBy}
         </ResearcherLink>
         <p>{project.institution}</p>
