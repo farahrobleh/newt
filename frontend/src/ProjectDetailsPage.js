@@ -85,12 +85,21 @@ const ProjectDetailsPage = () => {
   }, [id]);
 
   const handleApply = () => {
-    addApplicant({
+    const dummyApplicant = {
+      name: "John Doe",
+      email: "johndoe@example.com",
       projectTitle: project.title,
-      researcherId: 'elena-vasquez',
-      applicantName: "New Applicant",
+      appliedDate: new Date().toISOString(),
       status: "Pending"
-    });
+    };
+
+    // Add to Elena's applicants if it's her project
+    if (project.postedBy === "Dr. Elena Vasquez") {
+      const currentApplicants = JSON.parse(localStorage.getItem('elenaApplicants') || '[]');
+      currentApplicants.push(dummyApplicant);
+      localStorage.setItem('elenaApplicants', JSON.stringify(currentApplicants));
+    }
+
     history.push('/application-confirmation');
   };
 
@@ -118,9 +127,13 @@ const ProjectDetailsPage = () => {
       
       <Section>
         <SectionTitle>Posted By</SectionTitle>
-        <ResearcherLink to={`/generic-poster-profile/elena-vasquez`}>
-          {project.postedBy}
-        </ResearcherLink>
+        {project.postedBy === "Dr. Elena Vasquez" ? (
+          <ResearcherLink to="/researcher-public-profile/elena-vasquez">
+            {project.postedBy}
+          </ResearcherLink>
+        ) : (
+          <p>{project.postedBy}</p>
+        )}
         <p>{project.institution}</p>
       </Section>
 

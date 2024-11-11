@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useApplicants } from './context/ApplicantContext.js';
+import { Link } from 'react-router-dom';
 
 const ProfileContainer = styled.div`
   max-width: 800px;
@@ -42,6 +43,14 @@ const ProjectItem = styled.li`
   margin-bottom: 10px;
 `;
 
+const ProjectLink = styled(Link)`
+  color: #7fbf7f;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 const ApplicantList = styled.ul`
   list-style-type: none;
   padding: 0;
@@ -70,8 +79,16 @@ const PosterProfile = () => {
       <InfoSection>
         <SectionTitle>Active Projects</SectionTitle>
         <ProjectList>
-          <ProjectItem>Immunotherapy Optimization for Triple-Negative Breast Cancer</ProjectItem>
-          <ProjectItem>Precision Medicine Approaches in Lung Cancer Treatment</ProjectItem>
+          <ProjectItem>
+            <ProjectLink to="/project/cancer-1">
+              Immunotherapy Optimization for Triple-Negative Breast Cancer
+            </ProjectLink>
+          </ProjectItem>
+          <ProjectItem>
+            <ProjectLink to="/project/cancer-2">
+              Precision Medicine Approaches in Lung Cancer Treatment
+            </ProjectLink>
+          </ProjectItem>
         </ProjectList>
       </InfoSection>
       <InfoSection>
