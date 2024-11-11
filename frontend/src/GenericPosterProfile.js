@@ -5,68 +5,44 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
 
-const ProfileContainer = styled.div`
+const Container = styled.div`
   max-width: 800px;
-  margin: 120px auto 0;
+  margin: 120px auto 40px;
   padding: 40px;
-  background-color: #FFFFFF;
+  background-color: #1a1a1a;
   border-radius: 10px;
-  color: #333;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
 `;
 
-const WelcomeHeader = styled.h1`
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #FF3232;
+const Title = styled.h1`
+  color: #7fbf7f;
+  margin-bottom: 30px;
 `;
 
-const ProfileImage = styled.img`
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 20px;
-`;
-
-const InfoSection = styled.div`
+const Section = styled.div`
   margin-bottom: 30px;
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  color: #FF3232;
+  color: #7fbf7f;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
 `;
 
-const ProjectList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-`;
-
-const ProjectItem = styled.li`
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: rgba(255, 50, 50, 0.1);
-  border-radius: 5px;
-`;
-
-const CreateProjectButton = styled.button`
-  display: flex;
-  align-items: center;
-  background: none;
+const Button = styled.button`
+  background-color: #7fbf7f;
+  color: white;
   border: none;
-  color: #FF3232;
-  cursor: pointer;
+  padding: 12px 24px;
+  border-radius: 5px;
   font-size: 1rem;
-  padding: 10px;
-  
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+
   &:hover {
-    color: #CC0000;
-  }
-  
-  svg {
-    margin-right: 8px;
+    background-color: #6ca86c;
   }
 `;
 
@@ -78,36 +54,36 @@ const GenericPosterProfile = () => {
   };
 
   return (
-    <ProfileContainer>
-      <WelcomeHeader>Welcome to Your Research Dashboard</WelcomeHeader>
+    <Container>
+      <Title>Welcome to Your Research Dashboard</Title>
       <ProfileImage src="https://via.placeholder.com/200" alt="Generic Profile" />
-      <InfoSection>
+      <Section>
         <SectionTitle>Your Information</SectionTitle>
         <p>Research Institution Member</p>
         <p>Email: {localStorage.getItem('userEmail') || 'Not provided'}</p>
-      </InfoSection>
-      <InfoSection>
+      </Section>
+      <Section>
         <SectionTitle>Getting Started</SectionTitle>
         <ProjectList>
           <ProjectItem>Complete your profile information</ProjectItem>
           <ProjectItem>Post your first research project</ProjectItem>
           <ProjectItem>Connect with potential candidates</ProjectItem>
         </ProjectList>
-      </InfoSection>
-      <InfoSection>
+      </Section>
+      <Section>
         <SectionTitle>Quick Links</SectionTitle>
         <ProjectList>
           <ProjectItem>
-            <CreateProjectButton onClick={handleCreateProject}>
+            <Button onClick={handleCreateProject}>
               <FontAwesomeIcon icon={faPlus} /> Create New Project
-            </CreateProjectButton>
+            </Button>
           </ProjectItem>
           <ProjectItem>View Applications</ProjectItem>
           <ProjectItem>Message Center</ProjectItem>
           <ProjectItem>Settings</ProjectItem>
         </ProjectList>
-      </InfoSection>
-    </ProfileContainer>
+      </Section>
+    </Container>
   );
 };
 

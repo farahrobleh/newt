@@ -496,14 +496,14 @@ const DummyContainer = styled.div`
   max-width: 800px;
   margin: 120px auto 40px;
   padding: 40px;
-  background-color: #FFFFFF;
+  background-color: #1a1a1a;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  color: #333;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
 `;
 
 const DummyTitle = styled.h1`
-  color: #4a7a4a;
+  color: #7fbf7f;
   margin-bottom: 20px;
 `;
 

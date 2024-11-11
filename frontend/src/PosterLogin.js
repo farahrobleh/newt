@@ -4,19 +4,20 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 
-const LoginContainer = styled.div`
-  max-width: 450px;
-  margin: 150px auto;
-  padding: 30px;
-  background-color: rgba(255, 50, 50, 0.1);
+const Container = styled.div`
+  max-width: 400px;
+  margin: 120px auto 40px;
+  padding: 40px;
+  background-color: #1a1a1a;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(255, 50, 50, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
 `;
 
-const Title = styled.h2`
+const Title = styled.h1`
+  color: #7fbf7f;
+  margin-bottom: 30px;
   text-align: center;
-  color: #FF3232;
-  margin-bottom: 20px;
 `;
 
 const Form = styled.form`
@@ -33,16 +34,16 @@ const InputGroup = styled.div`
 
 const Input = styled.input`
   width: 100%;
-  padding: 10px 10px 10px 40px;
-  border: none;
-  border-bottom: 2px solid #FF3232;
-  background-color: transparent;
-  color: #333;
-  font-size: 16px;
-  box-sizing: border-box;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  background-color: #2a2a2a;
+  color: white;
+
   &:focus {
     outline: none;
-    border-bottom-color: #CC0000;
+    border-color: #7fbf7f;
   }
 `;
 
@@ -54,16 +55,19 @@ const Icon = styled(FontAwesomeIcon)`
 `;
 
 const Button = styled.button`
-  background-color: #FF3232;
+  width: 100%;
+  padding: 12px;
+  background-color: #7fbf7f;
   color: white;
   border: none;
-  padding: 10px;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
+  margin-top: 20px;
   transition: background-color 0.3s;
+
   &:hover {
-    background-color: #CC0000;
+    background-color: #6ca86c;
   }
 `;
 
@@ -106,7 +110,7 @@ const PosterLogin = () => {
   };
 
   return (
-    <LoginContainer>
+    <Container>
       <Title>Poster Login</Title>
       <Form onSubmit={handleSubmit}>
         <InputGroup>
@@ -132,7 +136,7 @@ const PosterLogin = () => {
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <Button type="submit">Log In</Button>
       </Form>
-    </LoginContainer>
+    </Container>
   );
 };
 
