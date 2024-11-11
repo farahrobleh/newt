@@ -245,13 +245,22 @@ const CommunityHub = () => {
       console.log('Posting comment:', { insightId, comment });
       const response = await axios.post(`/api/insights/${insightId}/comments`, { comment });
       console.log('Comment response:', response);
-      setInsights(insights.map(insight => 
-        insight._id === insightId 
-          ? { ...insight, comments: [...insight.comments, response.data] }
-          : insight
-      ));
+      
+      const updatedInsights = insights.map(insight => {
+        if (insight._id === insightId) {
+          return {
+            ...insight,
+            comments: Array.isArray(insight.comments) 
+              ? [...insight.comments, comment]
+              : [comment]
+          };
+        }
+        return insight;
+      });
+
+      setInsights(updatedInsights);
     } catch (error) {
-      console.error('Error posting comment:', error.response ? error.response.data : error.message);
+      console.error('Error posting comment:', error);
     }
   };
 
@@ -294,7 +303,7 @@ const CommunityHub = () => {
           <InsightButton type="submit">Post Insight</InsightButton>
         </InsightForm>
         {insights.map((insight, index) => (
-          <React.Fragment key={insight._id}>
+          <React.Fragment key={insight._id || index}>
             <Insight>
               <InsightHeader>
                 <Avatar>
@@ -308,12 +317,12 @@ const CommunityHub = () => {
                 <ActionButton><FontAwesomeIcon icon={faComment} /> Comment</ActionButton>
                 <LikeButton onClick={() => handleLike(insight._id)} liked={insight.liked}>
                   <FontAwesomeIcon icon={faHeart} /> Like
-                  <LikeCount>{insight.likes}</LikeCount>
+                  <LikeCount>{insight.likes || 0}</LikeCount>
                 </LikeButton>
               </InsightActions>
               <CommentSection>
-                {insight.comments.map((comment, index) => (
-                  <Comment key={index}>{comment}</Comment>
+                {Array.isArray(insight.comments) && insight.comments.map((comment, commentIndex) => (
+                  <Comment key={`${insight._id}-comment-${commentIndex}`}>{comment}</Comment>
                 ))}
                 <CommentForm onSubmit={(e) => {
                   e.preventDefault();
