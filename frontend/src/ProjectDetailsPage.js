@@ -61,8 +61,11 @@ const ApplyButton = styled.button`
   border: none;
   padding: 12px 24px;
   border-radius: 5px;
+  font-size: 1rem;
   cursor: pointer;
-  margin-top: 20px;
+  width: 100%;
+  transition: background-color 0.3s;
+
   &:hover {
     background-color: #6ca86c;
   }
@@ -175,8 +178,8 @@ const ProjectDetailsPage = () => {
               project?.postedBy
             )}
           </p>
-          <p><strong>Institution:</strong> {project?.institution}</p>
-          <p><strong>Job Title:</strong> {project?.jobTitle}</p>
+          <p><strong>Institution:</strong> {project?.institution || 'Not Provided'}</p>
+          <p><strong>Job Title:</strong> {project?.jobTitle || 'Not Provided'}</p>
         </ContentSection>
 
         <ContentSection>
@@ -235,11 +238,13 @@ const ProjectDetailsPage = () => {
             <p>{project.additionalInfo}</p>
           </ContentSection>
         )}
-      </ProjectContainer>
 
-      <ApplyButton onClick={handleApply}>
-        Apply to Research Project
-      </ApplyButton>
+        <ContentSection>
+          <ApplyButton onClick={handleApply}>
+            Apply to Research Project
+          </ApplyButton>
+        </ContentSection>
+      </ProjectContainer>
     </Container>
   );
 };

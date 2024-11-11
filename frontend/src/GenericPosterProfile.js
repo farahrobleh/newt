@@ -57,6 +57,54 @@ const ProjectLink = styled(Link)`
   }
 `;
 
+const ProfileImage = styled.img`
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 20px auto;
+  display: block;
+`;
+
+const ProjectList = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
+
+const ProjectItem = styled.li`
+  margin: 10px 0;
+`;
+
+const ApplicantsList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
+const ApplicantItem = styled.div`
+  background: rgba(127, 191, 127, 0.1);
+  padding: 15px;
+  border-radius: 5px;
+`;
+
+const ApplicantName = styled.h3`
+  color: #7fbf7f;
+  margin-bottom: 5px;
+`;
+
+const ApplicantProject = styled.p`
+  color: #ffffff;
+  margin-bottom: 5px;
+`;
+
+const ApplicantStatus = styled.p`
+  color: #7fbf7f;
+  font-weight: bold;
+`;
+
+const Text = styled.p`
+  color: #ffffff;
+`;
+
 const GenericPosterProfile = () => {
   const history = useHistory();
   const { applicants } = useApplicants();
