@@ -96,7 +96,8 @@ const PosterLogin = () => {
       history.push('/poster-profile');
     } else {
       if (email.includes('@') && password.length >= 6) {
-        history.push('/generic-poster-profile');
+        const researcherName = email.split('@')[0];
+        history.push(`/generic-poster-profile/${researcherName}`);
       } else {
         setError('Please enter a valid email and password (minimum 6 characters)');
       }

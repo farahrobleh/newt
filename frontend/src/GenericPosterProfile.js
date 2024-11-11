@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useApplicants } from './context/ApplicantContext.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -105,10 +105,11 @@ const Text = styled.p`
 
 const GenericPosterProfile = () => {
   const history = useHistory();
+  const { researcherName } = useParams();
   const { applicants } = useApplicants();
   const userEmail = localStorage.getItem('userEmail');
 
-  // Filter applicants for this user's projects
+  // Filter applicants for this researcher
   const userApplicants = applicants.filter(
     applicant => applicant.researcherEmail === userEmail
   );
@@ -119,17 +120,20 @@ const GenericPosterProfile = () => {
 
   return (
     <Container>
-      <Title>Welcome, {userEmail}</Title>
-      <Section>
-        <SectionTitle>Getting Started</SectionTitle>
-        <ProjectList>
-          <ProjectItem>Complete your profile information</ProjectItem>
-          <ProjectItem>Post your first research project</ProjectItem>
-          <ProjectItem>Connect with potential candidates</ProjectItem>
-        </ProjectList>
-      </Section>
+      <Title>Welcome, {researcherName}</Title>
+      <ProfileImage 
+        src={`https://api.dicebear.com/6.x/initials/svg?seed=${researcherName}`}
+        alt="Profile" 
+      />
       
       <Section>
+        <SectionTitle>Profile Information</SectionTitle>
+        <Text>Email: {userEmail}</Text>
+        <Text>Member Since: {new Date().toLocaleDateString()}</Text>
+      </Section>
+
+      <Section>
+        <SectionTitle>Quick Actions</SectionTitle>
         <Button onClick={handleCreateProject}>
           <FontAwesomeIcon icon={faPlus} /> Create New Project
         </Button>
