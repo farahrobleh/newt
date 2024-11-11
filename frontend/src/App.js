@@ -866,7 +866,7 @@ const App = () => {
                 <Route path="/poster-profile" component={PosterProfile} />
                 <Route path="/application-confirmation" component={ApplicationConfirmation} />
                 <Route path="/about" component={AboutUs} />
-                <Route path="/generic-poster-profile" component={GenericPosterProfile} />
+                <Route path="/generic-poster-profile/:researcherName" component={GenericPosterProfile} />
                 <Route path="/create-project" component={CreateProject} />
                 <Route path="/admin-login" component={AdminLogin} />
                 <Route path="/admin-dashboard" component={AdminDashboard} />

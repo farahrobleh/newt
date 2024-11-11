@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useApplicants } from './context/ApplicantContext.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -46,8 +47,24 @@ const Button = styled.button`
   }
 `;
 
+const ProjectLink = styled(Link)`
+  color: #7fbf7f;
+  text-decoration: none;
+  display: block;
+  margin: 10px 0;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 const GenericPosterProfile = () => {
   const history = useHistory();
+  const { applicants } = useApplicants();
+
+  // Filter applicants for Dr. Elena
+  const elenaApplicants = applicants.filter(
+    applicant => applicant.researcherId === 'elena-vasquez'
+  );
 
   const handleCreateProject = () => {
     history.push('/create-project');
@@ -82,6 +99,31 @@ const GenericPosterProfile = () => {
           <ProjectItem>Message Center</ProjectItem>
           <ProjectItem>Settings</ProjectItem>
         </ProjectList>
+      </Section>
+      <Section>
+        <SectionTitle>Active Projects</SectionTitle>
+        <ProjectLink to="/project/Immunotherapy%20Optimization%20for%20Triple-Negative%20Breast%20Cancer">
+          Immunotherapy Optimization for Triple-Negative Breast Cancer
+        </ProjectLink>
+        <ProjectLink to="/project/Precision%20Medicine%20Approaches%20in%20Lung%20Cancer%20Treatment">
+          Precision Medicine Approaches in Lung Cancer Treatment
+        </ProjectLink>
+      </Section>
+      <Section>
+        <SectionTitle>Current Applicants</SectionTitle>
+        {elenaApplicants.length > 0 ? (
+          <ApplicantsList>
+            {elenaApplicants.map((applicant, index) => (
+              <ApplicantItem key={index}>
+                <ApplicantName>{applicant.applicantName}</ApplicantName>
+                <ApplicantProject>{applicant.projectTitle}</ApplicantProject>
+                <ApplicantStatus>{applicant.status}</ApplicantStatus>
+              </ApplicantItem>
+            ))}
+          </ApplicantsList>
+        ) : (
+          <Text>No current applicants</Text>
+        )}
       </Section>
     </Container>
   );

@@ -45,7 +45,7 @@ const ApplyButton = styled.button`
   }
 `;
 
-const ResearcherName = styled(Link)`
+const ResearcherLink = styled(Link)`
   color: #7fbf7f;
   text-decoration: none;
   &:hover {
@@ -85,15 +85,12 @@ const ProjectDetailsPage = () => {
   }, [id]);
 
   const handleApply = () => {
-    if (project.researcherId) {
-      // Add the applicant to the researcher's profile
-      addApplicant({
-        projectTitle: project.title,
-        researcherId: project.researcherId,
-        applicantName: "New Applicant", // You can modify this as needed
-        status: "Pending"
-      });
-    }
+    addApplicant({
+      projectTitle: project.title,
+      researcherId: 'elena-vasquez',
+      applicantName: "New Applicant",
+      status: "Pending"
+    });
     history.push('/application-confirmation');
   };
 
@@ -121,13 +118,9 @@ const ProjectDetailsPage = () => {
       
       <Section>
         <SectionTitle>Posted By</SectionTitle>
-        {project.researcherId ? (
-          <ResearcherName to={`/researcher/${project.researcherId}`}>
-            {project.postedBy}
-          </ResearcherName>
-        ) : (
-          <p>{project.postedBy}</p>
-        )}
+        <ResearcherLink to={`/generic-poster-profile/${project.postedBy}`}>
+          {project.postedBy}
+        </ResearcherLink>
         <p>{project.institution}</p>
       </Section>
 
