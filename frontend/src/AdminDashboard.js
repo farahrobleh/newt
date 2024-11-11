@@ -66,31 +66,23 @@ const DeleteButton = styled.button`
 `;
 
 const CommentSection = styled.div`
-  margin-left: 20px;
   margin-top: 15px;
-  padding-left: 15px;
-  border-left: 2px solid rgba(127, 191, 127, 0.3);
+  padding-top: 15px;
+  border-top: 1px solid rgba(127, 191, 127, 0.3);
 `;
 
 const Comment = styled.div`
   position: relative;
+  background: rgba(26, 26, 26, 0.5);
   padding: 10px;
-  margin-bottom: 10px;
-  background-color: rgba(127, 191, 127, 0.05);
-  border-radius: 5px;
+  margin: 5px 0;
+  border-radius: 3px;
 `;
 
 const AdminDashboard = () => {
   const [dbProjects, setDbProjects] = useState([]);
   const [insights, setInsights] = useState([]);
-  const [dummyProjects, setDummyProjects] = useState({
-    example: [],
-    cancer: [],
-    influenza: [],
-    coronavirus: [],
-    measles: [],
-    sickleCell: []
-  });
+  const [dummyProjects, setDummyProjects] = useState({});
   const history = useHistory();
 
   useEffect(() => {
@@ -99,63 +91,68 @@ const AdminDashboard = () => {
       return;
     }
 
-    setDummyProjects({
+    const processedDummyProjects = {
       example: exampleProjects.map(project => ({
+        ...project,
+        id: `example-${Math.random()}`,
         title: project.title || 'Untitled',
-        postedBy: project.postedBy || 'Unknown',
-        description: project.description || '',
-        id: `example-${Math.random()}`
+        postedBy: typeof project.postedBy === 'string' ? project.postedBy : 'Unknown'
       })),
       cancer: cancerProjects.map(project => ({
+        ...project,
+        id: `cancer-${Math.random()}`,
         title: project.title || 'Untitled',
-        postedBy: project.postedBy || 'Unknown',
-        description: project.description || '',
-        id: `cancer-${Math.random()}`
+        postedBy: typeof project.postedBy === 'string' ? project.postedBy : 'Unknown'
       })),
       influenza: influenzaProjects.map(project => ({
+        ...project,
+        id: `influenza-${Math.random()}`,
         title: project.title || 'Untitled',
-        postedBy: project.postedBy || 'Unknown',
-        description: project.description || '',
-        id: `influenza-${Math.random()}`
+        postedBy: typeof project.postedBy === 'string' ? project.postedBy : 'Unknown'
       })),
       coronavirus: coronavirusProjects.map(project => ({
+        ...project,
+        id: `coronavirus-${Math.random()}`,
         title: project.title || 'Untitled',
-        postedBy: project.postedBy || 'Unknown',
-        description: project.description || '',
-        id: `coronavirus-${Math.random()}`
+        postedBy: typeof project.postedBy === 'string' ? project.postedBy : 'Unknown'
       })),
       measles: measlesProjects.map(project => ({
+        ...project,
+        id: `measles-${Math.random()}`,
         title: project.title || 'Untitled',
-        postedBy: project.postedBy || 'Unknown',
-        description: project.description || '',
-        id: `measles-${Math.random()}`
+        postedBy: typeof project.postedBy === 'string' ? project.postedBy : 'Unknown'
       })),
       sickleCell: sickleCellProjects.map(project => ({
+        ...project,
+        id: `sickleCell-${Math.random()}`,
         title: project.title || 'Untitled',
-        postedBy: project.postedBy || 'Unknown',
-        description: project.description || '',
-        id: `sickleCell-${Math.random()}`
+        postedBy: typeof project.postedBy === 'string' ? project.postedBy : 'Unknown'
       }))
-    });
+    };
 
+    setDummyProjects(processedDummyProjects);
     fetchData();
   }, [history]);
 
   const fetchData = async () => {
     try {
-      const projectsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/projects`);
-      const insightsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/insights`);
+      const [projectsResponse, insightsResponse] = await Promise.all([
+        axios.get(`${process.env.REACT_APP_API_URL}/api/projects`),
+        axios.get(`${process.env.REACT_APP_API_URL}/api/insights`)
+      ]);
       
-      if (Array.isArray(projectsResponse.data)) {
-        setDbProjects(projectsResponse.data);
-      }
-      
-      if (Array.isArray(insightsResponse.data)) {
-        setInsights(insightsResponse.data);
-      }
+      setDbProjects(Array.isArray(projectsResponse.data) ? projectsResponse.data : []);
+      setInsights(Array.isArray(insightsResponse.data) ? insightsResponse.data : []);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
+  };
+
+  const handleDeleteDummyProject = (category, projectId) => {
+    setDummyProjects(prev => ({
+      ...prev,
+      [category]: prev[category].filter(project => project.id !== projectId)
+    }));
   };
 
   const handleDeleteDbProject = async (projectId) => {
@@ -165,13 +162,6 @@ const AdminDashboard = () => {
     } catch (error) {
       console.error('Error deleting project:', error);
     }
-  };
-
-  const handleDeleteDummyProject = (category, projectId) => {
-    setDummyProjects(prev => ({
-      ...prev,
-      [category]: prev[category].filter(project => project.id !== projectId)
-    }));
   };
 
   const handleDeleteInsight = async (insightId) => {
@@ -218,7 +208,7 @@ const AdminDashboard = () => {
         {Object.entries(dummyProjects).map(([category, projects]) => (
           <React.Fragment key={category}>
             <SubsectionTitle>{category.charAt(0).toUpperCase() + category.slice(1)} Projects</SubsectionTitle>
-            {Array.isArray(projects) && projects.map((project) => (
+            {Array.isArray(projects) && projects.map(project => (
               <Card key={project.id}>
                 <DeleteButton onClick={() => handleDeleteDummyProject(category, project.id)}>Delete</DeleteButton>
                 <h3>{project.title}</h3>
