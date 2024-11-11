@@ -2,123 +2,154 @@ import React from 'react';
 import styled from 'styled-components';
 
 const AboutContainer = styled.div`
-  max-width: 800px;
+  max-width: 1000px;
   margin: 100px auto 0;
   padding: 40px 20px;
-  color: #4a7a4a;
+  color: #ffffff;
   background-color: rgba(127, 191, 127, 0.1);
   border-radius: 10px;
 `;
 
-const Title = styled.h1`
-  color: #4a7a4a;
-  text-align: center;
-  margin-bottom: 30px;
-`;
-
-const Section = styled.section`
-  margin-bottom: 30px;
-`;
-
-const SectionTitle = styled.h2`
+const MainTitle = styled.h1`
   color: #7fbf7f;
-  margin-bottom: 15px;
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
 `;
 
-const Paragraph = styled.p`
-  margin-bottom: 15px;
+const Subtitle = styled.p`
+  text-align: center;
+  font-size: 1.2rem;
   line-height: 1.6;
+  margin-bottom: 40px;
+  color: #ffffff;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
-const List = styled.ul`
-  margin-left: 20px;
-  margin-bottom: 15px;
+const FeatureGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin: 40px 0;
 `;
 
-const ListItem = styled.li`
-  margin-bottom: 10px;
-  &::before {
-    content: '•';
-    color: #7fbf7f;
-    font-weight: bold;
-    display: inline-block;
-    width: 1em;
-    margin-left: -1em;
-  }
-`;
-
-const ContactInfo = styled.div`
-  background-color: rgba(127, 191, 127, 0.2);
+const FeatureCard = styled.div`
   padding: 20px;
-  border-radius: 10px;
-  margin-top: 30px;
+  background-color: rgba(127, 191, 127, 0.05);
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
 `;
 
-const Link = styled.a`
-  color: #4a7a4a;
-  text-decoration: none;
-  border-bottom: 1px dotted #4a7a4a;
-  &:hover {
-    color: #7fbf7f;
-    border-bottom-color: #7fbf7f;
-  }
+const FeatureTitle = styled.h3`
+  color: #7fbf7f;
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+`;
+
+const FeatureText = styled.p`
+  color: #ffffff;
+  line-height: 1.5;
+`;
+
+const Stats = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 40px 0;
+  text-align: center;
+`;
+
+const StatItem = styled.div`
+  padding: 20px;
+`;
+
+const StatNumber = styled.h2`
+  color: #7fbf7f;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+`;
+
+const StatLabel = styled.p`
+  color: #ffffff;
+  font-size: 1.1rem;
+`;
+
+const CallToAction = styled.h2`
+  color: #7fbf7f;
+  text-align: center;
+  font-size: 2rem;
+  margin: 40px 0 20px;
+`;
+
+const FinalText = styled.p`
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 20px;
 `;
 
 const AboutUs = () => {
   return (
     <AboutContainer>
-      <Title>About Us</Title>
-      
-      <Section>
-        <Paragraph>Welcome to newt.io!</Paragraph>
-        <Paragraph>At newt.io, we're dedicated to transforming medical research recruitment. Our mission is to bridge the gap between exceptional research talent—both local and international—and U.S.-based institutions and hospitals. By harnessing the power of AI and tapping into a diverse talent pool, we aim to accelerate breakthroughs and foster collaboration within the scientific community.</Paragraph>
-      </Section>
+      <MainTitle>Join the Future of Medical Innovation</MainTitle>
+      <Subtitle>
+        In an era of unprecedented medical advancement, we're building the first true
+        ecosystem where innovation meets community, accelerating breakthroughs in
+        healthcare research!
+      </Subtitle>
+      <Subtitle>
+        Doctors globally are seeking a trusted digital space for authentic scientific discourse.
+      </Subtitle>
 
-      <Section>
-        <SectionTitle>The Challenge</SectionTitle>
-        <Paragraph>U.S. research institutions and hospitals often face significant hurdles in efficiently accessing diverse talent. Many talented researchers, whether local or from around the globe, encounter barriers that hinder their ability to connect with opportunities in the U.S. The current recruitment processes are frequently slow and inefficient, resulting in overlooked qualified candidates. This leads to delayed research progress and missed chances for groundbreaking collaborations.</Paragraph>
-      </Section>
+      <FeatureGrid>
+        <FeatureCard>
+          <FeatureTitle>Real-time Discovery</FeatureTitle>
+          <FeatureText>Share and discuss clinical breakthroughs instantly with global peers</FeatureText>
+        </FeatureCard>
+        <FeatureCard>
+          <FeatureTitle>Research Growth</FeatureTitle>
+          <FeatureText>Connect with research grants, lab positions, and funding opportunities</FeatureText>
+        </FeatureCard>
+        <FeatureCard>
+          <FeatureTitle>Global Collaboration</FeatureTitle>
+          <FeatureText>Form international research partnerships with verified professionals</FeatureText>
+        </FeatureCard>
+        <FeatureCard>
+          <FeatureTitle>Event Access</FeatureTitle>
+          <FeatureText>Stay connected with leading medical conferences and events</FeatureText>
+        </FeatureCard>
+        <FeatureCard>
+          <FeatureTitle>Verified Profiles</FeatureTitle>
+          <FeatureText>Build authenticated research profiles that showcase real impact</FeatureText>
+        </FeatureCard>
+        <FeatureCard>
+          <FeatureTitle>Knowledge Exchange</FeatureTitle>
+          <FeatureText>Engage in peer-to-peer learning and expertise sharing</FeatureText>
+        </FeatureCard>
+      </FeatureGrid>
 
-      <Section>
-        <SectionTitle>Our Solution</SectionTitle>
-        <Paragraph>newt.io offers an AI-powered platform that revolutionizes research recruitment by:</Paragraph>
-        <List>
-          <ListItem><strong>Connecting Local and Global Talent</strong>: We facilitate connections between researchers and U.S. institutions, expanding access to diverse expertise.</ListItem>
-          <ListItem><strong>Advanced Matching Algorithms</strong>: Our sophisticated algorithms ensure precise alignment of skills with project needs, streamlining the recruitment process.</ListItem>
-          <ListItem><strong>Streamlined Onboarding</strong>: We provide a seamless onboarding experience for both local and international researchers, allowing for quick integration into research teams.</ListItem>
-          <ListItem><strong>Rapid Position Filling</strong>: Our platform enables institutions to fill urgent research positions efficiently, ensuring that projects stay on track.</ListItem>
-        </List>
-      </Section>
+      <Stats>
+        <StatItem>
+          <StatNumber>100,000+</StatNumber>
+          <StatLabel>Engaged Researchers</StatLabel>
+        </StatItem>
+        <StatItem>
+          <StatNumber>Global</StatNumber>
+          <StatLabel>Research Network</StatLabel>
+        </StatItem>
+        <StatItem>
+          <StatNumber>24/7</StatNumber>
+          <StatLabel>Knowledge Exchange</StatLabel>
+        </StatItem>
+      </Stats>
 
-      <Section>
-        <SectionTitle>Market Insights</SectionTitle>
-        <Paragraph>The U.S. healthcare staffing market is witnessing significant growth. The employment of medical scientists is projected to increase by 11% from 2023 to 2033, with approximately 8,900 openings anticipated annually. Key drivers of this growth include:</Paragraph>
-        <List>
-          <ListItem><strong>Increasing Demand for Specialized Research Skills</strong>: As new fields emerge, the need for specialized expertise continues to rise.</ListItem>
-          <ListItem><strong>Growing Emphasis on Diversity</strong>: Diverse teams have been shown to enhance innovation and improve research outcomes.</ListItem>
-          <ListItem><strong>Post-Pandemic Focus on Global Collaboration</strong>: The need for efficient, collaborative approaches to healthcare research has never been more critical.</ListItem>
-        </List>
-      </Section>
-
-      <Section>
-        <SectionTitle>Our Vision and Impact</SectionTitle>
-        <Paragraph>At newt.io, we envision a future where:</Paragraph>
-        <List>
-          <ListItem><strong>Global Research Collaboration is Revolutionized</strong>: We aim to foster an inclusive research environment that transcends borders.</ListItem>
-          <ListItem><strong>Medical Breakthroughs are Accelerated</strong>: Diverse teams lead to innovative solutions and faster discoveries.</ListItem>
-          <ListItem><strong>A Borderless Research Community is Created</strong>: We strive to establish a network that unites researchers from all backgrounds.</ListItem>
-          <ListItem><strong>newt.io becomes the Go-To Platform</strong>: Our goal is to be the leading platform for research talent allocation worldwide.</ListItem>
-        </List>
-      </Section>
-
-      <ContactInfo>
-        <SectionTitle>Get in Touch</SectionTitle>
-        <Paragraph>We'd love to hear from you! For inquiries or more information, please reach out:</Paragraph>
-        <Paragraph><strong>Email</strong>: <Link href="mailto:ayan@newt.io">ayan@newt.io</Link></Paragraph>
-        <Paragraph><strong>Phone</strong>: +1 216 543 1146</Paragraph>
-      </ContactInfo>
-
-      <Paragraph>Thank you for joining us on this exciting journey to reshape the future of medical research recruitment. Together, we can unlock new possibilities and drive meaningful change in the scientific community.</Paragraph>
+      <CallToAction>Ready to Transform Medical Research?</CallToAction>
+      <FinalText>Join us in building the future of healthcare innovation.</FinalText>
     </AboutContainer>
   );
 };
