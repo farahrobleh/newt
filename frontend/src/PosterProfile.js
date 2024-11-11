@@ -61,17 +61,32 @@ const ApplicantList = styled.ul`
 
 const ApplicantItem = styled.div`
   background-color: rgba(127, 191, 127, 0.1);
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+`;
+
+const ApplicantDetail = styled.p`
+  margin: 8px 0;
+  color: #ffffff;
+`;
+
+const ApplicantEducation = styled.ul`
+  margin: 8px 0;
+  padding-left: 20px;
+  color: #ffffff;
+`;
+
+const DocumentLink = styled.span`
+  color: #7fbf7f;
+  cursor: not-allowed;
+  text-decoration: underline;
 `;
 
 const PosterProfile = () => {
-  const { applicants, addApplicant } = useApplicants();
-
-  const elenaApplicants = applicants.filter(applicant => 
-    applicant.projectTitle === "Immunotherapy Optimization for Triple-Negative Breast Cancer" ||
-    applicant.projectTitle === "Precision Medicine Approaches in Lung Cancer Treatment"
+  const { applicants } = useApplicants();
+  const elenaApplicants = applicants.filter(
+    applicant => applicant.researcherId === 'elena-vasquez'
   );
 
   return (
@@ -105,16 +120,28 @@ const PosterProfile = () => {
       <InfoSection>
         <SectionTitle>Current Applicants</SectionTitle>
         {elenaApplicants && elenaApplicants.length > 0 ? (
-          <ApplicantList>
+          <div>
             {elenaApplicants.map((applicant, index) => (
               <ApplicantItem key={index}>
-                <p><strong>Name:</strong> {applicant.name || 'Not provided'}</p>
-                <p><strong>Email:</strong> {applicant.email || 'Not provided'}</p>
-                <p><strong>Project:</strong> {applicant.projectTitle}</p>
-                <p><strong>Applied Date:</strong> {applicant.appliedDate || 'Not provided'}</p>
+                <ApplicantDetail><strong>Name:</strong> {applicant.name}</ApplicantDetail>
+                <ApplicantDetail><strong>Email:</strong> {applicant.email}</ApplicantDetail>
+                <ApplicantDetail><strong>LinkedIn:</strong> {applicant.linkedin}</ApplicantDetail>
+                <ApplicantDetail><strong>Education:</strong></ApplicantDetail>
+                <ApplicantEducation>
+                  {applicant.education.map((edu, idx) => (
+                    <li key={idx}>{edu}</li>
+                  ))}
+                </ApplicantEducation>
+                <ApplicantDetail>
+                  <strong>Documents:</strong>{' '}
+                  <DocumentLink>Resume</DocumentLink> |{' '}
+                  <DocumentLink>Cover Letter</DocumentLink>
+                </ApplicantDetail>
+                <ApplicantDetail><strong>Applied:</strong> {applicant.appliedDate}</ApplicantDetail>
+                <ApplicantDetail><strong>Status:</strong> {applicant.status}</ApplicantDetail>
               </ApplicantItem>
             ))}
-          </ApplicantList>
+          </div>
         ) : (
           <p>No current applicants</p>
         )}

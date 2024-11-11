@@ -128,17 +128,52 @@ const ProjectDetailsPage = () => {
   }, [id]);
 
   const handleApply = () => {
-    const newApplicant = {
-      name: "John Smith",
-      email: "john.smith@example.com",
-      projectTitle: project.title,
-      appliedDate: new Date().toLocaleDateString(),
-      status: "Pending Review",
-      researcherId: project.postedBy === "Dr. Elena Vasquez" ? "elena-vasquez" : undefined,
-      researcherEmail: project.postedBy === "Dr. Elena Vasquez" ? "drelena@metropolitan.edu" : undefined
-    };
+    // Array of dummy applicant data to randomly select from
+    const dummyApplicants = [
+      {
+        name: "Sarah Chen",
+        email: "schen@stanford.edu",
+        linkedin: "linkedin.com/in/sarahchen",
+        education: ["Stanford University - Ph.D. Candidate, Cancer Biology", "UC Berkeley - B.S. Molecular Biology"],
+        resume: "cancer_research_resume.pdf",
+        coverLetter: "I am excited to apply for this position...",
+        projectTitle: project?.title,
+        appliedDate: new Date().toLocaleDateString(),
+        status: "Pending Review",
+        researcherId: "elena-vasquez",
+        researcherEmail: "drelena@metropolitan.edu"
+      },
+      {
+        name: "Michael Rodriguez",
+        email: "mrodriguez@mit.edu",
+        linkedin: "linkedin.com/in/mrodriguez",
+        education: ["MIT - Ph.D. Bioengineering", "Johns Hopkins - B.S. Biomedical Engineering"],
+        resume: "immunotherapy_resume.pdf",
+        coverLetter: "With my background in immunotherapy research...",
+        projectTitle: project?.title,
+        appliedDate: new Date().toLocaleDateString(),
+        status: "Pending Review",
+        researcherId: "elena-vasquez",
+        researcherEmail: "drelena@metropolitan.edu"
+      },
+      {
+        name: "Emily Watson",
+        email: "ewatson@harvard.edu",
+        linkedin: "linkedin.com/in/emilywatson",
+        education: ["Harvard Medical School - MD/Ph.D. Program", "Yale - B.S. Molecular Biology"],
+        resume: "clinical_research_resume.pdf",
+        coverLetter: "Your groundbreaking work in immunotherapy...",
+        projectTitle: project?.title,
+        appliedDate: new Date().toLocaleDateString(),
+        status: "Pending Review",
+        researcherId: "elena-vasquez",
+        researcherEmail: "drelena@metropolitan.edu"
+      }
+    ];
 
-    addApplicant(newApplicant);
+    // Randomly select a dummy applicant
+    const randomApplicant = dummyApplicants[Math.floor(Math.random() * dummyApplicants.length)];
+    addApplicant(randomApplicant);
     history.push('/application-confirmation');
   };
 
