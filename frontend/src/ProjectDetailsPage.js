@@ -184,7 +184,7 @@ const ProjectDetailsPage = () => {
           <p>{project?.projectSummary || project?.description}</p>
         </ContentSection>
 
-        <Section>
+        <ContentSection>
           <SectionTitle>Role Details</SectionTitle>
           {Array.isArray(project?.roleDetails) ? (
             <ul>
@@ -195,14 +195,14 @@ const ProjectDetailsPage = () => {
           ) : (
             <p>{project?.roleDetails}</p>
           )}
-        </Section>
+        </ContentSection>
 
-        <Section>
+        <ContentSection>
           <SectionTitle>Compensation</SectionTitle>
           <p>{project?.compensation}</p>
-        </Section>
+        </ContentSection>
 
-        <Section>
+        <ContentSection>
           <SectionTitle>Timeline</SectionTitle>
           {project?.projectTimeline && typeof project.projectTimeline === 'object' ? (
             <>
@@ -214,9 +214,9 @@ const ProjectDetailsPage = () => {
           ) : (
             <p>{project?.projectTimeline}</p>
           )}
-        </Section>
+        </ContentSection>
 
-        <Section>
+        <ContentSection>
           <SectionTitle>Qualifications</SectionTitle>
           {Array.isArray(project?.qualifications) ? (
             <ul>
@@ -227,13 +227,13 @@ const ProjectDetailsPage = () => {
           ) : (
             <p>{project?.qualifications}</p>
           )}
-        </Section>
+        </ContentSection>
 
         {project?.additionalInfo && (
-          <Section>
+          <ContentSection>
             <SectionTitle>Additional Information</SectionTitle>
             <p>{project.additionalInfo}</p>
-          </Section>
+          </ContentSection>
         )}
       </ProjectContainer>
 
