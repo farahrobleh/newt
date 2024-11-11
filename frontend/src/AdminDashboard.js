@@ -83,14 +83,7 @@ const Comment = styled.div`
 const AdminDashboard = () => {
   const [dbProjects, setDbProjects] = useState([]);
   const [insights, setInsights] = useState([]);
-  const [dummyProjects, setDummyProjects] = useState({
-    example: [...exampleProjects],
-    cancer: [...cancerProjects],
-    influenza: [...influenzaProjects],
-    coronavirus: [...coronavirusProjects],
-    measles: [...measlesProjects],
-    sickleCell: [...sickleCellProjects]
-  });
+  const [dummyProjects, setDummyProjects] = useState({});
   const history = useHistory();
 
   useEffect(() => {
@@ -99,6 +92,15 @@ const AdminDashboard = () => {
       return;
     }
 
+    setDummyProjects({
+      example: exampleProjects.map(project => ({ ...project })),
+      cancer: cancerProjects.map(project => ({ ...project })),
+      influenza: influenzaProjects.map(project => ({ ...project })),
+      coronavirus: coronavirusProjects.map(project => ({ ...project })),
+      measles: measlesProjects.map(project => ({ ...project })),
+      sickleCell: sickleCellProjects.map(project => ({ ...project }))
+    });
+
     fetchData();
   }, [history]);
 
@@ -106,8 +108,14 @@ const AdminDashboard = () => {
     try {
       const projectsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/projects`);
       const insightsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/insights`);
-      setDbProjects(projectsResponse.data);
-      setInsights(insightsResponse.data);
+      
+      if (Array.isArray(projectsResponse.data)) {
+        setDbProjects(projectsResponse.data);
+      }
+      
+      if (Array.isArray(insightsResponse.data)) {
+        setInsights(insightsResponse.data);
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -116,7 +124,7 @@ const AdminDashboard = () => {
   const handleDeleteDbProject = async (projectId) => {
     try {
       await axios.delete(`${process.env.REACT_APP_API_URL}/api/projects/${projectId}`);
-      setDbProjects(dbProjects.filter(project => project._id !== projectId));
+      setDbProjects(prev => prev.filter(project => project._id !== projectId));
     } catch (error) {
       console.error('Error deleting project:', error);
     }
@@ -132,7 +140,7 @@ const AdminDashboard = () => {
   const handleDeleteInsight = async (insightId) => {
     try {
       await axios.delete(`${process.env.REACT_APP_API_URL}/api/insights/${insightId}`);
-      setInsights(insights.filter(insight => insight._id !== insightId));
+      setInsights(prev => prev.filter(insight => insight._id !== insightId));
     } catch (error) {
       console.error('Error deleting insight:', error);
     }
@@ -141,7 +149,7 @@ const AdminDashboard = () => {
   const handleDeleteComment = async (insightId, commentIndex) => {
     try {
       await axios.delete(`${process.env.REACT_APP_API_URL}/api/insights/${insightId}/comments/${commentIndex}`);
-      setInsights(insights.map(insight => {
+      setInsights(prev => prev.map(insight => {
         if (insight._id === insightId) {
           const updatedComments = [...insight.comments];
           updatedComments.splice(commentIndex, 1);
@@ -165,19 +173,19 @@ const AdminDashboard = () => {
         {dbProjects.map(project => (
           <Card key={project._id}>
             <DeleteButton onClick={() => handleDeleteDbProject(project._id)}>Delete</DeleteButton>
-            <h3>{project.title}</h3>
-            <p>Posted by: {project.postedBy}</p>
+            <h3>{project.title || 'Untitled Project'}</h3>
+            <p>Posted by: {project.postedBy || 'Unknown'}</p>
           </Card>
         ))}
 
         {Object.entries(dummyProjects).map(([category, projects]) => (
           <React.Fragment key={category}>
             <SubsectionTitle>{category.charAt(0).toUpperCase() + category.slice(1)} Projects</SubsectionTitle>
-            {projects.map((project, index) => (
+            {Array.isArray(projects) && projects.map((project, index) => (
               <Card key={`${category}-${index}`}>
                 <DeleteButton onClick={() => handleDeleteDummyProject(category, index)}>Delete</DeleteButton>
-                <h3>{project.title}</h3>
-                <p>Posted by: {project.postedBy}</p>
+                <h3>{project.title || 'Untitled Project'}</h3>
+                <p>Posted by: {project.postedBy || 'Unknown'}</p>
               </Card>
             ))}
           </React.Fragment>
@@ -189,7 +197,7 @@ const AdminDashboard = () => {
         {insights.map(insight => (
           <Card key={insight._id}>
             <DeleteButton onClick={() => handleDeleteInsight(insight._id)}>Delete Post</DeleteButton>
-            <h3>{insight.username}</h3>
+            <h3>{insight.username || 'Anonymous'}</h3>
             <p>{insight.content}</p>
             {insight.image && (
               <img 
@@ -201,8 +209,8 @@ const AdminDashboard = () => {
             
             <CommentSection>
               <h4 style={{ color: '#7fbf7f', marginBottom: '10px' }}>Comments:</h4>
-              {insight.comments && insight.comments.map((comment, index) => (
-                <Comment key={index}>
+              {Array.isArray(insight.comments) && insight.comments.map((comment, index) => (
+                <Comment key={`${insight._id}-comment-${index}`}>
                   <DeleteButton 
                     onClick={() => handleDeleteComment(insight._id, index)}
                     style={{ top: '5px', right: '5px' }}
