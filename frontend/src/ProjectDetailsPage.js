@@ -63,25 +63,37 @@ const ProjectDetailsPage = () => {
   const { addApplicant } = useApplicants();
 
   useEffect(() => {
-    const fetchProject = async () => {
-      try {
-        setLoading(true);
-        const baseUrl = process.env.REACT_APP_API_URL.replace(/\/+$/, '');
-        console.log('Fetching project with ID:', id);
-        
-        const response = await axios.get(`${baseUrl}/api/projects/${id}`);
-        console.log('Project data received:', response.data);
-        
-        setProject(response.data);
-      } catch (error) {
-        console.error('Error fetching project:', error.response?.data || error.message);
-        setError(error.response?.data?.message || error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProject();
+    // First try to find the project in our local data
+    const allProjects = [
+      ...cancerProjects,
+      ...influenzaProjects,
+      ...coronavirusProjects,
+      ...measlesProjects,
+      ...sickleCellProjects
+    ];
+    
+    const foundProject = allProjects.find(p => 
+      p.title === decodeURIComponent(id) || p.id === id
+    );
+    
+    if (foundProject) {
+      setProject(foundProject);
+      setLoading(false);
+    } else {
+      // If not found in local data, try the API
+      const fetchProject = async () => {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/projects/${id}`);
+          setProject(response.data);
+        } catch (error) {
+          console.error('Error fetching project:', error);
+          setError(error.response?.data?.message || error.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchProject();
+    }
   }, [id]);
 
   const handleApply = () => {
@@ -129,7 +141,7 @@ const ProjectDetailsPage = () => {
         <SectionTitle>Posted By</SectionTitle>
         {project.postedBy === "Dr. Elena Vasquez" ? (
           <ResearcherLink to="/researcher-public-profile/elena-vasquez">
-            {project.postedBy}
+            Dr. Elena Vasquez
           </ResearcherLink>
         ) : (
           <p>{project.postedBy}</p>

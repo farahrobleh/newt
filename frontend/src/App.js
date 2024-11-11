@@ -29,6 +29,7 @@ import CreateProject from './CreateProject.js';
 import ProjectDetailsPage from './ProjectDetailsPage';
 import AdminLogin from './AdminLogin';
 import AdminDashboard from './AdminDashboard';
+import ResearcherPublicProfile from './ResearcherPublicProfile';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -870,6 +871,10 @@ const App = () => {
                 <Route path="/create-project" component={CreateProject} />
                 <Route path="/admin-login" component={AdminLogin} />
                 <Route path="/admin-dashboard" component={AdminDashboard} />
+                <Route 
+                  path="/researcher-public-profile/:researcherId" 
+                  component={ResearcherPublicProfile} 
+                />
               </Switch>
             </AppContainer>
           </>
