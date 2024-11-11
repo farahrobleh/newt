@@ -27,6 +27,8 @@ import CommunityHub from './CommunityHub.js';
 import GenericPosterProfile from './GenericPosterProfile.js';
 import CreateProject from './CreateProject.js';
 import ProjectDetailsPage from './ProjectDetailsPage';
+import AdminLogin from './AdminLogin';
+import AdminDashboard from './AdminDashboard';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -802,6 +804,7 @@ const App = () => {
                   <NavLink to="/community-feed" onClick={toggleMenu}>Community Hub</NavLink>
                   <NavLink to="/candidate-login" onClick={toggleMenu}>Candidate Login</NavLink>
                   <NavLink to="/poster-login" onClick={toggleMenu}>Poster Login</NavLink>
+                  <NavLink to="/admin-login" onClick={toggleMenu}>Admin Login</NavLink>
                   <NavLink to="/about" onClick={toggleMenu}>About Us</NavLink>
                 </NavLinks>
               </NavContainer>
@@ -865,6 +868,8 @@ const App = () => {
                 <Route path="/about" component={AboutUs} />
                 <Route path="/generic-poster-profile" component={GenericPosterProfile} />
                 <Route path="/create-project" component={CreateProject} />
+                <Route path="/admin-login" component={AdminLogin} />
+                <Route path="/admin-dashboard" component={AdminDashboard} />
               </Switch>
             </AppContainer>
           </>
