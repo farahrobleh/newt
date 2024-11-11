@@ -55,10 +55,10 @@ const ResearcherPublicProfile = () => {
 
       <Section>
         <SubTitle>Current Projects</SubTitle>
-        <ProjectLink to="/projects/Immunotherapy%20Optimization%20for%20Triple-Negative%20Breast%20Cancer">
+        <ProjectLink to="/project/cancer-1">
           Immunotherapy Optimization for Triple-Negative Breast Cancer
         </ProjectLink>
-        <ProjectLink to="/projects/Precision%20Medicine%20Approaches%20in%20Lung%20Cancer%20Treatment">
+        <ProjectLink to="/project/cancer-2">
           Precision Medicine Approaches in Lung Cancer Treatment
         </ProjectLink>
       </Section>

@@ -63,7 +63,7 @@ const ProjectDetailsPage = () => {
   const { addApplicant } = useApplicants();
 
   useEffect(() => {
-    // First try to find the project in our local data
+    const decodedId = decodeURIComponent(id);
     const allProjects = [
       ...cancerProjects,
       ...influenzaProjects,
@@ -73,7 +73,7 @@ const ProjectDetailsPage = () => {
     ];
     
     const foundProject = allProjects.find(p => 
-      p.title === decodeURIComponent(id) || p.id === id
+      p.title === decodedId || p.id === decodedId
     );
     
     if (foundProject) {
@@ -135,79 +135,83 @@ const ProjectDetailsPage = () => {
 
   return (
     <Container>
-      <Title>{project.title}</Title>
-      
-      <Section>
-        <SectionTitle>Posted By</SectionTitle>
-        {project.postedBy === "Dr. Elena Vasquez" ? (
-          <ResearcherLink to="/researcher-public-profile/elena-vasquez">
-            Dr. Elena Vasquez
-          </ResearcherLink>
-        ) : (
-          <p>{project.postedBy}</p>
-        )}
-        <p>{project.institution}</p>
-      </Section>
+      {project && (
+        <>
+          <Title>{project.title}</Title>
+          
+          <Section>
+            <SectionTitle>Posted By</SectionTitle>
+            {project.postedBy === "Dr. Elena Vasquez" ? (
+              <ResearcherLink to={`/researcher-public-profile/${project.researcherId}`}>
+                {project.postedBy}
+              </ResearcherLink>
+            ) : (
+              <p>{project.postedBy}</p>
+            )}
+            <p>{project.institution}</p>
+          </Section>
 
-      <Section>
-        <SectionTitle>Job Title</SectionTitle>
-        <p>{project.jobTitle}</p>
-      </Section>
+          <Section>
+            <SectionTitle>Job Title</SectionTitle>
+            <p>{project.jobTitle}</p>
+          </Section>
 
-      <Section>
-        <SectionTitle>Project Summary</SectionTitle>
-        {renderContent(project.projectSummary)}
-      </Section>
+          <Section>
+            <SectionTitle>Project Summary</SectionTitle>
+            {renderContent(project.projectSummary)}
+          </Section>
 
-      <Section>
-        <SectionTitle>Role Details</SectionTitle>
-        {renderContent(project.roleDetails)}
-      </Section>
+          <Section>
+            <SectionTitle>Role Details</SectionTitle>
+            {renderContent(project.roleDetails)}
+          </Section>
 
-      <Section>
-        <SectionTitle>Compensation</SectionTitle>
-        <p>{project.compensation}</p>
-      </Section>
+          <Section>
+            <SectionTitle>Compensation</SectionTitle>
+            <p>{project.compensation}</p>
+          </Section>
 
-      <Section>
-        <SectionTitle>Project Timeline</SectionTitle>
-        {typeof project.projectTimeline === 'object' ? (
-          <>
-            <p>Start Date: {project.projectTimeline.start}</p>
-            <p>End Date: {project.projectTimeline.end}</p>
-          </>
-        ) : (
-          <p>{project.projectTimeline}</p>
-        )}
-      </Section>
+          <Section>
+            <SectionTitle>Project Timeline</SectionTitle>
+            {typeof project.projectTimeline === 'object' ? (
+              <>
+                <p>Start Date: {project.projectTimeline.start}</p>
+                <p>End Date: {project.projectTimeline.end}</p>
+              </>
+            ) : (
+              <p>{project.projectTimeline}</p>
+            )}
+          </Section>
 
-      <Section>
-        <SectionTitle>Role Timeline</SectionTitle>
-        {typeof project.roleTimeline === 'object' ? (
-          <>
-            <p>Start Date: {project.roleTimeline.start}</p>
-            <p>End Date: {project.roleTimeline.end}</p>
-          </>
-        ) : (
-          <p>{project.roleTimeline}</p>
-        )}
-      </Section>
+          <Section>
+            <SectionTitle>Role Timeline</SectionTitle>
+            {typeof project.roleTimeline === 'object' ? (
+              <>
+                <p>Start Date: {project.roleTimeline.start}</p>
+                <p>End Date: {project.roleTimeline.end}</p>
+              </>
+            ) : (
+              <p>{project.roleTimeline}</p>
+            )}
+          </Section>
 
-      <Section>
-        <SectionTitle>Qualifications</SectionTitle>
-        {renderContent(project.qualifications)}
-      </Section>
+          <Section>
+            <SectionTitle>Qualifications</SectionTitle>
+            {renderContent(project.qualifications)}
+          </Section>
 
-      {project.additionalInfo && (
-        <Section>
-          <SectionTitle>Additional Information</SectionTitle>
-          <p>{project.additionalInfo}</p>
-        </Section>
+          {project.additionalInfo && (
+            <Section>
+              <SectionTitle>Additional Information</SectionTitle>
+              <p>{project.additionalInfo}</p>
+            </Section>
+          )}
+
+          <ApplyButton onClick={handleApply}>
+            Apply to Research Project
+          </ApplyButton>
+        </>
       )}
-
-      <ApplyButton onClick={handleApply}>
-        Apply to Research Project
-      </ApplyButton>
     </Container>
   );
 };

@@ -828,27 +828,7 @@ const App = () => {
                 )} />
                 <Route 
                   path="/project/:id" 
-                  render={(props) => {
-                    const { id } = props.match.params;
-                    const allDummyProjects = [
-                      ...exampleProjects,
-                      ...cancerProjects,
-                      ...influenzaProjects,
-                      ...coronavirusProjects,
-                      ...measlesProjects,
-                      ...sickleCellProjects
-                    ];
-
-                    const dummyProject = allDummyProjects.find(
-                      project => project.title === decodeURIComponent(id)
-                    );
-
-                    return dummyProject ? (
-                      <DummyProjectDetails project={dummyProject} {...props} />
-                    ) : (
-                      <ProjectDetailsPage {...props} />
-                    );
-                  }}
+                  component={ProjectDetailsPage} 
                 />
                 <Route path="/researcher/:researcherId" component={ResearcherProfilePage} />
                 <Route path="/search" render={(props) => (
