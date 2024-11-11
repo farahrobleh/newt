@@ -82,14 +82,14 @@ const exampleProjects = [
   
 const cancerProjects = [
     {
+      id: 'cancer-1',
       title: "Immunotherapy Optimization for Triple-Negative Breast Cancer",
-      description: "Developing personalized immunotherapy approaches for aggressive breast cancer subtypes.",
-      postedBy: {
-        id: "elena-vasquez",
-        name: "Dr. Elena Vasquez",
-        institution: "Comprehensive Cancer Center, Metropolitan University Hospital"
-      },
-      jobTitle: "Senior Research Scientist - Cancer Immunology",
+      description: "Developing improved immunotherapy protocols for triple-negative breast cancer patients.",
+      imageUrl: "https://www.cancer.gov/sites/g/files/xnrzdm211/files/styles/cgov_article/public/cgov_contextual_image/2019-04/immunotherapy-attacking-cancer-cell-article.jpg",
+      postedBy: "Dr. Elena Vasquez",
+      researcherId: "elena-vasquez",
+      institution: "Memorial Cancer Research Center",
+      jobTitle: "Senior Research Scientist - Immunotherapy",
       summary: "This project aims to enhance the efficacy of immunotherapy treatments for triple-negative breast cancer (TNBC) patients. We will investigate novel combination therapies, including immune checkpoint inhibitors and CAR-T cell approaches, to overcome the immunosuppressive tumor microenvironment. Our goal is to develop personalized immunotherapy strategies that can improve outcomes for TNBC patients who currently have limited treatment options.",
       roleDetails: [
         "Designing and conducting preclinical studies to evaluate novel immunotherapy combinations in TNBC models.",

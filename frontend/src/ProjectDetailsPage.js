@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
+import { useApplicants } from './context/ApplicantContext';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -44,12 +45,22 @@ const ApplyButton = styled.button`
   }
 `;
 
+const ResearcherName = styled(Link)`
+  color: #7fbf7f;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 const ProjectDetailsPage = () => {
   const { id } = useParams();
   const history = useHistory();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const { addApplicant } = useApplicants();
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -74,7 +85,15 @@ const ProjectDetailsPage = () => {
   }, [id]);
 
   const handleApply = () => {
-    // You can add application logic here
+    if (project.researcherId) {
+      // Add the applicant to the researcher's profile
+      addApplicant({
+        projectTitle: project.title,
+        researcherId: project.researcherId,
+        applicantName: "New Applicant", // You can modify this as needed
+        status: "Pending"
+      });
+    }
     history.push('/application-confirmation');
   };
 
@@ -102,7 +121,14 @@ const ProjectDetailsPage = () => {
       
       <Section>
         <SectionTitle>Posted By</SectionTitle>
-        <p>{project.postedBy}</p>
+        {project.researcherId ? (
+          <ResearcherName to={`/researcher/${project.researcherId}`}>
+            {project.postedBy}
+          </ResearcherName>
+        ) : (
+          <p>{project.postedBy}</p>
+        )}
+        <p>{project.institution}</p>
       </Section>
 
       <Section>
