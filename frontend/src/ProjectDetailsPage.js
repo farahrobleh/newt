@@ -3,6 +3,14 @@ import { useParams, useHistory, Link } from 'react-router-dom';
 import { useApplicants } from './context/ApplicantContext';
 import styled from 'styled-components';
 import axios from 'axios';
+import { 
+  exampleProjects, 
+  cancerProjects, 
+  influenzaProjects, 
+  coronavirusProjects, 
+  measlesProjects, 
+  sickleCellProjects 
+} from './projectData';
 
 const Container = styled.div`
   max-width: 800px;
@@ -56,11 +64,8 @@ const ResearcherLink = styled(Link)`
 const ProjectDetailsPage = () => {
   const { id } = useParams();
   const history = useHistory();
-  const [project, setProject] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
   const { addApplicant } = useApplicants();
+  const [project, setProject] = useState(null);
 
   useEffect(() => {
     const decodedId = decodeURIComponent(id);
@@ -78,140 +83,104 @@ const ProjectDetailsPage = () => {
     
     if (foundProject) {
       setProject(foundProject);
-      setLoading(false);
-    } else {
-      // If not found in local data, try the API
-      const fetchProject = async () => {
-        try {
-          const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/projects/${id}`);
-          setProject(response.data);
-        } catch (error) {
-          console.error('Error fetching project:', error);
-          setError(error.response?.data?.message || error.message);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchProject();
     }
   }, [id]);
 
   const handleApply = () => {
-    const dummyApplicant = {
-      name: "John Doe",
-      email: "johndoe@example.com",
-      projectTitle: project.title,
-      appliedDate: new Date().toISOString(),
-      status: "Pending"
-    };
+    if (project) {
+      const dummyApplicant = {
+        name: "John Doe",
+        email: "johndoe@example.com",
+        projectTitle: project.title,
+        appliedDate: new Date().toISOString(),
+        status: "Pending",
+        researcherId: project.researcherId
+      };
 
-    // Add to Elena's applicants if it's her project
-    if (project.postedBy === "Dr. Elena Vasquez") {
-      const currentApplicants = JSON.parse(localStorage.getItem('elenaApplicants') || '[]');
-      currentApplicants.push(dummyApplicant);
-      localStorage.setItem('elenaApplicants', JSON.stringify(currentApplicants));
+      addApplicant(dummyApplicant);
+      history.push('/application-confirmation');
     }
-
-    history.push('/application-confirmation');
   };
 
-  if (loading) return <Container>Loading...</Container>;
-  if (error) return <Container>Error: {error}</Container>;
-  if (!project) return <Container>Project not found</Container>;
-
-  // Helper function to render array or string content
-  const renderContent = (content) => {
-    if (Array.isArray(content)) {
-      return (
-        <ul>
-          {content.map((item, index) => (
-            <li key={index}>{item}</li>
-          ))}
-        </ul>
-      );
-    }
-    return <p>{content}</p>;
-  };
+  if (!project) {
+    return <Container>Loading...</Container>;
+  }
 
   return (
     <Container>
-      {project && (
-        <>
-          <Title>{project.title}</Title>
-          
-          <Section>
-            <SectionTitle>Posted By</SectionTitle>
-            {project.postedBy === "Dr. Elena Vasquez" ? (
-              <ResearcherLink to={`/researcher-public-profile/${project.researcherId}`}>
-                {project.postedBy}
-              </ResearcherLink>
-            ) : (
-              <p>{project.postedBy}</p>
-            )}
-            <p>{project.institution}</p>
-          </Section>
+      <Title>{project.title}</Title>
+      
+      <Section>
+        <SectionTitle>Posted By</SectionTitle>
+        {project.postedBy === "Dr. Elena Vasquez" ? (
+          <ResearcherLink to={`/researcher-public-profile/${project.researcherId}`}>
+            {project.postedBy}
+          </ResearcherLink>
+        ) : (
+          <p>{project.postedBy}</p>
+        )}
+        <p>{project.institution}</p>
+      </Section>
 
-          <Section>
-            <SectionTitle>Job Title</SectionTitle>
-            <p>{project.jobTitle}</p>
-          </Section>
+      <Section>
+        <SectionTitle>Job Title</SectionTitle>
+        <p>{project.jobTitle}</p>
+      </Section>
 
-          <Section>
-            <SectionTitle>Project Summary</SectionTitle>
-            {renderContent(project.projectSummary)}
-          </Section>
+      <Section>
+        <SectionTitle>Project Summary</SectionTitle>
+        {renderContent(project.projectSummary)}
+      </Section>
 
-          <Section>
-            <SectionTitle>Role Details</SectionTitle>
-            {renderContent(project.roleDetails)}
-          </Section>
+      <Section>
+        <SectionTitle>Role Details</SectionTitle>
+        {renderContent(project.roleDetails)}
+      </Section>
 
-          <Section>
-            <SectionTitle>Compensation</SectionTitle>
-            <p>{project.compensation}</p>
-          </Section>
+      <Section>
+        <SectionTitle>Compensation</SectionTitle>
+        <p>{project.compensation}</p>
+      </Section>
 
-          <Section>
-            <SectionTitle>Project Timeline</SectionTitle>
-            {typeof project.projectTimeline === 'object' ? (
-              <>
-                <p>Start Date: {project.projectTimeline.start}</p>
-                <p>End Date: {project.projectTimeline.end}</p>
-              </>
-            ) : (
-              <p>{project.projectTimeline}</p>
-            )}
-          </Section>
+      <Section>
+        <SectionTitle>Project Timeline</SectionTitle>
+        {typeof project.projectTimeline === 'object' ? (
+          <>
+            <p>Start Date: {project.projectTimeline.start}</p>
+            <p>End Date: {project.projectTimeline.end}</p>
+          </>
+        ) : (
+          <p>{project.projectTimeline}</p>
+        )}
+      </Section>
 
-          <Section>
-            <SectionTitle>Role Timeline</SectionTitle>
-            {typeof project.roleTimeline === 'object' ? (
-              <>
-                <p>Start Date: {project.roleTimeline.start}</p>
-                <p>End Date: {project.roleTimeline.end}</p>
-              </>
-            ) : (
-              <p>{project.roleTimeline}</p>
-            )}
-          </Section>
+      <Section>
+        <SectionTitle>Role Timeline</SectionTitle>
+        {typeof project.roleTimeline === 'object' ? (
+          <>
+            <p>Start Date: {project.roleTimeline.start}</p>
+            <p>End Date: {project.roleTimeline.end}</p>
+          </>
+        ) : (
+          <p>{project.roleTimeline}</p>
+        )}
+      </Section>
 
-          <Section>
-            <SectionTitle>Qualifications</SectionTitle>
-            {renderContent(project.qualifications)}
-          </Section>
+      <Section>
+        <SectionTitle>Qualifications</SectionTitle>
+        {renderContent(project.qualifications)}
+      </Section>
 
-          {project.additionalInfo && (
-            <Section>
-              <SectionTitle>Additional Information</SectionTitle>
-              <p>{project.additionalInfo}</p>
-            </Section>
-          )}
-
-          <ApplyButton onClick={handleApply}>
-            Apply to Research Project
-          </ApplyButton>
-        </>
+      {project.additionalInfo && (
+        <Section>
+          <SectionTitle>Additional Information</SectionTitle>
+          <p>{project.additionalInfo}</p>
+        </Section>
       )}
+
+      <ApplyButton onClick={handleApply}>
+        Apply to Research Project
+      </ApplyButton>
     </Container>
   );
 };
