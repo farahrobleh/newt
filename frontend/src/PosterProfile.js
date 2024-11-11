@@ -26,7 +26,10 @@ const ProfileImage = styled.img`
 `;
 
 const InfoSection = styled.div`
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  padding: 20px 20px 15px;
+  background-color: rgba(127, 191, 127, 0.1);
+  border-radius: 10px;
 `;
 
 const SectionTitle = styled.h2`
@@ -56,22 +59,30 @@ const ApplicantList = styled.ul`
   padding: 0;
 `;
 
-const ApplicantItem = styled.li`
+const ApplicantItem = styled.div`
+  background-color: rgba(127, 191, 127, 0.1);
+  padding: 15px;
   margin-bottom: 10px;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 5px;
 `;
 
 const PosterProfile = () => {
   const { applicants } = useApplicants();
 
+  const elenaApplicants = applicants.filter(applicant => 
+    applicant.projectTitle === "Immunotherapy Optimization for Triple-Negative Breast Cancer" ||
+    applicant.projectTitle === "Precision Medicine Approaches in Lung Cancer Treatment"
+  );
+
   return (
     <ProfileContainer>
-      <WelcomeHeader>Welcome Dr. Elena Vasquez</WelcomeHeader>
-      <ProfileImage src="https://www.socsci.uci.edu/files/news_events/2021/glendaflores_2021_880.jpg" alt="Dr. Elena Vasquez" />
+      <WelcomeHeader>Dr. Elena Vasquez</WelcomeHeader>
+      <ProfileImage 
+        src="https://via.placeholder.com/200" 
+        alt="Dr. Elena Vasquez" 
+      />
       <InfoSection>
-        <SectionTitle>Information</SectionTitle>
+        <SectionTitle>Profile Information</SectionTitle>
         <p>Comprehensive Cancer Center, Metropolitan University Hospital</p>
         <p>Specialization: Oncology, Cancer Research</p>
         <p>Email: drelena@metropolitan.edu</p>
@@ -93,14 +104,14 @@ const PosterProfile = () => {
       </InfoSection>
       <InfoSection>
         <SectionTitle>Current Applicants</SectionTitle>
-        {applicants.length > 0 ? (
+        {elenaApplicants && elenaApplicants.length > 0 ? (
           <ApplicantList>
-            {applicants.map((applicant) => (
-              <ApplicantItem key={applicant.id}>
-                <p><strong>Name:</strong> {applicant.name}</p>
-                <p><strong>Email:</strong> {applicant.email}</p>
+            {elenaApplicants.map((applicant, index) => (
+              <ApplicantItem key={index}>
+                <p><strong>Name:</strong> {applicant.name || 'Not provided'}</p>
+                <p><strong>Email:</strong> {applicant.email || 'Not provided'}</p>
                 <p><strong>Project:</strong> {applicant.projectTitle}</p>
-                <p><strong>Applied Date:</strong> {applicant.appliedDate}</p>
+                <p><strong>Applied Date:</strong> {applicant.appliedDate || 'Not provided'}</p>
               </ApplicantItem>
             ))}
           </ApplicantList>

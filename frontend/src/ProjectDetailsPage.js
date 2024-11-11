@@ -22,7 +22,7 @@ const Container = styled.div`
 const ProjectContainer = styled.div`
   background-color: rgba(127, 191, 127, 0.1);
   border-radius: 10px;
-  padding: 30px;
+  padding: 30px 30px 20px;
   margin-top: 20px;
 `;
 
@@ -32,12 +32,14 @@ const Title = styled.h1`
 `;
 
 const ContentSection = styled.div`
-  margin: 25px 0;
+  margin: 20px 0;
   border-bottom: 1px solid rgba(127, 191, 127, 0.2);
-  padding-bottom: 20px;
+  padding-bottom: 15px;
 
   &:last-child {
     border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
 `;
 
