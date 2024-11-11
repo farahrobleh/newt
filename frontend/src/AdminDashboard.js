@@ -2,6 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
+import { 
+  exampleProjects, 
+  cancerProjects, 
+  influenzaProjects, 
+  coronavirusProjects, 
+  measlesProjects, 
+  sickleCellProjects 
+} from './projectData';
 
 const DashboardContainer = styled.div`
   max-width: 1200px;
@@ -24,6 +32,13 @@ const Section = styled.div`
 const SectionTitle = styled.h2`
   color: #7fbf7f;
   margin-bottom: 20px;
+`;
+
+const SubsectionTitle = styled.h3`
+  color: #7fbf7f;
+  margin: 20px 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(127, 191, 127, 0.3);
 `;
 
 const Card = styled.div`
@@ -50,9 +65,32 @@ const DeleteButton = styled.button`
   }
 `;
 
+const CommentSection = styled.div`
+  margin-left: 20px;
+  margin-top: 15px;
+  padding-left: 15px;
+  border-left: 2px solid rgba(127, 191, 127, 0.3);
+`;
+
+const Comment = styled.div`
+  position: relative;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: rgba(127, 191, 127, 0.05);
+  border-radius: 5px;
+`;
+
 const AdminDashboard = () => {
-  const [projects, setProjects] = useState([]);
+  const [dbProjects, setDbProjects] = useState([]);
   const [insights, setInsights] = useState([]);
+  const [dummyProjects, setDummyProjects] = useState({
+    example: [...exampleProjects],
+    cancer: [...cancerProjects],
+    influenza: [...influenzaProjects],
+    coronavirus: [...coronavirusProjects],
+    measles: [...measlesProjects],
+    sickleCell: [...sickleCellProjects]
+  });
   const history = useHistory();
 
   useEffect(() => {
@@ -68,20 +106,27 @@ const AdminDashboard = () => {
     try {
       const projectsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/projects`);
       const insightsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/insights`);
-      setProjects(projectsResponse.data);
+      setDbProjects(projectsResponse.data);
       setInsights(insightsResponse.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
-  const handleDeleteProject = async (projectId) => {
+  const handleDeleteDbProject = async (projectId) => {
     try {
       await axios.delete(`${process.env.REACT_APP_API_URL}/api/projects/${projectId}`);
-      setProjects(projects.filter(project => project._id !== projectId));
+      setDbProjects(dbProjects.filter(project => project._id !== projectId));
     } catch (error) {
       console.error('Error deleting project:', error);
     }
+  };
+
+  const handleDeleteDummyProject = (category, index) => {
+    setDummyProjects(prev => ({
+      ...prev,
+      [category]: prev[category].filter((_, i) => i !== index)
+    }));
   };
 
   const handleDeleteInsight = async (insightId) => {
@@ -115,12 +160,27 @@ const AdminDashboard = () => {
       
       <Section>
         <SectionTitle>Research Projects</SectionTitle>
-        {projects.map(project => (
+        
+        <SubsectionTitle>Database Projects</SubsectionTitle>
+        {dbProjects.map(project => (
           <Card key={project._id}>
-            <DeleteButton onClick={() => handleDeleteProject(project._id)}>Delete</DeleteButton>
+            <DeleteButton onClick={() => handleDeleteDbProject(project._id)}>Delete</DeleteButton>
             <h3>{project.title}</h3>
             <p>Posted by: {project.postedBy}</p>
           </Card>
+        ))}
+
+        {Object.entries(dummyProjects).map(([category, projects]) => (
+          <React.Fragment key={category}>
+            <SubsectionTitle>{category.charAt(0).toUpperCase() + category.slice(1)} Projects</SubsectionTitle>
+            {projects.map((project, index) => (
+              <Card key={`${category}-${index}`}>
+                <DeleteButton onClick={() => handleDeleteDummyProject(category, index)}>Delete</DeleteButton>
+                <h3>{project.title}</h3>
+                <p>Posted by: {project.postedBy}</p>
+              </Card>
+            ))}
+          </React.Fragment>
         ))}
       </Section>
 
@@ -128,15 +188,31 @@ const AdminDashboard = () => {
         <SectionTitle>Community Hub Posts</SectionTitle>
         {insights.map(insight => (
           <Card key={insight._id}>
-            <DeleteButton onClick={() => handleDeleteInsight(insight._id)}>Delete</DeleteButton>
+            <DeleteButton onClick={() => handleDeleteInsight(insight._id)}>Delete Post</DeleteButton>
             <h3>{insight.username}</h3>
             <p>{insight.content}</p>
-            {insight.comments && insight.comments.map((comment, index) => (
-              <div key={index} style={{ marginLeft: '20px', marginTop: '10px' }}>
-                <DeleteButton onClick={() => handleDeleteComment(insight._id, index)}>Delete Comment</DeleteButton>
-                <p>{comment}</p>
-              </div>
-            ))}
+            {insight.image && (
+              <img 
+                src={insight.image} 
+                alt="Post content" 
+                style={{ maxWidth: '200px', marginTop: '10px' }} 
+              />
+            )}
+            
+            <CommentSection>
+              <h4 style={{ color: '#7fbf7f', marginBottom: '10px' }}>Comments:</h4>
+              {insight.comments && insight.comments.map((comment, index) => (
+                <Comment key={index}>
+                  <DeleteButton 
+                    onClick={() => handleDeleteComment(insight._id, index)}
+                    style={{ top: '5px', right: '5px' }}
+                  >
+                    Delete Comment
+                  </DeleteButton>
+                  <p style={{ marginRight: '70px' }}>{comment}</p>
+                </Comment>
+              ))}
+            </CommentSection>
           </Card>
         ))}
       </Section>
